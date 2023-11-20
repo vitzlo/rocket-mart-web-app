@@ -1,13 +1,71 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+:root {
+  --backgroud-color: var(--dark-grey);
+  --primary-color: #8591ce;
+  --secondary-color: #eca2bd;
+  --dark-grey: #2d2d2d;
+  --med-dark-grey: #6a6a6a;
+  --med-grey: #989898;
+  --light-grey: #d9d9d9;
+  --red: #e66779;
+  --green: #a2d5c6;
+  --blue: var(--primary-color);
+  --white: #fff;
+  --black: #000;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.primary-color {
+  color: var(--primary-color);
+}
+.secondary-color {
+  color: var(--secondary-color);
+}
+.dark-grey {
+  color: var(--dark-grey);
+}
+.med-dark-grey {
+  color: var(--med-dark-grey);
+}
+.med-grey {
+  color: var(--med-grey);
+}
+.light-grey {
+  color: var(--light-grey);
+}
+.red {
+  color: var(--red);
+}
+.green {
+  color: var(--green);
+}
+.blue {
+  color: var(--blue);
+}
+.white {
+  color: var(--white);
+}
+.black {
+  color: var(--black);
+}
+
+/* Font size */
+.xl-font {
+  font-size: 2rem;
+}
+.lg-font {
+  font-size: 1.25rem;
+}
+.md-font {
+  font-size: 1rem;
+}
+.sm-font {
+  font-size: 0.875rem;
+}
+.xs-font {
+  font-size: 0.625rem;
+}
+
+body {
+  margin: 0;
+  background-color: var(--backgroud-color);
+  color: var(--white);
 }

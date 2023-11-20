@@ -63,9 +63,3 @@
 .xs-font {
   font-size: 0.625rem;
 }
-
-body {
-  margin: 0;
-  background-color: var(--backgroud-color);
-  color: var(--white);
-}

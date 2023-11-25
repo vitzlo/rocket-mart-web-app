@@ -63,3 +63,21 @@
 .xs-font {
   font-size: 0.625rem;
 }
+
+/* Profile */
+#profile-picture {
+  width: 25vw;
+  height: 25vw;
+}
+
+.private-both {
+  color: magenta; /* temporary, just for skeleton modeling */
+}
+
+.private-seller {
+  color: red; /* temporary, just for skeleton modeling */
+}
+
+.private-buyer {
+  color: blue; /* temporary, just for skeleton modeling */
+}

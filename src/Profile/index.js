@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { getMonthName } from "../Utils/date-utils";
-import "./index.css";
+import "../index.css";
 
 function Profile() {
   const username = "Brando";

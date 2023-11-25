@@ -65,7 +65,6 @@ export const searchPokemonBySubstring = async (substring) => {
   const allPokemon = response.data.results;
   const filteredPokemon = allPokemon
     .filter((pokemon) => pokemon.name.includes(substring.toLowerCase())) // has search query in name
-    .filter((pokemon) => !pokemon.name.includes("-")) // no mega types
     .map((pokemon) => pokemon.name);
 
   return filteredPokemon;

@@ -30,6 +30,7 @@ function Profile() {
   ];
   const listedPokemon = [
     {
+      listingId: 900,
       timeOfListing: new Date(2023, 11, 17, 19, 33),
       sellerId: 491,
       pokemon: {

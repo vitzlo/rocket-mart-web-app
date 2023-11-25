@@ -66,7 +66,9 @@ function Profile() {
   ];
   const soldPokemon = [
     {
-      timeOfListing: new Date(2023, 11, 18, 10, 33),
+      purchaseId: 727,
+      timeOfPurchase: new Date(2023, 11, 18, 10, 33),
+      buyerId: 528,
       sellerId: 491,
       pokemon: {
         id: 132,
@@ -110,6 +112,7 @@ function Profile() {
               <Link to={`/details/${purchase.pokemon.id}`}>
                 {purchase.pokemon.name}
               </Link>
+              <div>{`Purchase ID = ${purchase.purchaseId}`}</div>
             </div>
           );
         })}
@@ -130,6 +133,7 @@ function Profile() {
               <Link to={`/details/${purchase.pokemon.id}`}>
                 {purchase.pokemon.name}
               </Link>
+              <div>{`Purchase ID = ${purchase.purchaseId}`}</div>
             </div>
           );
         })}

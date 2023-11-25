@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
-import { getMonthName } from "../Utils";
+import { getMonthName } from "../Utils/date-utils";
 import "./index.css";
 
 function Profile() {
   const username = "Brando";
   const region = "Ryder Hall, MA";
-  const joinDate = new Date(2023, 11, 17);
+  const joinDate = new Date(2023, 10, 17);
 
   const purchasedPokemon = [
     {

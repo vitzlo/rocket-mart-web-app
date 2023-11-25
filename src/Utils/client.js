@@ -18,10 +18,7 @@ const pruneSprites = (spritesData) => {
   const prunedData = {};
 
   // this field seemed suspect so this is a cautious measure
-  if (
-    spritesData["other"] !== undefined &&
-    spritesData["other"]["official-artwork"] !== undefined
-  ) {
+  if (spritesData["other"] && spritesData["other"]["official-artwork"]) {
     prunedData.large =
       spritesData["other"]["official-artwork"]["front_default"];
   }
@@ -48,7 +45,7 @@ const prunePokemon = (pokemonData) => {
 
 export const findPokemon = async (name) => {
   const response = await axios.get(`${API_BASE}/pokemon/${name}`);
-  if (response.data === undefined) {
+  if (!response.data) {
     return undefined;
   }
 

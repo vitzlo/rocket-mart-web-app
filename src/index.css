@@ -65,19 +65,19 @@
 }
 
 /* Profile */
-#profile-picture {
+#rm-profile-picture {
   width: 25vw;
   height: 25vw;
 }
 
-.private-both {
+.rm-private-both {
   color: magenta; /* temporary, just for skeleton modeling */
 }
 
-.private-seller {
+.rm-private-seller {
   color: red; /* temporary, just for skeleton modeling */
 }
 
-.private-buyer {
+.rm-private-buyer {
   color: blue; /* temporary, just for skeleton modeling */
 }

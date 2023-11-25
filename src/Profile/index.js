@@ -93,10 +93,10 @@ function Profile() {
         <img
           src="https://www.svgrepo.com/show/135058/circle-outline.svg"
           alt="pfp icon"
-          id="profile-picture"
+          id="rm-profile-picture"
         />
         <div>{`@${username} | ${region}`}</div>
-        <div className="private-both">
+        <div className="rm-private-both">
           <div>Email: xie.br@northeastern.edu</div>
           <div>Phone: 800-588-2300</div>
         </div>
@@ -106,7 +106,7 @@ function Profile() {
         </div>
       </div>
       <div className="col-6 col-sm-6">
-        <h1 className="private-buyer">[BUYER] Purchased Pokémon</h1>
+        <h1 className="rm-private-buyer">[BUYER] Purchased Pokémon</h1>
         {purchasedPokemon.map((purchase) => {
           return (
             <div>
@@ -127,7 +127,7 @@ function Profile() {
             </div>
           );
         })}
-        <h1 className="private-seller">[SELLER] Sold Pokémon</h1>
+        <h1 className="rm-private-seller">[SELLER] Sold Pokémon</h1>
         {soldPokemon.map((purchase) => {
           return (
             <div>

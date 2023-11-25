@@ -1,0 +1,17 @@
+#profile-picture {
+    width: 25vw;
+    height: 25vw;
+}
+
+/* the next three classes are temporary, just for skeleton modeling */
+.private-both {
+    color: magenta;
+}
+
+.private-seller {
+    color: red;
+}
+
+.private-buyer {
+    color: blue;
+}

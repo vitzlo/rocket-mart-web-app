@@ -105,3 +105,21 @@ body {
   -webkit-overflow-scrolling: touch;
   -ms-overflow-style: -ms-autohiding-scrollbar;
 }
+
+/* Profile */
+#rm-profile-picture {
+  width: 25vw;
+  height: 25vw;
+}
+
+.rm-private-both {
+  color: magenta; /* temporary, just for skeleton modeling */
+}
+
+.rm-private-seller {
+  color: red; /* temporary, just for skeleton modeling */
+}
+
+.rm-private-buyer {
+  color: blue; /* temporary, just for skeleton modeling */
+}

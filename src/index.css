@@ -182,13 +182,29 @@ body {
   text-align: center;
   margin: 0;
   padding: 0;
-  text-shadow: 1px 1px 1px var(--dark-grey);
 }
 .rm-large-pokemon .rm-pokemon-image {
   width: 40%;
   min-width: 300px;
-  aspect-ratio: 1 / 1;  
+  height: 40%;
+  min-height: 300px;
   border-radius: 5%;
   padding: 5px;
   background-color: var(--light-grey);
+  margin-right: 10px;
+}
+.rm-large-pokemon .rm-pokemon-info {
+  font-size: 1rem;
+}
+/* seller listing on large view */
+.rm-listing {
+  align-items: center;
+  background-color: var(--primary-color);
+  border-radius: 12px;
+  margin: 12px;
+  padding: 6px;
+}
+.rm-listing p {
+  margin: 0;
+  padding: 0;
 }

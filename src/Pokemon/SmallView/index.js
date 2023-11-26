@@ -6,9 +6,8 @@ function SmallPokemon({ pokemon, pokemonName }) {
   // might not need to prune or even need this if we want to make it 
   // so it always is by name but i wanted to save some API requests
   // actually... findPokemon doesnt work so uhhhh
-  // TODO: fix findPOkemon by name
+  // TODO: fix findPokemon by name, example can be found in LargeView
   pokemon = pokemon ? prunePokemon(pokemon) : findPokemon(pokemonName);
-  console.log(pokemon.sprites.large);
   const redirect = () => {
     navigate(`/pokemon/${pokemon.id}`);
   };

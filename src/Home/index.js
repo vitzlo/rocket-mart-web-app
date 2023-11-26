@@ -13,7 +13,7 @@ const Home = () => {
   const fetchPokemon = async () => {
     const pokemonList = [];
     for (let i = 0; i < 10; i++) {
-      const pokemon = Math.floor(Math.random() * 500);
+      const pokemon = Math.floor(Math.random() * 1000) + 1;
       const response = await axios.get(`${API_BASE}/pokemon/${pokemon}`);
       pokemonList.push(response.data);
     }

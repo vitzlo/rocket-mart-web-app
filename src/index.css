@@ -102,6 +102,9 @@ body {
   top: 0rem;
   padding-left: 40px !important;
   margin: 0px !important;
+  z-index: 1000;
+  /* TODO: new navbar color? */
+  background-color: var(--background-color);
 }
 
 .rm-search {

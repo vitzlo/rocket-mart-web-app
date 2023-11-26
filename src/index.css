@@ -184,9 +184,9 @@ body {
   padding: 0;
 }
 .rm-large-pokemon .rm-pokemon-image {
-  width: 40%;
+  width: 30vw;
   min-width: 300px;
-  height: 40%;
+  height: 30vw;
   min-height: 300px;
   border-radius: 5%;
   padding: 5px;
@@ -201,7 +201,7 @@ body {
   align-items: center;
   background-color: var(--primary-color);
   border-radius: 12px;
-  margin: 12px;
+  margin-bottom: 12px;
   padding: 6px;
 }
 .rm-listing p {

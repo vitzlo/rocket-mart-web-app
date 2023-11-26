@@ -49,12 +49,12 @@ function LargePokemon() {
         <div>
           <div className="rm-pokemon-name text-nowrap">{pokemon.name}</div>
           <div className="row flex-nowrap">
-            <img
-              src={pokemon.sprites.large}
-              alt={pokemon.name}
-              className="rm-pokemon-image m-0 col-auto"
-            />
-            <div className="col">
+            <div className="col-auto">
+              <img
+                src={pokemon.sprites.large}
+                alt={pokemon.name}
+                className="rm-pokemon-image m-0"
+              />
               {/* TODO: make the types pretty plz, they bland */}
               <div className="rm-pokemon-info">
                 Types:{" "}
@@ -64,7 +64,9 @@ function LargePokemon() {
                   </span>
                 ))}
               </div>
-              {/* any other fields we want to list here??? */}
+              {/* any other fields we want to list here??? maybe evolution tree*/}
+            </div>
+            <div className="col">
               {listedPokemon.map((listing) => (
                 <Listing key={listing.listingId} listing={listing} />
               ))}

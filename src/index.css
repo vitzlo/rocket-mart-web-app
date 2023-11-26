@@ -1,5 +1,5 @@
 :root {
-  --backgroud-color: var(--dark-grey);
+  --background-color: var(--dark-grey);
   --primary-color: #8591ce;
   --secondary-color: #eca2bd;
   --dark-grey: #2d2d2d;
@@ -13,54 +13,84 @@
   --black: #000;
 }
 
-.primary-color {
-  color: var(--primary-color);
-}
-.secondary-color {
-  color: var(--secondary-color);
-}
-.dark-grey {
-  color: var(--dark-grey);
-}
-.med-dark-grey {
-  color: var(--med-dark-grey);
-}
-.med-grey {
-  color: var(--med-grey);
-}
-.light-grey {
+/* override body styles */
+body {
+  background: var(--background-color);
+  /* default text colors: change maybe? */
   color: var(--light-grey);
 }
-.red {
+
+/* Scrollbar styles */
+/* TODO PICK SCROLLBAR COLORS */
+/* Works on Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-color) var(--secondary-color);
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--primary-color);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--secondary-color);
+  border-radius: 20px;
+}
+
+.rm-primary-color {
+  color: var(--primary-color);
+}
+.rm-secondary-color {
+  color: var(--secondary-color);
+}
+.rm-dark-grey {
+  color: var(--dark-grey);
+}
+.rm-med-dark-grey {
+  color: var(--med-dark-grey);
+}
+.rm-med-grey {
+  color: var(--med-grey);
+}
+.rm-light-grey {
+  color: var(--light-grey);
+}
+.rm-red {
   color: var(--red);
 }
-.green {
+.rm-green {
   color: var(--green);
 }
-.blue {
+.rm-blue {
   color: var(--blue);
 }
-.white {
+.rm-white {
   color: var(--white);
 }
-.black {
+.rm-black {
   color: var(--black);
 }
 
 /* Font size */
-.xl-font {
+.rm-xl-font {
   font-size: 2rem;
 }
-.lg-font {
+.rm-lg-font {
   font-size: 1.25rem;
 }
-.md-font {
+.rm-md-font {
   font-size: 1rem;
 }
-.sm-font {
+.rm-sm-font {
   font-size: 0.875rem;
 }
-.xs-font {
+.rm-xs-font {
   font-size: 0.625rem;
 }
 
@@ -79,4 +109,33 @@
   width: 75%;
   height: 40px;
   margin-right: 200px;
+}
+.rm-curser-pointer {
+  cursor: pointer;
+}
+
+.rm-horizontal-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
+/* Profile */
+#rm-profile-picture {
+  width: 25vw;
+  height: 25vw;
+}
+
+.rm-private-both {
+  color: magenta; /* temporary, just for skeleton modeling */
+}
+
+.rm-private-seller {
+  color: red; /* temporary, just for skeleton modeling */
+}
+
+.rm-private-buyer {
+  color: blue; /* temporary, just for skeleton modeling */
 }

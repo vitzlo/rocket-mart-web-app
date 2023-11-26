@@ -12,18 +12,13 @@ function App() {
     <HashRouter>
       <div>
         <NavigationBar />
-
         <Routes>
           <Route path="/" element={<Navigate to="/home" />} />
-
           <Route path="/home" element={<Home />} />
-
           {/* use the URL */}
           <Route path="/profile/*" element={<Profile />} />
-
           {/* needs to take a parameter, or use the URL */}
           <Route path="/results/*" element={<SearchResults />} />
-
           {/* needs to take a parameter, or use the URL */}
           <Route path="/details/*" element={<LargePokemon />} />
         </Routes>

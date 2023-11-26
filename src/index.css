@@ -63,3 +63,20 @@
 .xs-font {
   font-size: 0.625rem;
 }
+
+/* Nav Bar Styles */
+.rm-nav {
+  max-width:100%;
+  height:80px;
+  position: sticky;
+  top: 0rem;
+  padding-left: 40px !important;
+  margin: 0px !important;
+}
+
+.rm-search {
+  border-radius: 20px;
+  width: 75%;
+  height: 40px;
+  margin-right: 200px;
+}

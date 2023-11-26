@@ -1,24 +1,27 @@
+import React, { useState } from "react";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-// import Container from "react-bootstrap/Container";
-import "./../index.css";
-import React, { useState } from "react";
 
 function NavigationBar() {
   const [searchInput, setSearchInput] = useState("");
+  const handleSearch = (e) => {
+    e.preventDefault();
+    setSearchInput(e.target.value);
+  };
   return (
-    <Navbar className="rm-nav" bg="dark" data-bs-theme="dark">
-      {/* <Container className="mx-4"> */}
-        <Navbar.Brand className="" href="#home">Rocket Mart</Navbar.Brand>
+    <Navbar className="rm-nav" data-bs-theme="dark">
+      <Navbar.Brand className="" href="#home">
+        Rocket Mart
+      </Navbar.Brand>
 
-        <input
-          className="rm-search"
-          type="search"
-          placeholder="Find your next pokemon"
-          // onChange={handleChange}
-          value={searchInput}
-        />
-      {/* </Container> */}
+      <input
+        className="rm-search"
+        type="search"
+        placeholder="Find your next pokemon"
+        onChange={handleSearch}
+        value={searchInput}
+      />
+
       <Nav className="ms-5 float-end">
         <Nav.Link href="#profile">
           <img

@@ -153,6 +153,7 @@ body {
   margin: 12px;
   margin-top: 80px;
   padding: 6px;
+  cursor: pointer;
 }
 .rm-small-pokemon .rm-pokemon-name-container {
   position: absolute;

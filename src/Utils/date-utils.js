@@ -14,6 +14,12 @@ const months = [
 ];
 
 // [0, 11]
-export const getMonthName = (index) => {
+const getMonthName = (index) => {
   return months[index];
+};
+
+export const getDateString = (date) => {
+  return `${getMonthName(
+    date.getMonth()
+  )} ${date.getDate()}, ${date.getFullYear()}`;
 };

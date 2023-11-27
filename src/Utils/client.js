@@ -27,7 +27,11 @@ const pruneSprites = (spritesData) => {
   return prunedData;
 };
 
-const prunePokemon = (pokemonData) => {
+/////////////
+// EXPORTS //
+/////////////
+
+export const prunePokemon = (pokemonData) => {
   const prunedData = {};
   prunedData.id = pokemonData.id;
   prunedData.name = pokemonData.name;
@@ -39,16 +43,19 @@ const prunePokemon = (pokemonData) => {
   return prunedData;
 };
 
-/////////////
-// EXPORTS //
-/////////////
-
 export const findPokemon = async (name) => {
   const response = await axios.get(`${API_BASE}/pokemon/${name}`);
   if (!response.data) {
     return undefined;
   }
+  return prunePokemon(response.data);
+};
 
+export const findPokemonById = async (id) => {
+  const response = await axios.get(`${API_BASE}/pokemon/${id}`);
+  if (!response.data) {
+    return undefined;
+  }
   return prunePokemon(response.data);
 };
 

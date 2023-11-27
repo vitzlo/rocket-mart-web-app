@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
+import SignIn from "../SignIn";
+import Button from "react-bootstrap/Button";
 
 function NavigationBar() {
   const [searchInput, setSearchInput] = useState("");
@@ -8,6 +10,7 @@ function NavigationBar() {
     e.preventDefault();
     setSearchInput(e.target.value);
   };
+  const [modalShow, setModalShow] = React.useState(false);
   return (
     <Navbar className="rm-nav" data-bs-theme="dark">
       <Navbar.Brand className="" href="#home">
@@ -21,7 +24,11 @@ function NavigationBar() {
         onChange={handleSearch}
         value={searchInput}
       />
+      <Button variant="primary" className="text-nowrap" onClick={() => setModalShow(true)}>
+        Sign in
+      </Button>
 
+      <SignIn show={modalShow} onHide={() => setModalShow(false)} />
       <Nav className="ms-5 float-end">
         <Nav.Link href="#profile">
           <img

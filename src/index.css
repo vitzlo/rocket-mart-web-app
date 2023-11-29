@@ -188,6 +188,13 @@ body {
   width: 90%;
   aspect-ratio: 1/1;
   border-radius: 5%;
+  transition: all 0.25s ease-in-out;
+}
+
+/* hover animation */
+.rm-small-pokemon:hover .rm-pokemon-image {
+  bottom: 15%;
+  transition: all 0.25s ease-in-out;
 }
 
 /* large pokemon view */

@@ -47,7 +47,9 @@ function LargePokemon() {
     <div className="container-fluid rm-large-pokemon">
       {pokemon && (
         <div>
-          <div className="rm-pokemon-name text-nowrap">{pokemon.name}</div>
+          <div className="rm-pokemon-name text-nowrap">
+            {pokemon.name.replaceAll("-", " ")}
+          </div>
           <div className="row flex-nowrap">
             <div className="col-auto">
               <img

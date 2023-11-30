@@ -29,7 +29,7 @@ function SearchResults() {
           <div className="text-center">
             <h1>Loading...</h1>
             <img
-              src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia.giphy.com%2Fmedia%2FS0dlRVeqjpoTC%2Fgiphy.gif&f=1&nofb=1&ipt=1fcd67f50a18eb323cb536b60a98d4543333c563cdea04fae3c1a499bbb24f4e&ipo=images"
+              src="https://media.giphy.com/media/S0dlRVeqjpoTC/giphy.gif"
               alt="loading"
               className="w-50"
             />
@@ -38,7 +38,7 @@ function SearchResults() {
           <div className="text-center">
             <h1>Sorry... theres no pokemon named {search.replace("-", " ")}</h1>
             <img
-              src="https://i0.wp.com/media1.giphy.com/media/dJYoOVAWf2QkU/giphy.gif?resize=640%2C640&ssl=1&crop=1"
+              src="https://media.giphy.com/media/12Bpme5pTzGmg8/giphy.gif"
               alt="no results"
               className="w-50"
             />

@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import SignIn from "../SignIn";
 import Button from "react-bootstrap/Button";
+import SignIn from "../SignIn";
 
 function NavigationBar() {
   const [searchInput, setSearchInput] = useState("");
+  const [modalShow, setModalShow] = useState(false);
   const handleSearch = (e) => {
     e.preventDefault();
     setSearchInput(e.target.value);
   };
-  const [modalShow, setModalShow] = React.useState(false);
   return (
     <Navbar className="rm-nav" data-bs-theme="dark">
       <Navbar.Brand className="" href="#home">

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { getMonthName } from "../Utils/date-utils";
+import { getDateString } from "../Utils/date-utils";
 import "../index.css";
 
 function Profile() {
@@ -100,10 +100,7 @@ function Profile() {
           <div>Email: xie.br@northeastern.edu</div>
           <div>Phone: 800-588-2300</div>
         </div>
-        <div>
-          Joined {getMonthName(joinDate.getMonth())} {joinDate.getDate()},{" "}
-          {joinDate.getFullYear()}
-        </div>
+        <div>Joined {getDateString(joinDate)}</div>
       </div>
       <div className="col-6 col-sm-6">
         <h1 className="rm-private-buyer">[BUYER] Purchased Pokémon</h1>

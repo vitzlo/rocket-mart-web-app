@@ -1,15 +1,22 @@
 import React, { useState } from "react";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
+import { useNavigate } from "react-router";
 import Button from "react-bootstrap/Button";
 import SignIn from "../SignIn";
 
 function NavigationBar() {
   const [searchInput, setSearchInput] = useState("");
   const [modalShow, setModalShow] = useState(false);
+  const navigate = useNavigate();
   const handleSearch = (e) => {
     e.preventDefault();
     setSearchInput(e.target.value);
+  };
+  const handleEnter = (e) => {
+    if (e.key === "Enter") {
+      navigate(`/results/${searchInput.replaceAll(" ", "-")}`);
+    }
   };
   return (
     <Navbar className="rm-nav" data-bs-theme="dark">
@@ -18,10 +25,11 @@ function NavigationBar() {
       </Navbar.Brand>
 
       <input
-        className="rm-search"
+        className="rm-search px-3"
         type="search"
         placeholder="Find your next pokemon"
         onChange={handleSearch}
+        onKeyUp={handleEnter}
         value={searchInput}
       />
       <Button variant="primary" className="text-nowrap" onClick={() => setModalShow(true)}>

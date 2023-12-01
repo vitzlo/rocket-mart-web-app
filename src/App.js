@@ -14,13 +14,13 @@ function App() {
         <NavigationBar />
         <Routes>
           <Route path="/" element={<Navigate to="/home" />} />
-          <Route path="/home" element={<Home />} />
+          <Route path="home" element={<Home />} />
           {/* use the URL */}
-          <Route path="/profile/*" element={<Profile />} />
+          <Route path="profile/*" element={<Profile />} />
           {/* needs to take a parameter, or use the URL */}
-          <Route path="/results/*" element={<SearchResults />} />
+          <Route path="results/:search/*" element={<SearchResults />} />
           {/* needs to take a parameter, or use the URL */}
-          <Route path="/details/*" element={<LargePokemon />} />
+          <Route path="pokemon/:pokemonId/*" element={<LargePokemon />} />
         </Routes>
       </div>
     </HashRouter>

@@ -2,34 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { findPokemonById } from "../../Utils/client";
 import Listing from "./listing";
+import { findTransactionsForPokeon } from "../../Utils/Transactions/client";
 
 function LargePokemon() {
   const [pokemon, setPokemon] = useState(undefined);
+  const [listedPokemon, setListedPokemon] = useState([]);
   const { pokemonId } = useParams();
-
-  const listedPokemon = [
-    {
-      listingId: 120,
-      timeOfListing: new Date(2023, 11, 17, 19, 33),
-      sellerId: 491,
-      cost: 100,
-      pokemon: {
-        // any other fields that might be useful to display here?
-        height: 5,
-        weight: 940,
-      },
-    },
-    {
-      listingId: 231,
-      timeOfListing: new Date(2022, 4, 5, 19, 34),
-      sellerId: 321,
-      cost: 90,
-      pokemon: {
-        height: 3.6,
-        weight: 800,
-      },
-    },
-  ];
 
   // TODOS:
   // maybe add evolution chain as data shown?
@@ -40,6 +18,9 @@ function LargePokemon() {
     const setPokemonByID = async (id) => {
       const poke = await findPokemonById(id);
       setPokemon(poke);
+      // sets the transactions for pokemon
+      const listed = await findTransactionsForPokeon(id);
+      setListedPokemon(listed);
     };
     setPokemonByID(pokemonId);
   }, [pokemonId, setPokemon]);
@@ -68,6 +49,8 @@ function LargePokemon() {
               </div>
               {/* any other fields we want to list here??? maybe evolution tree*/}
             </div>
+            {/* change this condition to show something else */}
+            {!listedPokemon.length && <h1>NO POKEMON LISTED</h1>}
             <div className="col">
               {listedPokemon.map((listing) => (
                 <Listing key={listing.listingId} listing={listing} />

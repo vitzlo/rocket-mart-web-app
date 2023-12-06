@@ -1,7 +1,6 @@
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import React, { useState } from "react";
-import {useNavigate} from "react-router";
 
 function SignIn(props) {
   const [isNewUser, setIsNewUser] = useState(false);
@@ -9,7 +8,6 @@ function SignIn(props) {
     username: "",
     password: "",
   });
-  const navigate = useNavigate();
   return (
     <Modal
       {...props}
@@ -33,13 +31,16 @@ function SignIn(props) {
             onChange={(e) =>
               setCredentials({ ...credentials, username: e.target.value })
             }
-          /> <br />
+          />{" "}
+          <br />
           <label>Password</label> <br />
           <input
             type="text"
             placeholder="Password"
             value={credentials.password}
-            onChange={(e) => setCredentials({...credentials, password: e.target.value})}
+            onChange={(e) =>
+              setCredentials({ ...credentials, password: e.target.value })
+            }
           />
         </div>
 

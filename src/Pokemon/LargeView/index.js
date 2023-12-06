@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { findPokemonById } from "../../Utils/client";
 import Listing from "./listing";
-import { findTransactionsForPokeon } from "../../Utils/Transactions/client";
+import { findTransactionsForPokemon } from "../../Utils/Transactions/client";
 
 function LargePokemon() {
   const [pokemon, setPokemon] = useState(undefined);
@@ -19,7 +19,7 @@ function LargePokemon() {
       const poke = await findPokemonById(id);
       setPokemon(poke);
       // sets the transactions for pokemon
-      const listed = await findTransactionsForPokeon(id);
+      const listed = await findTransactionsForPokemon(id);
       setListedPokemon(listed);
     };
     setPokemonByID(pokemonId);

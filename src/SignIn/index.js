@@ -31,7 +31,7 @@ function SignIn(props) {
             onChange={(e) =>
               setCredentials({ ...credentials, username: e.target.value })
             }
-          />{" "}
+          />
           <br />
           <label>Password</label> <br />
           <input
@@ -61,8 +61,6 @@ function SignIn(props) {
           No account? Create one
         </div>
       </Modal.Body>
-      {/* <Modal.Footer> */}
-      {/* </Modal.Footer> */}
     </Modal>
   );
 }

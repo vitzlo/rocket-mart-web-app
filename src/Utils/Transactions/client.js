@@ -24,7 +24,7 @@ const pruneTransaction = (transactionsData) => {
 /////////////
 
 // GET: list of transactions for a given Pokemon by id
-export const findTransactionsForPokeon = async (pokemonId) => {
+export const findTransactionsForPokemon = async (pokemonId) => {
   const response = await axios.get(
     `${API_BASE}/api/transactions/pokemon/${pokemonId}`
   );

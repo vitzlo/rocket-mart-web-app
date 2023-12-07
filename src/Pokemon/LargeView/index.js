@@ -49,9 +49,9 @@ function LargePokemon() {
               </div>
               {/* any other fields we want to list here??? maybe evolution tree*/}
             </div>
-            {/* change this condition to show something else */}
-            {!listedPokemon.length && <h1>NO POKEMON LISTED</h1>}
             <div className="col">
+              {/* change this condition to show something else */}
+              {!listedPokemon.length && <h1>NO POKEMON LISTED</h1>}
               {listedPokemon.map((listing) => (
                 <Listing key={listing.listingId} listing={listing} />
               ))}

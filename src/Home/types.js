@@ -21,7 +21,7 @@ const Types = () => {
   return (
     <div className="text-center m-2">
       <h2>Search by Types</h2>
-      <div className="row flex-nowrap rm-horizontal-scroll mx-4">
+      <div className="row mx-4">
         {types.map((type) => (
           <div
             key={type.name}

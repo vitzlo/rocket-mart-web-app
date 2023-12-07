@@ -2,14 +2,14 @@ import React from "react";
 import { Button } from "react-bootstrap";
 import { getDateString } from "../../Utils/date-utils";
 
-const Listing = ({ listing }) => {
+const Listing = ({ listing, isSold }) => {
   const purchase = () => {
     console.log("purchased listing: ", listing.listingId);
   };
 
   return (
-    // only render if the pokemon is not already sold
-    !listing.buyerId && (
+    // enforce whether we want to display a sold or unsold listing
+    (!listing.buyerId ^ isSold) && (
       <div className="rm-listing">
         <h3>LISTING</h3>
         <p>listed on: {getDateString(listing.timeOfListing)}</p>

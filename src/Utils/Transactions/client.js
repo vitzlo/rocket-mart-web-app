@@ -33,3 +33,14 @@ export const findTransactionsForPokemon = async (pokemonId) => {
   }
   return response.data.map(pruneTransaction);
 };
+
+// GET: list of transactions that also satisfy the given criteria
+export const findFilteredTransactions = async (pruner) => {
+  const response = await axios.get(
+    `${API_BASE}/api/transactions`
+  );
+  if (!response.data) {
+    return [];
+  }
+  return response.data.map(pruneTransaction).filter(pruner);
+};

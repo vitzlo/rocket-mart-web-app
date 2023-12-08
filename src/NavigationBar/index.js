@@ -3,7 +3,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { useNavigate } from "react-router";
 import Button from "react-bootstrap/Button";
-import SignIn from "../SignIn";
+import User from "../SignIn";
 
 function NavigationBar() {
   const [searchInput, setSearchInput] = useState("");
@@ -36,7 +36,7 @@ function NavigationBar() {
         Sign in
       </Button>
 
-      <SignIn show={modalShow} onHide={() => setModalShow(false)} />
+      <User show={modalShow} onHide={() => setModalShow(false)} />
       <Nav className="ms-5 float-end">
         <Nav.Link href="#profile">
           <img

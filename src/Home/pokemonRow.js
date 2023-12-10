@@ -13,7 +13,7 @@ const PokemonRow = ({ category, pokemonList }) => {
     });
     // check if we can scroll left or right
     const scrollLeft = row.scrollLeft + amount;
-    const maxScroll = row.scrollWidth - row.clientWidth;
+    const maxScroll = row.scrollWidth - row.clientWidth + 1;
     setHasLeftScroll(scrollLeft > 0);
     setHasRightScroll(scrollLeft < maxScroll);
   };
@@ -29,7 +29,6 @@ const PokemonRow = ({ category, pokemonList }) => {
             </div>
           ))}
           <button
-            disabled={!hasLeftScroll}
             className="rm-carousel-button"
             style={{ left: "2%" }}
             onClick={() => scrollRow(-400)}
@@ -37,7 +36,6 @@ const PokemonRow = ({ category, pokemonList }) => {
             <IoIosArrowBack />
           </button>
           <button
-            disabled={!hasRightScroll}
             className="rm-carousel-button"
             style={{ right: "2%" }}
             onClick={() => scrollRow(400)}

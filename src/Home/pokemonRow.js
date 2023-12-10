@@ -1,14 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import SmallPokemon from "../Pokemon/SmallView";
 
 const PokemonRow = ({ category, pokemonList }) => {
+  const [hasLeftScroll, setHasLeftScroll] = useState(false);
+  const [hasRightScroll, setHasRightScroll] = useState(true);
   const scrollRow = (amount) => {
     const row = document.getElementById(category);
     row.scroll({
       left: row.scrollLeft + amount,
       behavior: "smooth",
     });
+    // check if we can scroll left or right
+    const scrollLeft = row.scrollLeft + amount;
+    const maxScroll = row.scrollWidth - row.clientWidth;
+    setHasLeftScroll(scrollLeft > 0);
+    setHasRightScroll(scrollLeft < maxScroll);
   };
 
   return (
@@ -22,16 +29,18 @@ const PokemonRow = ({ category, pokemonList }) => {
             </div>
           ))}
           <button
+            disabled={!hasLeftScroll}
             className="rm-carousel-button"
             style={{ left: "2%" }}
-            onClick={() => scrollRow(-300)}
+            onClick={() => scrollRow(-400)}
           >
             <IoIosArrowBack />
           </button>
           <button
+            disabled={!hasRightScroll}
             className="rm-carousel-button"
             style={{ right: "2%" }}
-            onClick={() => scrollRow(300)}
+            onClick={() => scrollRow(400)}
           >
             <IoIosArrowForward />
           </button>

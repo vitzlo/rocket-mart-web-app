@@ -148,6 +148,10 @@ body {
   top: 50%;
 }
 
+.rm-carousel-button:disabled {
+  opacity: 1;
+}
+
 /* Profile */
 #rm-profile-picture {
   width: 25vw;

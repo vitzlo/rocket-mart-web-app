@@ -1,21 +1,17 @@
 import React, { useEffect, useState } from "react";
 import Types from "./types";
 import PokemonRow from "./pokemonRow";
-import axios from "axios";
 
 const Home = () => {
-  const API_BASE = "https://pokeapi.co/api/v2";
-  // temp data, just thought fetching from API would be easier than adding manual pokemon
   const [popularPokemon, setPopularPokemon] = useState([]);
   const [recentPokemon, setRecentPokemon] = useState([]);
 
-  // gets 5 random pokemon from the API for now
+  // gets 1- random pokemon from the API for now
   const fetchPokemon = async () => {
     const pokemonList = [];
     for (let i = 0; i < 10; i++) {
       const pokemon = Math.floor(Math.random() * 1000) + 1;
-      const response = await axios.get(`${API_BASE}/pokemon/${pokemon}`);
-      pokemonList.push(response.data);
+      pokemonList.push(pokemon);
     }
     setPopularPokemon(pokemonList);
   };
@@ -23,8 +19,7 @@ const Home = () => {
     const recentPokemon = [];
     for (let i = 0; i < 10; i++) {
       const pokemon = Math.floor(Math.random() * 500);
-      const response = await axios.get(`${API_BASE}/pokemon/${pokemon}`);
-      recentPokemon.push(response.data);
+      recentPokemon.push(pokemon);
     }
     setRecentPokemon(recentPokemon);
   };

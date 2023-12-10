@@ -20,9 +20,9 @@ function SearchResults() {
     <div className="container-fluid">
       <div className="row">
         {searchResults.length > 0 ? (
-          searchResults.map((pokemon, index) => (
+          searchResults.map((pokemonId, index) => (
             <div className="col-auto">
-              <SmallPokemon key={index} pokemonName={pokemon} />
+              <SmallPokemon key={index} pokemonId={pokemonId} />
             </div>
           ))
         ) : loading ? (

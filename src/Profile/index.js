@@ -4,7 +4,7 @@ import "../index.css";
 import { useEffect, useState } from "react";
 import { findUserById } from "../Utils/Users/client";
 import { findFilteredTransactions } from "../Utils/Transactions/client";
-import Listing from "../Pokemon/LargeView/listing";
+import SmallPokemon from "../Pokemon/SmallView";
 
 function Profile() {
   const [user, setUser] = useState();
@@ -22,8 +22,8 @@ function Profile() {
     setUser(undefined);
 
     // TODO: current user that is logged in
-    // "656df74b113db7c889459d0c" / "656df74b113db7c889459d0d"
-    findUserById("656df74b113db7c889459d0c").then((result) => {
+    // "656df74b113db7c889459d0c" / "656df74b113db7c889459d0d" / "656df74b113db7c889459d0e"
+    findUserById("656df74b113db7c889459d0d").then((result) => {
       setUser(result);
     });
   }, []);
@@ -50,44 +50,49 @@ function Profile() {
   }, [user]);
 
   return (
-    <div className="row">
-      <div className="col-6 col-sm-6">
-        <img
-          src="https://www.svgrepo.com/show/135058/circle-outline.svg"
-          alt="pfp icon"
-          id="rm-profile-picture"
-        />
-        <div>{user && `@${user.username} | ${user.region}`}</div>
-        <div className="rm-private-both">
-          <div>{user && user.email}</div>
+    <div className="container-fluid">
+      <div className="row mx-2">
+        <div className="col-auto">
+          <img
+            src={
+              (user && user.pfp) ||
+              "https://www.svgrepo.com/show/135058/circle-outline.svg"
+            }
+            alt="pfp icon"
+            id="rm-profile-picture"
+          />
+          <div>{user && `@${user.username} | ${user.region}`}</div>
+          <div className="rm-private-both">
+            <div>{user && user.email}</div>
+          </div>
+          <div>{user && `Joined ${getDateString(user.signUpDate)}`}</div>
         </div>
-        <div>{user && `Joined ${getDateString(user.signUpDate)}`}</div>
-      </div>
-      <div className="col-6 col-sm-6">
-        {user && user.type === "BUYER" && purchased && (
-          <div>
-            <h1 className="rm-private-buyer">[BUYER] Purchased Pokémon</h1>
-            {purchased.map((transaction) => (
-              <Listing listing={transaction} isSold={true} />
-            ))}
-          </div>
-        )}
-        {user && user.type === "SELLER" && listed && (
-          <div>
-            <h1 className="rm-private-seller">[SELLER] Listed Pokémon</h1>
-            {listed.map((transaction) => (
-              <Listing listing={transaction} isSold={false} />
-            ))}
-          </div>
-        )}
-        {user && user.type === "SELLER" && sold && (
-          <div>
-            <h1 className="rm-private-seller">[SELLER] Sold Pokémon</h1>
-            {sold.map((transaction) => (
-              <Listing listing={transaction} isSold={true} />
-            ))}
-          </div>
-        )}
+        <div className="col">
+          {user && user.type === "BUYER" && purchased && (
+            <div>
+              <h1 className="rm-private-buyer">[BUYER] Purchased Pokémon</h1>
+              {purchased.map((transaction) => (
+                <SmallPokemon pokemonId={transaction.pokemonId} />
+              ))}
+            </div>
+          )}
+          {user && user.type === "SELLER" && listed && (
+            <div>
+              <h1 className="rm-private-seller">[SELLER] Listed Pokémon</h1>
+              {listed.map((transaction) => (
+                <SmallPokemon pokemonId={transaction.pokemonId} />
+              ))}
+            </div>
+          )}
+          {user && user.type === "SELLER" && sold && (
+            <div>
+              <h1 className="rm-private-seller">[SELLER] Sold Pokémon</h1>
+              {sold.map((transaction) => (
+                <SmallPokemon pokemonId={transaction.pokemonId} />
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

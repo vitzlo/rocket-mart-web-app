@@ -16,6 +16,7 @@ const PokemonRow = ({ category, pokemonList }) => {
     const maxScroll = row.scrollWidth - row.clientWidth + 1;
     setHasLeftScroll(scrollLeft > 0);
     setHasRightScroll(scrollLeft < maxScroll);
+    console.log(hasLeftScroll, hasRightScroll)
   };
 
   return (

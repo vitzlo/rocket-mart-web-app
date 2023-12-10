@@ -1,6 +1,4 @@
-import { Link } from "react-router-dom";
 import { getDateString } from "../Utils/date-utils";
-import "../index.css";
 import { useEffect, useState } from "react";
 import { findUserById } from "../Utils/Users/client";
 import { findFilteredTransactions } from "../Utils/Transactions/client";

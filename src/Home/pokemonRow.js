@@ -1,4 +1,5 @@
 import React from "react";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import SmallPokemon from "../Pokemon/SmallView";
 
 const PokemonRow = ({ category, pokemonList }) => {
@@ -25,14 +26,14 @@ const PokemonRow = ({ category, pokemonList }) => {
             style={{ left: "2%" }}
             onClick={() => scrollRow(-300)}
           >
-            Left
+            <IoIosArrowBack />
           </button>
           <button
             className="rm-carousel-button"
             style={{ right: "2%" }}
             onClick={() => scrollRow(300)}
           >
-            Right
+            <IoIosArrowForward />
           </button>
         </div>
       </div>

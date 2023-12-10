@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { searchPokemonBySubstring } from "../Utils/client";
-import SmallPokemon from "../Pokemon/SmallView";
+import SmallPokemon from "../Pokemon/SmallView/smallPokemon";
 
 function SearchResults() {
   const [searchResults, setSearchResults] = useState([]);

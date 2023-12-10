@@ -1,8 +1,11 @@
 import { getDateString } from "../Utils/date-utils";
 import { useEffect, useState } from "react";
 import { findUserById } from "../Utils/Users/client";
-import { findFilteredTransactions } from "../Utils/Transactions/client";
-import SmallPokemon from "../Pokemon/SmallView";
+import {
+  findTransactionByBuyerId,
+  findTransactionBySellerId,
+} from "../Utils/Transactions/client";
+import SmallPokemon from "../Pokemon/SmallView/smallPokemon";
 
 function Profile() {
   const [user, setUser] = useState();
@@ -28,22 +31,14 @@ function Profile() {
 
   useEffect(() => {
     if (user) {
-      setPurchased([]);
-      setListed([]);
-      setSold([]);
-
-      const isPurchased = (transaction) => transaction.buyerId === user._id;
-      findFilteredTransactions(isPurchased).then((results) =>
+      findTransactionByBuyerId(user._id).then((results) =>
         setPurchased(results)
       );
 
-      const isListed = (transaction) =>
-        transaction.sellerId === user._id && !transaction.buyerId;
-      findFilteredTransactions(isListed).then((results) => setListed(results));
-
-      const isSold = (transaction) =>
-        transaction.sellerId === user._id && transaction.buyerId;
-      findFilteredTransactions(isSold).then((results) => setSold(results));
+      findTransactionBySellerId(user._id).then((results) => {
+        setSold(results.filter((transaction) => transaction.buyerId));
+        setListed(results.filter((transaction) => !transaction.buyerId));
+      });
     }
   }, [user]);
 

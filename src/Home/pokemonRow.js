@@ -1,5 +1,5 @@
 import React from "react";
-import SmallPokemon from "../Pokemon/SmallView";
+import SmallPokemon from "../Pokemon/SmallView/smallPokemon";
 const PokemonRow = ({ category, pokemonList }) => {
   return (
     <div className="text-center m-2">

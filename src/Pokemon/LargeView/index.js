@@ -20,7 +20,8 @@ function LargePokemon() {
       setPokemon(poke);
       // sets the transactions for pokemon
       const listed = await findTransactionsForPokemon(id);
-      setListedPokemon(listed);
+      // filter out sold pokemon
+      setListedPokemon(listed.filter((listing) => !listing.buyerId));
     };
     setPokemonByID(pokemonId);
   }, [pokemonId, setPokemon]);

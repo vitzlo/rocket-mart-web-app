@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import SignIn from "./signin";
 import SignUp from "./signup";
 
-function User({ onHide, setUser, ...props }) {
+function User({ setUser, ...props }) {
   const [isNewUser, setIsNewUser] = useState(true);
   return (
     <Modal
@@ -24,7 +24,7 @@ function User({ onHide, setUser, ...props }) {
       <Modal.Body className="container">
         {isNewUser ? (
           <div>
-            <SignIn onHide={onHide} setUser={setUser} />
+            <SignIn onHide={props.onHide} setUser={setUser} />
             <div
               className="text-center rm-curser-pointer"
               onClick={() => setIsNewUser(!isNewUser)}
@@ -34,7 +34,7 @@ function User({ onHide, setUser, ...props }) {
           </div>
         ) : (
           <div>
-            <SignUp onHide={onHide} setUser={setUser} />
+            <SignUp onHide={props.onHide} setUser={setUser} />
             <div
               className="text-center rm-curser-pointer"
               onClick={() => setIsNewUser(!isNewUser)}

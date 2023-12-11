@@ -74,7 +74,7 @@ function LargePokemon() {
               {listing &&
                 (listing.buyerId ? (
                   <div>
-                    <h1>Purchased Listing</h1>
+                    <h1>Sold Listing</h1>
                     <Listing listing={listing} />
                     <h1>Other Listings</h1>
                   </div>

@@ -18,6 +18,8 @@ body {
   background: var(--background-color);
   /* default text colors: change maybe? */
   color: var(--light-grey);
+  font-family: 'Rubik';
+
 }
 
 /* Scrollbar styles */
@@ -334,4 +336,59 @@ body {
 /* Sign in and Sign up modal */
 .rm-account-modal .modal-content {
   background-color: var(--dark-grey);
+  max-width: 450px;
+
+}
+
+.rm-modal-switch {
+  font-size: 0.9rem;
+}
+
+.rm-sign-user {
+  padding-left: 13%;
+  padding-right: 13%;
+}
+
+.rm-sign-user-title {
+  padding-left: 18%;
+  padding-right: 13%;
+}
+
+.rm-sign-user input{
+  padding: 8px;
+  margin-bottom: 20px;
+  border-radius: 6px;
+  border: 1px #989898;
+}
+.rm-sign-user label {
+  margin-bottom: 2px;
+  font-size: 14px;
+}
+
+.rm-sign-user button {
+  text-align: center !important;
+  margin-bottom: 5px;
+}
+
+.form-select {
+  margin-bottom: 20px;
+}
+
+.flex-container {
+  display: flex;
+  justify-content: center;
+}
+
+/* Button Styles */
+.btn-primary {
+  background-color: #EA6797;
+  border: none !important;
+}
+
+.btn-primary:hover {
+  background-color: #D34579;
+}
+
+.btn-secondary {
+
 }

@@ -11,10 +11,13 @@ export const signin = async (credentials) => {
   return response.data;
 };
 export const account = async () => {
-  console.log("wante account");
   const response = await request.post(`${USERS_API}/account`);
-  console.log(response);
-  return response.data;
+  
+  if (!response.data) {
+    return undefined;
+  }
+
+  return pruneUser(response.data);
 };
 export const updateUser = async (user) => {
   const response = await request.put(`${USERS_API}/${user._id}`, user);
@@ -33,9 +36,9 @@ export const deleteUser = async (user) => {
   return response.data;
 };
 export const signup = async (credentials) => {
-  console.log("attempting signup")
+  console.log("attempting signup");
   const response = await request.post(`${USERS_API}/signup`, credentials);
-  console.log("signedup", response)
+  console.log("signedup", response);
   return response.data;
 };
 export const signout = async () => {

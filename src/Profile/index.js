@@ -5,7 +5,7 @@ import {
   findTransactionByBuyerId,
   findTransactionBySellerId,
 } from "../Utils/Transactions/client";
-import SmallPokemon from "../Pokemon/SmallView/smallPokemon";
+import ProfileListing from "../Pokemon/SmallView/smallListing";
 
 function Profile() {
   const [user, setUser] = useState();
@@ -65,7 +65,10 @@ function Profile() {
             <div>
               <h1 className="rm-private-buyer">[BUYER] Purchased Pokémon</h1>
               {purchased.map((transaction) => (
-                <SmallPokemon pokemonId={transaction.pokemonId} />
+                <ProfileListing
+                  transactionId={transaction._id}
+                  key={transaction._id}
+                />
               ))}
             </div>
           )}
@@ -73,7 +76,10 @@ function Profile() {
             <div>
               <h1 className="rm-private-seller">[SELLER] Listed Pokémon</h1>
               {listed.map((transaction) => (
-                <SmallPokemon pokemonId={transaction.pokemonId} />
+                <ProfileListing
+                  transactionId={transaction._id}
+                  key={transaction._id}
+                />
               ))}
             </div>
           )}
@@ -81,7 +87,10 @@ function Profile() {
             <div>
               <h1 className="rm-private-seller">[SELLER] Sold Pokémon</h1>
               {sold.map((transaction) => (
-                <SmallPokemon pokemonId={transaction.pokemonId} />
+                <ProfileListing
+                  transactionId={transaction._id}
+                  key={transaction._id}
+                />
               ))}
             </div>
           )}

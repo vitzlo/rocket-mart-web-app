@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import Navbar from "react-bootstrap/Navbar";
 import { useNavigate } from "react-router-dom";
 import User from "../SignIn";
-import * as client from "../Utils/Users/client";
 
-function NavigationBar() {
+function NavigationBar({ user, setUser }) {
   const [searchInput, setSearchInput] = useState("");
   const [modalShow, setModalShow] = useState(false);
   const navigate = useNavigate();
@@ -17,14 +16,6 @@ function NavigationBar() {
       navigate(`/results/${searchInput.replaceAll(" ", "-")}`);
     }
   };
-
-  const [account, setAccount] = useState(null);
-  const fetchAccount = async () => {
-    const account = await client.account();
-    setAccount(account);
-  };
-
-  fetchAccount();
 
   return (
     <Navbar className="rm-nav" data-bs-theme="dark">
@@ -41,7 +32,7 @@ function NavigationBar() {
       />
       <div
         className="ms-5 float-end .rm-curser-pointer"
-        onClick={() => (!account ? setModalShow(true) : navigate("/profile"))}
+        onClick={() => (!user ? setModalShow(true) : navigate("/profile"))}
       >
         <img
           src="https://www.svgrepo.com/show/135058/circle-outline.svg"
@@ -50,7 +41,11 @@ function NavigationBar() {
           height="50px"
         />
       </div>
-      <User show={modalShow} onHide={() => setModalShow(false)} />
+      <User
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+        setUser={setUser}
+      />
     </Navbar>
   );
 }

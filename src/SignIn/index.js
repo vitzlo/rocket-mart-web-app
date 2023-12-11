@@ -3,8 +3,8 @@ import React, { useState } from "react";
 import SignIn from "./signin";
 import SignUp from "./signup";
 
-function User(props) {
-  const [isNewUser, setIsNewUser] = useState(false);
+function User({ onHide, setUser, ...props }) {
+  const [isNewUser, setIsNewUser] = useState(true);
   return (
     <Modal
       {...props}
@@ -13,18 +13,18 @@ function User(props) {
       centered
       className="rm-account-modal"
     >
-      <Modal.Header closeButton
-      closeVariant="white"
-      >
-        
-        <Modal.Title className="rm-sign-user-title"id="contained-modal-title-vcenter">
+      <Modal.Header closeButton closeVariant="white">
+        <Modal.Title
+          className="rm-sign-user-title"
+          id="contained-modal-title-vcenter"
+        >
           Welcome to Rocket Mart
         </Modal.Title>
       </Modal.Header>
       <Modal.Body className="container">
         {isNewUser ? (
           <div>
-            <SignIn onHide={props.onHide} />
+            <SignIn onHide={onHide} setUser={setUser} />
             <div
               className="text-center rm-curser-pointer"
               onClick={() => setIsNewUser(!isNewUser)}
@@ -34,7 +34,7 @@ function User(props) {
           </div>
         ) : (
           <div>
-            <SignUp onHide={props.onHide} />
+            <SignUp onHide={onHide} setUser={setUser} />
             <div
               className="text-center rm-curser-pointer"
               onClick={() => setIsNewUser(!isNewUser)}

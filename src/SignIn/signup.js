@@ -4,12 +4,14 @@ import { useNavigate } from "react-router-dom";
 import * as client from "../Utils/Users/client";
 import Form from "react-bootstrap/Form";
 
-function SignUp(props) {
+function SignUp({ onHide, setUser }) {
   const [error, setError] = useState("");
   const regions = ["Kalos", "Unova", "Kanto", "Johto", "Galar"];
   const signup = async () => {
     try {
-      await client.signup(credentials);
+      const response = await client.signup(credentials);
+      setUser(response.data);
+      onHide();
       navigate("/profile");
     } catch (err) {
       setError(err.response.data.message);
@@ -81,13 +83,7 @@ function SignUp(props) {
         </div>
       </div>
       <div className="text-center">
-        <Button
-          className="w-100"
-          onClick={() => {
-            signup();
-            props.onHide();
-          }}
-        >
+        <Button className="w-100" onClick={signup}>
           Create Account
         </Button>
       </div>

@@ -36,9 +36,7 @@ export const deleteUser = async (user) => {
   return response.data;
 };
 export const signup = async (credentials) => {
-  console.log("attempting signup");
   const response = await request.post(`${USERS_API}/signup`, credentials);
-  console.log("signedup", response);
   return response.data;
 };
 export const signout = async () => {

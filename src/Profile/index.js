@@ -9,7 +9,7 @@ import {
 import ProfileListing from "../Pokemon/SmallView/smallListing";
 import * as client from "../Utils/Users/client";
 
-function Profile() {
+function Profile({ user, setUser }) {
   const { id } = useParams();
   const [purchased, setPurchased] = useState();
   const [listed, setListed] = useState([]);
@@ -24,6 +24,7 @@ function Profile() {
   const signout = async () => {
     await client.signout();
     setAccount(null);
+    setUser(null);
     navigate("/home");
   };
 

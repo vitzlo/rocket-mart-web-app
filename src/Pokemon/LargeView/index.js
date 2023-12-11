@@ -12,7 +12,6 @@ function LargePokemon() {
   const [listing, setListing] = useState(undefined);
   const [listedPokemon, setListedPokemon] = useState([]);
   const { pokemonId, transactionId } = useParams();
-
   // TODOS:
   // maybe add evolution chain as data shown?
   // add a button to list the pokemon
@@ -72,19 +71,20 @@ function LargePokemon() {
               {/* any other fields we want to list here??? maybe evolution tree*/}
             </div>
             <div className="col">
-              {listing && listing.buyerId ? (
-                <div>
-                  <h1>Purchased Listing</h1>
-                  <Listing listing={listing} />
-                  <h1>Other Listings</h1>
-                </div>
-              ) : (
-                <div>
-                  <h1>Your Listing</h1>
-                  <Listing listing={listing} />
-                  <h1>Other Listings</h1>
-                </div>
-              )}
+              {listing &&
+                (listing.buyerId ? (
+                  <div>
+                    <h1>Purchased Listing</h1>
+                    <Listing listing={listing} />
+                    <h1>Other Listings</h1>
+                  </div>
+                ) : (
+                  <div>
+                    <h1>Your Listing</h1>
+                    <Listing listing={listing} />
+                    <h1>Other Listings</h1>
+                  </div>
+                ))}
               {/* change this condition to show something else */}
               {!listedPokemon.length && (
                 <h1>{listing ? "NO OTHER LISTINGS" : "NO LISTINGS"}</h1>

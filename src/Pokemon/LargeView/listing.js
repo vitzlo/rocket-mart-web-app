@@ -13,6 +13,13 @@ const Listing = ({ listing }) => {
       <p>listed on: {getDateString(listing.timeOfListing)}</p>
       {/* make this link to seller profile page? */}
       <p>by seller: {listing.sellerId}</p>
+      {listing.buyerId && (
+        <>
+          <p>purchased on: {getDateString(listing.timeOfPurchase)}</p>
+          <p>by buyer: {listing.buyerId}</p>
+        </>
+      )}
+      {/* make this link to buyer profile page? */}
       <h3>ABOUT</h3>
       <p>height: {listing.height}</p>
       <p>weight: {listing.weight}</p>
@@ -23,9 +30,11 @@ const Listing = ({ listing }) => {
         </div>
         <div className="col-auto">
           {/* TODO: override button styles */}
-          <Button onClick={purchase} variant="primary">
-            Purchase
-          </Button>
+          {!listing.buyerId && (
+            <Button onClick={purchase} variant="primary">
+              Purchase
+            </Button>
+          )}
         </div>
       </div>
     </div>

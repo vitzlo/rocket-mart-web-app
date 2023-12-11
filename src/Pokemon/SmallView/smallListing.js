@@ -11,17 +11,17 @@ const ProfileListing = ({ transactionId }) => {
   const navigate = useNavigate();
 
   const purchase = () => {
-    console.log("purchased listing: ", listing.listingId);
+    console.log("purchased listing: ", listing._id);
   };
 
   useEffect(() => {
     findTransactionById(transactionId).then((transaction) => {
-      setListing(transaction);
+  setListing(transaction);  
       findPokemonById(transaction.pokemonId).then((pok) => {
         setPokemon(pok);
       });
     });
-  }, [transactionId, listing]);
+  }, [transactionId]);
 
   return (
     listing &&
@@ -30,7 +30,7 @@ const ProfileListing = ({ transactionId }) => {
         className="rm-profile-listing"
         onClick={() => {
           // make this navigate to transaction page for pokemon?
-          navigate("/pokemon/" + listing.pokemonId);
+          navigate("/pokemon/transaction/" + transactionId);
         }}
       >
         <div className="row">
@@ -54,7 +54,9 @@ const ProfileListing = ({ transactionId }) => {
               <div className="col-auto">
                 {/* TODO: override button styles */}
                 {!listing.buyerId && (
-                  <Button onClick={purchase} variant="primary">
+                  <Button onClick={(e) => {
+                    e.stopPropagation();
+                    purchase()}} variant="primary">
                     Purchase
                   </Button>
                 )}

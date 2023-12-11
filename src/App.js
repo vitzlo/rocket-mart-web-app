@@ -21,6 +21,7 @@ function App() {
           <Route path="results/:search/*" element={<SearchResults />} />
           {/* needs to take a parameter, or use the URL */}
           <Route path="pokemon/:pokemonId/*" element={<LargePokemon />} />
+          <Route path="pokemon/transaction/:transactionId/*" element={<LargePokemon />} />
         </Routes>
       </div>
     </HashRouter>

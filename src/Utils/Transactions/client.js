@@ -23,6 +23,28 @@ const pruneTransaction = (transactionsData) => {
 // EXPORTS //
 /////////////
 
+// GET: list of transactions that the given user has listed
+export const findTransactionBySellerId = async (sellerId) => {
+  const response = await axios.get(
+    `${API_BASE}/api/transactions/seller/${sellerId}`
+  );
+  if (!response.data) {
+    return [];
+  }
+  return response.data.map(pruneTransaction);
+};
+
+// GET: list of transactions that the given user has purchased
+export const findTransactionByBuyerId = async (buyerId) => {
+  const response = await axios.get(
+    `${API_BASE}/api/transactions/buyer/${buyerId}`
+  );
+  if (!response.data) {
+    return [];
+  }
+  return response.data.map(pruneTransaction);
+};
+
 // GET: list of transactions for a given Pokemon by id
 export const findTransactionsForPokemon = async (pokemonId) => {
   const response = await axios.get(
@@ -34,13 +56,11 @@ export const findTransactionsForPokemon = async (pokemonId) => {
   return response.data.map(pruneTransaction);
 };
 
-// GET: list of transactions that also satisfy the given criteria
-export const findFilteredTransactions = async (pruner) => {
-  const response = await axios.get(
-    `${API_BASE}/api/transactions`
-  );
+// GET: transaction by id
+export const findTransactionById = async (id) => {
+  const response = await axios.get(`${API_BASE}/api/transactions/${id}`);
   if (!response.data) {
-    return [];
+    return undefined;
   }
-  return response.data.map(pruneTransaction).filter(pruner);
+  return pruneTransaction(response.data);
 };

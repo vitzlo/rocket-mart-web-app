@@ -176,6 +176,26 @@ body {
   color: blue; /* temporary, just for skeleton modeling */
 }
 
+/* Profile listing */
+.rm-profile-listing {
+  width: 50%;
+  background-color: var(--primary-color);
+  border-radius: 12px;
+  margin-bottom: 12px;
+  padding: 12px;
+}
+.rm-profile-listing p {
+  margin: 0;
+  padding: 0;
+}
+.rm-profile-listing .rm-listing-img {
+  scale: 1.5;
+  object-fit: none;
+  width: 60px;
+  height: 60px;
+}
+
+
 /* small pokemon */
 .rm-small-pokemon {
   position: relative;
@@ -353,11 +373,10 @@ body {
 }
 /* seller listing on large view */
 .rm-listing {
-  align-items: center;
   background-color: var(--primary-color);
   border-radius: 12px;
   margin-bottom: 12px;
-  padding: 6px;
+  padding: 12px;
 }
 .rm-listing p {
   margin: 0;

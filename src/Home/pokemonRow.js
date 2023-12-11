@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import SmallPokemon from "../Pokemon/SmallView";
+import SmallPokemon from "../Pokemon/SmallView/smallPokemon";
 
 const PokemonRow = ({ category, pokemonList }) => {
   const [hasLeftScroll, setHasLeftScroll] = useState(false);
@@ -16,7 +16,7 @@ const PokemonRow = ({ category, pokemonList }) => {
     const maxScroll = row.scrollWidth - row.clientWidth + 1;
     setHasLeftScroll(scrollLeft > 0);
     setHasRightScroll(scrollLeft < maxScroll);
-    console.log(hasLeftScroll, hasRightScroll)
+    console.log(hasLeftScroll, hasRightScroll);
   };
 
   return (
@@ -24,9 +24,9 @@ const PokemonRow = ({ category, pokemonList }) => {
       <h2 className="ms-5">{category}</h2>
       <div className="rm-carousel-container">
         <div className="row flex-nowrap rm-carousel" id={category}>
-          {pokemonList.map((pokemon) => (
+          {pokemonList.map((pokemon, index) => (
             <div className="col-auto rm-carousel-item">
-              <SmallPokemon key={pokemon.species.name} pokemon={pokemon} />
+              <SmallPokemon key={index} pokemonId={pokemon} />
             </div>
           ))}
           <button

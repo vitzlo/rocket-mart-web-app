@@ -1,10 +1,12 @@
-import { useParams, useNavigate} from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { getDateString } from "../Utils/date-utils";
-import "../index.css";
 import { useEffect, useState } from "react";
 import { findUserById } from "../Utils/Users/client";
-import { findFilteredTransactions } from "../Utils/Transactions/client";
-import Listing from "../Pokemon/LargeView/listing";
+import {
+  findTransactionByBuyerId,
+  findTransactionBySellerId,
+} from "../Utils/Transactions/client";
+import ProfileListing from "../Pokemon/SmallView/smallListing";
 import * as client from "../Utils/Users/client";
 
 function Profile() {
@@ -21,6 +23,7 @@ function Profile() {
   };
   const signout = async () => {
     await client.signout();
+    setAccount(null);
     navigate("/home");
   };
 
@@ -31,33 +34,28 @@ function Profile() {
       fetchAccount();
     }
   }, [id]);
+
   useEffect(() => {
     if (account) {
-      setPurchased([]);
-      setListed([]);
-      setSold([]);
-
-      const isPurchased = (transaction) => transaction.buyerId === account._id;
-      findFilteredTransactions(isPurchased).then((results) =>
+      findTransactionByBuyerId(account._id).then((results) =>
         setPurchased(results)
       );
-
-      const isListed = (transaction) =>
-        transaction.sellerId === account._id && !transaction.buyerId;
-      findFilteredTransactions(isListed).then((results) => setListed(results));
-
-      const isSold = (transaction) =>
-        transaction.sellerId === account._id && transaction.buyerId;
-      findFilteredTransactions(isSold).then((results) => setSold(results));
+      findTransactionBySellerId(account._id).then((results) => {
+        setSold(results.filter((transaction) => transaction.buyerId));
+        setListed(results.filter((transaction) => !transaction.buyerId));
+      });
     }
   }, [account]);
 
   return (
-    <div>
-      <div className="row">
-        <div className="col-6 col-sm-6">
+    <div className="container-fluid">
+      <div className="row mx-2">
+        <div className="col-auto">
           <img
-            src="https://www.svgrepo.com/show/135058/circle-outline.svg"
+            src={
+              (account && account.pfp) ||
+              "https://www.svgrepo.com/show/135058/circle-outline.svg"
+            }
             alt="pfp icon"
             id="rm-profile-picture"
           />
@@ -67,12 +65,15 @@ function Profile() {
           </div>
           <div>{account && `Joined ${getDateString(account.signUpDate)}`}</div>
         </div>
-        <div className="col-6 col-sm-6">
+        <div className="col">
           {account && account.type === "BUYER" && purchased && (
             <div>
               <h1 className="rm-private-buyer">[BUYER] Purchased Pokémon</h1>
               {purchased.map((transaction) => (
-                <Listing listing={transaction} isSold={true} />
+                <ProfileListing
+                  transactionId={transaction._id}
+                  key={transaction._id}
+                />
               ))}
             </div>
           )}
@@ -80,7 +81,10 @@ function Profile() {
             <div>
               <h1 className="rm-private-seller">[SELLER] Listed Pokémon</h1>
               {listed.map((transaction) => (
-                <Listing listing={transaction} isSold={false} />
+                <ProfileListing
+                  transactionId={transaction._id}
+                  key={transaction._id}
+                />
               ))}
             </div>
           )}
@@ -88,11 +92,14 @@ function Profile() {
             <div>
               <h1 className="rm-private-seller">[SELLER] Sold Pokémon</h1>
               {sold.map((transaction) => (
-                <Listing listing={transaction} isSold={true} />
+                <ProfileListing
+                  transactionId={transaction._id}
+                  key={transaction._id}
+                />
               ))}
             </div>
           )}
-                   <button className="btn w-100 btn-danger" onClick={signout}>
+          <button className="btn w-100 btn-danger" onClick={signout}>
             Sign out
           </button>
         </div>
@@ -100,4 +107,5 @@ function Profile() {
     </div>
   );
 }
+
 export default Profile;

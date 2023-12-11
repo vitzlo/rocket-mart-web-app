@@ -6,7 +6,7 @@ const Home = () => {
   const [popularPokemon, setPopularPokemon] = useState([]);
   const [recentPokemon, setRecentPokemon] = useState([]);
 
-  // gets 1- random pokemon from the API for now
+  // gets 10 random pokemon from the API for now
   const fetchPokemon = async () => {
     const pokemonList = [];
     for (let i = 0; i < 10; i++) {

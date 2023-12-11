@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as client from "../Utils/Users/client";
 
-function SignIn(props) {
+function SignIn({ onHide, setUser }) {
   const [credentials, setCredentials] = useState({
     username: "",
     password: "",
@@ -11,7 +11,9 @@ function SignIn(props) {
   });
   const navigate = useNavigate();
   const signin = async () => {
-    await client.signin(credentials);
+    const response = await client.signin(credentials);
+    setUser(response);
+    onHide();
     navigate("/profile");
   };
   return (
@@ -39,13 +41,7 @@ function SignIn(props) {
           }
         />
       </div>
-      <Button
-        className="w-100"
-        onClick={() => {
-          signin();
-          props.onHide();
-        }}
-      >
+      <Button className="w-100" onClick={signin}>
         Sign in
       </Button>
     </div>

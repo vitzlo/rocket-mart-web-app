@@ -36,7 +36,7 @@ function SearchResults() {
           </div>
         ) : (
           <div className="text-center">
-            <h1>Sorry... theres no pokemon named {search.replace("-", " ")}</h1>
+            <h1>Sorry... there's no pokemon named {search.replace("-", " ")}</h1>
             <img
               src="https://media.giphy.com/media/12Bpme5pTzGmg8/giphy.gif"
               alt="no results"

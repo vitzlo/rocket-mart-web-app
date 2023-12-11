@@ -1,7 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { getDateString } from "../Utils/date-utils";
 import { useEffect, useState } from "react";
-import { findUserById } from "../Utils/Users/client";
 import {
   findTransactionByBuyerId,
   findTransactionBySellerId,
@@ -10,17 +9,13 @@ import ProfileListing from "../Pokemon/SmallView/smallListing";
 import * as client from "../Utils/Users/client";
 
 function Profile({ user, setUser }) {
-  const { id } = useParams();
+  const { userId } = useParams();
   const [purchased, setPurchased] = useState();
   const [listed, setListed] = useState([]);
   const [sold, setSold] = useState([]);
   const [account, setAccount] = useState(null);
   const navigate = useNavigate();
 
-  const fetchAccount = async () => {
-    const user = await client.account();
-    setAccount(user);
-  };
   const signout = async () => {
     await client.signout();
     setAccount(null);
@@ -29,12 +24,12 @@ function Profile({ user, setUser }) {
   };
 
   useEffect(() => {
-    if (id) {
-      findUserById(id);
+    if (userId) {
+      client.findUserById(userId).then((data) => setAccount(data));
     } else {
-      fetchAccount();
+      setAccount(user);
     }
-  }, [id]);
+  }, [userId, user]);
 
   useEffect(() => {
     if (account) {

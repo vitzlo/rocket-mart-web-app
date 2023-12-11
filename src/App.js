@@ -19,15 +19,19 @@ function App() {
           <Route path="home" element={<Home />} />
           {/* use the URL */}
           <Route
-            path="profile/*"
+            path="profile"
+            element={<Profile user={user} setUser={setUser} />}
+          />
+          <Route
+            path="profile/:userId"
             element={<Profile user={user} setUser={setUser} />}
           />
           {/* needs to take a parameter, or use the URL */}
-          <Route path="results/:search/*" element={<SearchResults />} />
+          <Route path="results/:search" element={<SearchResults />} />
           {/* needs to take a parameter, or use the URL */}
-          <Route path="pokemon/:pokemonId/*" element={<LargePokemon />} />
+          <Route path="pokemon/:pokemonId" element={<LargePokemon />} />
           <Route
-            path="pokemon/transaction/:transactionId/*"
+            path="pokemon/transaction/:transactionId"
             element={<LargePokemon />}
           />
         </Routes>

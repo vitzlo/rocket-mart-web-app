@@ -96,6 +96,10 @@ body {
   font-size: 0.625rem;
 }
 
+.rm-curser-pointer {
+  cursor: pointer;
+}
+
 /* Nav Bar Styles */
 .rm-nav {
   max-width: 100%;
@@ -115,16 +119,43 @@ body {
   height: 40px;
   margin-right: 200px;
 }
-.rm-curser-pointer {
-  cursor: pointer;
+
+/* Carousel styles */
+.rm-carousel-container {
+  position: relative;
+  border-left: 2vw solid var(--background-color);
+  border-right: 2vw solid var(--background-color);
 }
 
-.rm-horizontal-scroll {
-  overflow-x: auto;
+.rm-carousel {
+  overflow-x: hidden;
   overflow-y: hidden;
   white-space: nowrap;
   -webkit-overflow-scrolling: touch;
   -ms-overflow-style: -ms-autohiding-scrollbar;
+  scroll-snap-type: x mandatory;
+}
+
+.rm-carousel-item {
+  scroll-snap-align: start;
+}
+
+.rm-carousel-button {
+  background-color: var(--white);
+  position: absolute;
+  width: fit-content;
+  aspect-ratio: 1/1;
+  border: none;
+  border-radius: 50%;
+  top: 50%;
+}
+
+.rm-carousel-button:hover {
+  background-color: var(--light-grey);
+}
+
+.rm-carousel-button:disabled {
+  opacity: 1;
 }
 
 /* Profile */
@@ -337,7 +368,6 @@ body {
 .rm-account-modal .modal-content {
   background-color: var(--dark-grey);
   max-width: 450px;
-
 }
 
 .rm-modal-switch {
@@ -387,8 +417,4 @@ body {
 
 .btn-primary:hover {
   background-color: #D34579;
-}
-
-.btn-secondary {
-
 }

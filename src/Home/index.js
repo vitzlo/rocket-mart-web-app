@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 import Types from "./types";
 import PokemonRow from "./pokemonRow";
 
-const Home = () => {
+const Home = ({ user }) => {
   const [popularPokemon, setPopularPokemon] = useState([]);
-  const [recentPokemon, setRecentPokemon] = useState([]);
 
   // gets 10 random pokemon from the API for now
   const fetchPokemon = async () => {
@@ -15,18 +14,9 @@ const Home = () => {
     }
     setPopularPokemon(pokemonList);
   };
-  const fetchRecentPokemon = async () => {
-    const recentPokemon = [];
-    for (let i = 0; i < 10; i++) {
-      const pokemon = Math.floor(Math.random() * 500);
-      recentPokemon.push(pokemon);
-    }
-    setRecentPokemon(recentPokemon);
-  };
 
   useEffect(() => {
     fetchPokemon();
-    fetchRecentPokemon();
   }, []);
 
   return (
@@ -40,12 +30,14 @@ const Home = () => {
       <div className="my-4">
         <PokemonRow category="Popular Pokemon!" pokemonList={popularPokemon} />
       </div>
-      <div className="my-4">
-        <PokemonRow
-          category="Last Searched Pokemon!"
-          pokemonList={recentPokemon}
-        />
-      </div>
+      {user && (
+        <div className="my-4">
+          <PokemonRow
+            category="Last Searched Pokemon!"
+            pokemonList={user.recentlyViewed.slice(0).reverse()}
+          />
+        </div>
+      )}
     </div>
   );
 };

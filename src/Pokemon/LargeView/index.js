@@ -6,8 +6,9 @@ import {
   findTransactionById,
   findTransactionsForPokemon,
 } from "../../Utils/Transactions/client";
+import { updateRecentlyViewed } from "../../Utils/Users/client";
 
-function LargePokemon() {
+function LargePokemon({ setUser }) {
   const [pokemon, setPokemon] = useState(undefined);
   const [listing, setListing] = useState(undefined);
   const [listedPokemon, setListedPokemon] = useState([]);
@@ -21,6 +22,7 @@ function LargePokemon() {
     const setPokemonByID = async (id) => {
       const poke = await findPokemonById(id);
       setPokemon(poke);
+      setUser(await updateRecentlyViewed(id));
       // sets the transactions for pokemon
       const listed = await findTransactionsForPokemon(id);
       // filter out sold pokemon
@@ -43,7 +45,7 @@ function LargePokemon() {
     } else {
       setPokemonByID(pokemonId);
     }
-  }, [pokemonId, transactionId]);
+  }, [pokemonId, transactionId, setUser]);
 
   return (
     <div className="container-fluid rm-large-pokemon">
@@ -99,4 +101,5 @@ function LargePokemon() {
     </div>
   );
 }
+
 export default LargePokemon;

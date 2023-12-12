@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Badge from "../Pokemon/LargeView/Types/pokemonTypeBadge";
 
 const Types = () => {
   const API_BASE = "https://pokeapi.co/api/v2";
@@ -11,10 +12,6 @@ const Types = () => {
     setTypes(response.data.results);
   };
 
-  const selectType = (type) => {
-    console.log("redirect to search results for type: ", type);
-  };
-
   useEffect(() => {
     fetchTypes();
   }, []);
@@ -23,13 +20,8 @@ const Types = () => {
       <h2>Search by Types</h2>
       <div className="row mx-4">
         {types.map((type) => (
-          <div
-            key={type.name}
-            className="rm-curser-pointer m-4 col"
-            onClick={() => selectType(type)}
-          >
-            {/* TODO: make it so it uses a type image of some sort? maybe a random pokemon of the type or something */}
-            {type.name}
+          <div className="col">
+            <Badge key={type.name} type={type.name} />
           </div>
         ))}
       </div>

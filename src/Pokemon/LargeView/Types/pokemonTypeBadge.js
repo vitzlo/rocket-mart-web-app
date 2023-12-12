@@ -22,9 +22,14 @@ function Badge({ type }) {
     ["dark", "#705848"],
   ]);
 
+  const handleClick = () => {
+    console.log("clicked");
+  };
+
   return (
     <div
-      className="rm-type"
+      className="rm-type col p-0"
+      onClick={handleClick}
       style={{
         background: `radial-gradient(rgb(0, 0, 0, 0.3), 60%, rgb(0, 0, 0, 0)), 
         ${typeColors.get(type)}`,

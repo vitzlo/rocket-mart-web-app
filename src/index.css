@@ -288,6 +288,7 @@ body {
   text-align: center;
   text-shadow: -1px -1px 0 var(--dark-grey), 1px -1px 0 var(--dark-grey),
     -1px 1px 0 var(--dark-grey), 1px 1px 0 var(--dark-grey);
+  cursor: pointer;
 }
 
 /* seller listing on large view */

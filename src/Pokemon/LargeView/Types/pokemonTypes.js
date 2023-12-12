@@ -4,9 +4,7 @@ function PokemonTypes({ types }) {
   return (
     <div className="row">
       {types.map((type, index) => (
-        <div className="col p-0">
-          <Badge key={index} type={type} />
-        </div>
+        <Badge key={index} type={type} />
       ))}
     </div>
   );

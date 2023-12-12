@@ -1,21 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { searchPokemonBySubstring } from "../Utils/client";
+import { searchPokemonBySubstring, searchPokemonByType } from "../Utils/client";
 import SmallPokemon from "../Pokemon/SmallView/smallPokemon";
 
 function SearchResults() {
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { search } = useParams();
+  const { search, type } = useParams();
 
   useEffect(() => {
     setLoading(true);
     setSearchResults([]);
-    searchPokemonBySubstring(search).then((results) => {
-      setSearchResults(results);
-      setLoading(false);
-    });
-  }, [search]);
+    if (search) {
+      searchPokemonBySubstring(search).then((results) => {
+        setSearchResults(results);
+        setLoading(false);
+      });
+    } else {
+      searchPokemonByType(type).then((results) => {
+        setSearchResults(results);
+        setLoading(false);
+      });
+    }
+  }, [search, type]);
   return (
     <div className="container-fluid">
       <div className="row">
@@ -36,7 +43,11 @@ function SearchResults() {
           </div>
         ) : (
           <div className="text-center">
-            <h1>Sorry... there's no pokemon named {search.replace("-", " ")}</h1>
+            {search && (
+              <h1>
+                Sorry... there's no pokemon named {search.replace("-", " ")}
+              </h1>
+            )}
             <img
               src="https://media.giphy.com/media/12Bpme5pTzGmg8/giphy.gif"
               alt="no results"

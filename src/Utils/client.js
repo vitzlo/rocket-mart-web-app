@@ -73,3 +73,8 @@ export const searchPokemonBySubstring = async (substring) => {
 
   return filteredPokemon;
 };
+
+export const searchPokemonByType = async (type) => {
+  const response = await axios.get(`${API_BASE}/type/${type}`); // all pokemon
+  return response.data.pokemon.map((pokemon) => pokemon.pokemon.name);
+};

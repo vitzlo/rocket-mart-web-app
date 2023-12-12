@@ -18,8 +18,7 @@ body {
   background: var(--background-color);
   /* default text colors: change maybe? */
   color: var(--light-grey);
-  font-family: 'Rubik';
-
+  font-family: "Rubik";
 }
 
 /* Scrollbar styles */
@@ -195,7 +194,6 @@ body {
   height: 60px;
 }
 
-
 /* small pokemon */
 .rm-small-pokemon {
   position: relative;
@@ -277,100 +275,24 @@ body {
 .rm-large-pokemon .rm-pokemon-info {
   font-size: 1rem;
 }
-/* seller listing on large view */
-.rm-listing {
-  align-items: center;
-  background-color: var(--primary-color);
-  border-radius: 12px;
-  margin-bottom: 12px;
-  padding: 6px;
-}
-.rm-listing p {
-  margin: 0;
-  padding: 0;
-}
 
-/* small pokemon */
-.rm-small-pokemon {
-  position: relative;
-  width: 300px;
-  height: 190px;
-  background-color: var(--primary-color);
-  border-radius: 12px;
-  margin: 20px;
-  margin-top: 120px;
-  padding: 6px;
+/* Pokemon Types */
+.rm-type {
+  border-radius: 16px;
+  border: 2px solid var(--white);
+  padding: 2px;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin: 10px;
+  font-size: 1.25rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: center;
+  text-shadow: -1px -1px 0 var(--dark-grey), 1px -1px 0 var(--dark-grey),
+    -1px 1px 0 var(--dark-grey), 1px 1px 0 var(--dark-grey);
   cursor: pointer;
 }
-.rm-small-pokemon .rm-pokemon-name-container {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 40%;
-  background: linear-gradient(transparent, var(--secondary-color));
-  opacity: 0.5;
-  border-radius: 0 0 12px 12px;
-  margin: 0;
-  padding: 0;
-}
-.rm-small-pokemon .rm-pokemon-name {
-  position: absolute;
-  bottom: 5%;
-  left: 0;
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: var(--white);
-  text-transform: capitalize;
-  margin: 0;
-  padding: 0;
-  padding-left: 5%;
-  padding-right: 5%;
-  text-shadow: 1px 1px 1px var(--dark-grey);
-}
-.rm-small-pokemon .rm-pokemon-image {
-  position: absolute;
-  bottom: 10%;
-  left: 5%;
-  width: 90%;
-  aspect-ratio: 1/1;
-  border-radius: 5%;
-  transition: all 0.25s ease-in-out;
-}
 
-/* hover animation */
-.rm-small-pokemon:hover .rm-pokemon-image {
-  bottom: 15%;
-  transition: all 0.25s ease-in-out;
-}
-
-/* large pokemon view */
-.rm-large-pokemon {
-  padding-left: 15%;
-  padding-right: 15%;
-}
-.rm-large-pokemon .rm-pokemon-name {
-  text-transform: capitalize;
-  font-size: 5rem;
-  font-weight: bold;
-  color: var(--white);
-  text-align: center;
-  margin: 0;
-  padding: 0;
-}
-.rm-large-pokemon .rm-pokemon-image {
-  width: 30vw;
-  min-width: 300px;
-  height: 30vw;
-  min-height: 300px;
-  border-radius: 5%;
-  padding: 5px;
-  background-color: var(--light-grey);
-  margin-right: 10px;
-}
-.rm-large-pokemon .rm-pokemon-info {
-  font-size: 1rem;
-}
 /* seller listing on large view */
 .rm-listing {
   background-color: var(--primary-color);
@@ -403,7 +325,7 @@ body {
   padding-right: 13%;
 }
 
-.rm-sign-user input{
+.rm-sign-user input {
   padding: 8px;
   margin-bottom: 20px;
   border-radius: 6px;
@@ -430,10 +352,10 @@ body {
 
 /* Button Styles */
 .btn-primary {
-  background-color: #EA6797;
+  background-color: #ea6797;
   border: none !important;
 }
 
 .btn-primary:hover {
-  background-color: #D34579;
+  background-color: #d34579;
 }

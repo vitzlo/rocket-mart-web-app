@@ -6,6 +6,7 @@ import {
   findTransactionById,
   findTransactionsForPokemon,
 } from "../../Utils/Transactions/client";
+import PokemonTypes from "./Types/pokemonTypes";
 import { updateRecentlyViewed } from "../../Utils/Users/client";
 
 function LargePokemon({ setUser }) {
@@ -62,14 +63,15 @@ function LargePokemon({ setUser }) {
                 className="rm-pokemon-image m-0"
               />
               {/* TODO: make the types pretty plz, they bland */}
-              <div className="rm-pokemon-info">
+              {/* <div className="rm-pokemon-info">
                 Types:{" "}
                 {pokemon.types.map((type) => (
                   <span key={type} className="rm-pokemon-info">
                     {type}{" "}
                   </span>
                 ))}
-              </div>
+              </div> */}
+              <PokemonTypes types={pokemon.types} />
               {/* any other fields we want to list here??? maybe evolution tree*/}
             </div>
             <div className="col">

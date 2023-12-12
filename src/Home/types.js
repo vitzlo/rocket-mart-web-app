@@ -20,9 +20,7 @@ const Types = () => {
       <h2>Search by Types</h2>
       <div className="row mx-4">
         {types.map((type) => (
-          <div className="col">
-            <Badge key={type.name} type={type.name} />
-          </div>
+          <Badge key={type.name} type={type.name} />
         ))}
       </div>
     </div>

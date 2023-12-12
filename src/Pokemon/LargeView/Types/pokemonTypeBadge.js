@@ -1,6 +1,8 @@
 import React from "react";
+import { useNavigate } from "react-router";
 
 function Badge({ type }) {
+  const navigate = useNavigate();
   const typeColors = new Map([
     ["grass", "#78C850"],
     ["poison", "#A040A0"],
@@ -22,9 +24,14 @@ function Badge({ type }) {
     ["dark", "#705848"],
   ]);
 
+  const handleClick = () => {
+    navigate(`/results/type/${type}`);
+  };
+
   return (
     <div
-      className="rm-type"
+      className="rm-type col"
+      onClick={handleClick}
       style={{
         background: `radial-gradient(rgb(0, 0, 0, 0.3), 60%, rgb(0, 0, 0, 0)), 
         ${typeColors.get(type)}`,

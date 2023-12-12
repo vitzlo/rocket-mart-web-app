@@ -6,6 +6,7 @@ import {
   createTransaction,
   findTransactionById,
   findTransactionsForPokemon,
+  purchaseTransactionById,
 } from "../../Utils/Transactions/client";
 import { updateRecentlyViewed } from "../../Utils/Users/client";
 
@@ -16,6 +17,22 @@ function LargePokemon({ user, setUser }) {
   const { pokemonId, transactionId } = useParams();
   // TODOS:
   // maybe add evolution chain as data shown?
+
+  const updateListings = async (newListing) => {
+    setListing(newListing);
+    const listed = await findTransactionsForPokemon(pokemon.id);
+    let unsold = listed.filter((listing) => !listing.buyerId);
+    console.log("unsold: ", unsold);
+    console.log("transaction: ", newListing);
+    setListedPokemon(
+      unsold.filter((listing) => listing._id !== newListing._id)
+    );
+  };
+  const purchaseListing = async (id) => {
+    const purchase = await purchaseTransactionById(id);
+    console.log(purchase);
+    updateListings(purchase);
+  };
   // add a button to list the pokemon
   const listPokemon = async () => {
     if (user && user.type === "SELLER") {
@@ -27,14 +44,7 @@ function LargePokemon({ user, setUser }) {
         height: 10,
         iv: 10,
       });
-      setListing(transaction);
-      const listed = await findTransactionsForPokemon(pokemon.id);
-      let unsold = listed.filter((listing) => !listing.buyerId);
-      console.log("unsold: ", unsold);
-      console.log("transaction: ", transaction)
-      setListedPokemon(
-        unsold.filter((listing) => listing._id !== transaction._id)
-      );
+      updateListings(transaction);
     }
   };
   // add a button to go back to the search results??? (might be tough bc we need history)
@@ -110,13 +120,19 @@ function LargePokemon({ user, setUser }) {
                 (listing.buyerId ? (
                   <div>
                     <h1>Sold Listing</h1>
-                    <Listing listing={listing} />
+                    <Listing
+                      listing={listing}
+                      purchaseListing={purchaseListing}
+                    />
                     <h1>Other Listings</h1>
                   </div>
                 ) : (
                   <div>
                     <h1>Your Listing</h1>
-                    <Listing listing={listing} />
+                    <Listing
+                      listing={listing}
+                      purchaseListing={purchaseListing}
+                    />
                     <h1>Other Listings</h1>
                   </div>
                 ))}
@@ -125,7 +141,11 @@ function LargePokemon({ user, setUser }) {
                 <h1>{listing ? "NO OTHER LISTINGS" : "NO LISTINGS"}</h1>
               )}
               {listedPokemon.map((listing) => (
-                <Listing key={listing.listingId} listing={listing} />
+                <Listing
+                  key={listing.listingId}
+                  listing={listing}
+                  purchaseListing={purchaseListing}
+                />
               ))}
             </div>
           </div>

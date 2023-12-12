@@ -2,11 +2,7 @@ import React from "react";
 import { Button } from "react-bootstrap";
 import { getDateString } from "../../Utils/date-utils";
 
-const Listing = ({ listing }) => {
-  const purchase = () => {
-    console.log("purchased listing: ", listing.listingId);
-  };
-
+const Listing = ({ listing, purchaseListing }) => {
   return (
     <div className="rm-listing">
       <h3>LISTING</h3>
@@ -31,7 +27,7 @@ const Listing = ({ listing }) => {
         <div className="col-auto">
           {/* TODO: override button styles */}
           {!listing.buyerId && (
-            <Button onClick={purchase} variant="primary">
+            <Button onClick={() => purchaseListing(listing._id)} variant="primary">
               Purchase
             </Button>
           )}

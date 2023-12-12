@@ -45,11 +45,11 @@ function App() {
           {/* needs to take a parameter, or use the URL */}
           <Route
             path="pokemon/:pokemonId"
-            element={<LargePokemon setUser={setUser} />}
+            element={<LargePokemon user={user} setUser={setUser} />}
           />
           <Route
             path="pokemon/transaction/:transactionId"
-            element={<LargePokemon setUser={setUser} />}
+            element={<LargePokemon user={user} setUser={setUser} />}
           />
         </Routes>
       </div>

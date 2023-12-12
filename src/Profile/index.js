@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import {
   findTransactionByBuyerId,
   findTransactionBySellerId,
+  purchaseTransactionById,
 } from "../Utils/Transactions/client";
 import ProfileListing from "../Pokemon/SmallView/smallListing";
 import * as client from "../Utils/Users/client";
@@ -21,6 +22,13 @@ function Profile({ user, setUser }) {
     setAccount(null);
     setUser(null);
     navigate("/home");
+  };
+
+  const purchaseListing = async (id) => {
+    const purchase = await purchaseTransactionById(id);
+    setListed(listed.filter((transaction) => transaction._id !== id));
+    setSold([...sold, purchase]);
+    console.log(purchase);
   };
 
   useEffect(() => {
@@ -69,6 +77,8 @@ function Profile({ user, setUser }) {
                 <ProfileListing
                   transactionId={transaction._id}
                   key={transaction._id}
+                  purchaseListing={purchaseListing}
+                  editable={false}
                 />
               ))}
             </div>
@@ -80,6 +90,9 @@ function Profile({ user, setUser }) {
                 <ProfileListing
                   transactionId={transaction._id}
                   key={transaction._id}
+                  purchaseListing={purchaseListing}
+                  editable={!userId}
+                  buyable={userId}
                 />
               ))}
             </div>
@@ -91,6 +104,8 @@ function Profile({ user, setUser }) {
                 <ProfileListing
                   transactionId={transaction._id}
                   key={transaction._id}
+                  purchaseListing={purchaseListing}
+                  editable={false}
                 />
               ))}
             </div>

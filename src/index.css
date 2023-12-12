@@ -281,6 +281,8 @@ body {
   border-radius: 16px;
   border: 2px solid var(--white);
   padding: 2px;
+  padding-left: 10px;
+  padding-right: 10px;
   margin: 10px;
   font-size: 1.25rem;
   font-weight: bold;

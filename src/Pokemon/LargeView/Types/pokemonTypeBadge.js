@@ -30,7 +30,7 @@ function Badge({ type }) {
 
   return (
     <div
-      className="rm-type col p-0"
+      className="rm-type col"
       onClick={handleClick}
       style={{
         background: `radial-gradient(rgb(0, 0, 0, 0.3), 60%, rgb(0, 0, 0, 0)), 

@@ -70,3 +70,13 @@ export const findUserById = async (id) => {
   }
   return pruneUser(response.data);
 };
+
+export const updateRecentlyViewed = async (pokemonId) => {
+  const response = await request.put(
+    `${USERS_API}/recentlyViewed/${pokemonId}`
+  );
+  if (!response.data) {
+    return undefined;
+  }
+  return pruneUser(response.data);
+};

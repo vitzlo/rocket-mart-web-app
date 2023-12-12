@@ -16,7 +16,7 @@ const ProfileListing = ({ transactionId }) => {
 
   useEffect(() => {
     findTransactionById(transactionId).then((transaction) => {
-  setListing(transaction);  
+      setListing(transaction);
       findPokemonById(transaction.pokemonId).then((pok) => {
         setPokemon(pok);
       });
@@ -54,9 +54,13 @@ const ProfileListing = ({ transactionId }) => {
               <div className="col-auto">
                 {/* TODO: override button styles */}
                 {!listing.buyerId && (
-                  <Button onClick={(e) => {
-                    e.stopPropagation();
-                    purchase()}} variant="primary">
+                  <Button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      purchase();
+                    }}
+                    variant="primary"
+                  >
                     Purchase
                   </Button>
                 )}

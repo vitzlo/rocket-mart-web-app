@@ -2,18 +2,18 @@ import React, { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import { getDateString } from "../../Utils/date-utils";
 import { findPokemonById } from "../../Utils/client";
-import { findTransactionById, purchaseTransactionById } from "../../Utils/Transactions/client";
+import { findTransactionById } from "../../Utils/Transactions/client";
 import { useNavigate } from "react-router";
 
-const ProfileListing = ({ transactionId }) => {
+const ProfileListing = ({
+  transactionId,
+  purchaseListing,
+  editable,
+  buyable,
+}) => {
   const [listing, setListing] = useState(null);
   const [pokemon, setPokemon] = useState(null);
   const navigate = useNavigate();
-
-  const purchase = () => {
-    purchaseTransactionById(transactionId);
-    console.log("purchased listing: ", listing._id);
-  };
 
   useEffect(() => {
     findTransactionById(transactionId).then((transaction) => {
@@ -54,15 +54,26 @@ const ProfileListing = ({ transactionId }) => {
               </div>
               <div className="col-auto">
                 {/* TODO: override button styles */}
-                {!listing.buyerId && (
+                {!listing.buyerId && buyable && (
                   <Button
                     onClick={(e) => {
                       e.stopPropagation();
-                      purchase();
+                      purchaseListing(listing._id);
                     }}
                     variant="primary"
                   >
                     Purchase
+                  </Button>
+                )}
+                {editable && (
+                  <Button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      console.log("editing");
+                    }}
+                    variant="primary"
+                  >
+                    Edit
                   </Button>
                 )}
               </div>

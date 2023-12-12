@@ -1,9 +1,11 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 import { getDateString } from "../../Utils/date-utils";
+import { purchaseTransactionById } from "../../Utils/Transactions/client";
 
 const Listing = ({ listing }) => {
   const purchase = () => {
+    purchaseTransactionById(listing._id);
     console.log("purchased listing: ", listing.listingId);
   };
 

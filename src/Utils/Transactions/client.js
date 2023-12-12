@@ -64,3 +64,14 @@ export const findTransactionById = async (id) => {
   }
   return pruneTransaction(response.data);
 };
+
+export const purchaseTransactionById = async (id) => {
+  const response = await axios.put(
+    `${API_BASE}/api/transactions/purchase/${id}`
+  );
+  if (!response.data) {
+    return undefined;
+  }
+  
+  return pruneTransaction(response.data);
+};

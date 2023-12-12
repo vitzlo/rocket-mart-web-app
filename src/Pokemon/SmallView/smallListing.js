@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import { getDateString } from "../../Utils/date-utils";
 import { findPokemonById } from "../../Utils/client";
-import { findTransactionById } from "../../Utils/Transactions/client";
+import { findTransactionById, purchaseTransactionById } from "../../Utils/Transactions/client";
 import { useNavigate } from "react-router";
 
 const ProfileListing = ({ transactionId }) => {
@@ -11,6 +11,7 @@ const ProfileListing = ({ transactionId }) => {
   const navigate = useNavigate();
 
   const purchase = () => {
+    purchaseTransactionById(transactionId);
     console.log("purchased listing: ", listing._id);
   };
 

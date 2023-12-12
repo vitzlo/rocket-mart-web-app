@@ -9,7 +9,8 @@ const Types = () => {
 
   const fetchTypes = async () => {
     const response = await axios.get(`${API_BASE}/type`);
-    setTypes(response.data.results);
+    const prunedTypes = response.data.results.filter((t) => t.name !== "unknown" && t.name !== "shadow");
+    setTypes(prunedTypes);
   };
 
   useEffect(() => {

@@ -3,12 +3,13 @@ import { useParams } from "react-router-dom";
 import { findPokemonById } from "../../Utils/client";
 import Listing from "./listing";
 import {
+  createTransaction,
   findTransactionById,
   findTransactionsForPokemon,
 } from "../../Utils/Transactions/client";
 import { updateRecentlyViewed } from "../../Utils/Users/client";
 
-function LargePokemon({ setUser }) {
+function LargePokemon({ user, setUser }) {
   const [pokemon, setPokemon] = useState(undefined);
   const [listing, setListing] = useState(undefined);
   const [listedPokemon, setListedPokemon] = useState([]);
@@ -16,6 +17,26 @@ function LargePokemon({ setUser }) {
   // TODOS:
   // maybe add evolution chain as data shown?
   // add a button to list the pokemon
+  const listPokemon = async () => {
+    if (user && user.type === "SELLER") {
+      // filler data for now
+      const transaction = await createTransaction({
+        pokemonId: pokemon.id,
+        price: Math.random() * 100 + 50,
+        weight: 10,
+        height: 10,
+        iv: 10,
+      });
+      setListing(transaction);
+      const listed = await findTransactionsForPokemon(pokemon.id);
+      let unsold = listed.filter((listing) => !listing.buyerId);
+      console.log("unsold: ", unsold);
+      console.log("transaction: ", transaction)
+      setListedPokemon(
+        unsold.filter((listing) => listing._id !== transaction._id)
+      );
+    }
+  };
   // add a button to go back to the search results??? (might be tough bc we need history)
 
   useEffect(() => {
@@ -51,6 +72,18 @@ function LargePokemon({ setUser }) {
     <div className="container-fluid rm-large-pokemon">
       {pokemon && (
         <div>
+          {user && user.type === "SELLER" && (
+            <div className="float-end">
+              <button
+                className="btn btn-primary"
+                onClick={() => {
+                  listPokemon();
+                }}
+              >
+                List a pokemon
+              </button>
+            </div>
+          )}
           <div className="rm-pokemon-name text-nowrap">
             {pokemon.name.replaceAll("-", " ")}
           </div>

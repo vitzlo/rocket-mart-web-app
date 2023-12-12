@@ -1,5 +1,9 @@
 import axios from "axios";
 
+const request = axios.create({
+  withCredentials: true,
+});
+
 const API_BASE = process.env.REACT_APP_API_BASE;
 
 /////////////
@@ -23,9 +27,21 @@ const pruneTransaction = (transactionsData) => {
 // EXPORTS //
 /////////////
 
+// POST: create a new transaction
+export const createTransaction = async (transactionData) => {
+  const response = await request.post(
+    `${API_BASE}/api/transactions`,
+    transactionData
+  );
+  if (!response.data) {
+    return undefined;
+  }
+  return pruneTransaction(response.data);
+};
+
 // GET: list of transactions that the given user has listed
 export const findTransactionBySellerId = async (sellerId) => {
-  const response = await axios.get(
+  const response = await request.get(
     `${API_BASE}/api/transactions/seller/${sellerId}`
   );
   if (!response.data) {
@@ -36,7 +52,7 @@ export const findTransactionBySellerId = async (sellerId) => {
 
 // GET: list of transactions that the given user has purchased
 export const findTransactionByBuyerId = async (buyerId) => {
-  const response = await axios.get(
+  const response = await request.get(
     `${API_BASE}/api/transactions/buyer/${buyerId}`
   );
   if (!response.data) {
@@ -47,7 +63,7 @@ export const findTransactionByBuyerId = async (buyerId) => {
 
 // GET: list of transactions for a given Pokemon by id
 export const findTransactionsForPokemon = async (pokemonId) => {
-  const response = await axios.get(
+  const response = await request.get(
     `${API_BASE}/api/transactions/pokemon/${pokemonId}`
   );
   if (!response.data) {
@@ -58,7 +74,7 @@ export const findTransactionsForPokemon = async (pokemonId) => {
 
 // GET: transaction by id
 export const findTransactionById = async (id) => {
-  const response = await axios.get(`${API_BASE}/api/transactions/${id}`);
+  const response = await request.get(`${API_BASE}/api/transactions/${id}`);
   if (!response.data) {
     return undefined;
   }
@@ -66,12 +82,12 @@ export const findTransactionById = async (id) => {
 };
 
 export const purchaseTransactionById = async (id) => {
-  const response = await axios.put(
+  const response = await request.put(
     `${API_BASE}/api/transactions/purchase/${id}`
   );
   if (!response.data) {
     return undefined;
   }
-  
+
   return pruneTransaction(response.data);
 };

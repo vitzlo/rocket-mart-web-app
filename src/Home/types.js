@@ -24,8 +24,8 @@ const Types = () => {
   ];
 
   return (
-    <div className="text-center m-2">
-      <h2>Search by Types</h2>
+    <div className="m-2">
+      <h2 className="ms-5 text-nowrap">Search by Types</h2>
       <div className="row mx-4">
         {types.map((type) => (
           <Badge key={type} type={type} />

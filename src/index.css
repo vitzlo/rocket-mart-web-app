@@ -122,8 +122,9 @@ body {
 /* Carousel styles */
 .rm-carousel-container {
   position: relative;
-  border-left: 2vw solid var(--background-color);
-  border-right: 2vw solid var(--background-color);
+  padding-left: 2vw;
+  padding-right: 2vw;
+  min-width: 364px;
 }
 
 .rm-carousel {
@@ -283,6 +284,7 @@ body {
   padding: 2px;
   padding-left: 20px;
   padding-right: 20px;
+  min-width: fit-content;
   margin: 10px;
   font-size: 1.25rem;
   font-weight: bold;

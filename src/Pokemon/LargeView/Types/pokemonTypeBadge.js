@@ -1,6 +1,8 @@
 import React from "react";
+import { useNavigate } from "react-router";
 
 function Badge({ type }) {
+  const navigate = useNavigate();
   const typeColors = new Map([
     ["grass", "#78C850"],
     ["poison", "#A040A0"],
@@ -23,7 +25,7 @@ function Badge({ type }) {
   ]);
 
   const handleClick = () => {
-    console.log("clicked");
+    navigate(`/results/type/${type}`);
   };
 
   return (

@@ -12,7 +12,7 @@ function SignUp({ onHide, setUser }) {
     try {
       credentials["pfp"] = generatePfp();
       const response = await client.signup(credentials);
-      setUser(response.data);
+      setUser(response);
       onHide();
       navigate("/profile");
     } catch (err) {

@@ -10,12 +10,20 @@ import * as client from "../Utils/Users/client";
 import { Tab, Tabs } from "react-bootstrap";
 import ProfileListingList from "./profileListingList";
 import { blankPfpPath, pfpPathToSvg } from "../Utils/pfp-utils";
+import {
+  createUserReview,
+  findUserReviewBySubject,
+  updateUserReview,
+} from "../Utils/UserReviews/client";
+import ProfileReviewList from "./profileReviewList";
 
 function Profile({ user, setUser }) {
   const { userId } = useParams();
   const [purchased, setPurchased] = useState();
   const [listed, setListed] = useState([]);
   const [sold, setSold] = useState([]);
+  const [reviews, setReviews] = useState([]);
+  const [review, setReview] = useState(null);
   const [account, setAccount] = useState(null);
   const navigate = useNavigate();
 
@@ -31,6 +39,28 @@ function Profile({ user, setUser }) {
     setListed(listed.filter((transaction) => transaction._id !== id));
     setSold([...sold, purchase]);
     console.log(purchase);
+  };
+
+  const createReview = async (reviewBody) => {
+    // create a new review
+    const newReview = await createUserReview({
+      ...reviewBody,
+      reviewer: user.username,
+      subject: account.username,
+    });
+    setReviews([...reviews, newReview]);
+    setReview(newReview);
+  };
+
+  const editReview = async (reviewBody) => {
+    // update the existing review
+    const newReview = {
+      ...review,
+      ...reviewBody,
+    };
+    await updateUserReview(newReview);
+    setReviews([...reviews.filter((r) => r._id !== review._id), newReview]);
+    setReview(newReview);
   };
 
   useEffect(() => {
@@ -50,8 +80,12 @@ function Profile({ user, setUser }) {
         setSold(results.filter((transaction) => transaction.buyerId));
         setListed(results.filter((transaction) => !transaction.buyerId));
       });
+      findUserReviewBySubject(account.username).then((results) => {
+        setReviews(results);
+        setReview(user && results.find((r) => r.reviewer === user.username));
+      });
     }
-  }, [account]);
+  }, [account, user]);
 
   return (
     <div className="container-fluid">
@@ -59,9 +93,7 @@ function Profile({ user, setUser }) {
         <div className="row justify-content-center mx-2">
           <div className="col-auto mb-4">
             <img
-              src={
-                account.pfp ? pfpPathToSvg[account.pfp] : blankPfpPath
-              }
+              src={account.pfp ? pfpPathToSvg[account.pfp] : blankPfpPath}
               alt="pfp icon"
               id="rm-profile-picture"
             />
@@ -75,6 +107,23 @@ function Profile({ user, setUser }) {
                 Sign out
               </button>
             )}
+            {userId &&
+              user &&
+              (review ? (
+                <button
+                  className="btn w-100 btn-primary"
+                  onClick={() => editReview({ review: "review 2", stars: 2 })}
+                >
+                  Edit your review
+                </button>
+              ) : (
+                <button
+                  className="btn w-100 btn-primary"
+                  onClick={() => createReview({ review: "review", stars: 5 })}
+                >
+                  Leave a review
+                </button>
+              ))}
           </div>
           <div className="row mx-2">
             <Tabs
@@ -104,6 +153,9 @@ function Profile({ user, setUser }) {
                   {sold && <ProfileListingList listings={sold} />}
                 </Tab>
               )}
+              <Tab eventKey="reviews" title="Reviews">
+                {reviews && <ProfileReviewList reviews={reviews} />}
+              </Tab>
             </Tabs>
           </div>
         </div>

@@ -21,17 +21,14 @@ const Home = ({ user }) => {
 
   return (
     <div className="container-fluid">
-      <div className="row text-center mb-4">
-        <h1>Welcome to Rocket Mart!</h1>
-      </div>
-      <div className="my-4">
+      <div className="mb-5 p-2">
         <Types />
       </div>
-      <div className="my-4">
+      <div className="mb-5 pb-2">
         <PokemonRow category="Popular Pokemon!" pokemonList={popularPokemon} />
       </div>
       {user && (
-        <div className="my-4">
+        <div className="pb-5">
           <PokemonRow
             category="Last Searched Pokemon!"
             pokemonList={user.recentlyViewed.slice(0).reverse()}

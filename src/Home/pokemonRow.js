@@ -1,27 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import SmallPokemon from "../Pokemon/SmallView/smallPokemon";
 
 const PokemonRow = ({ category, pokemonList }) => {
-  const [hasLeftScroll, setHasLeftScroll] = useState(false);
-  const [hasRightScroll, setHasRightScroll] = useState(true);
   const scrollRow = (amount) => {
     const row = document.getElementById(category);
     row.scroll({
       left: row.scrollLeft + amount,
       behavior: "smooth",
     });
-    // check if we can scroll left or right
-    const scrollLeft = row.scrollLeft + amount;
-    const maxScroll = row.scrollWidth - row.clientWidth + 1;
-    setHasLeftScroll(scrollLeft > 0);
-    setHasRightScroll(scrollLeft < maxScroll);
-    console.log(hasLeftScroll, hasRightScroll);
   };
 
   return (
     <div className="m-2">
-      <h2 className="ms-5">{category}</h2>
+      <h1 className="ms-5 mb-0 text-nowrap">{category}</h1>
       <div className="rm-carousel-container">
         <div className="row flex-nowrap rm-carousel" id={category}>
           {pokemonList.map((pokemon, index) => (

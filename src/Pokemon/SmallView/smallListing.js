@@ -49,7 +49,7 @@ const ProfileListing = ({
             )}
             <div className="row flex-nowrap">
               <div className="col">
-                <h3>Price: {listing.price.toFixed(2)}</h3>
+                <h3>Price: {listing.price}</h3>
               </div>
               <div className="col-auto">
                 {/* TODO: override button styles */}

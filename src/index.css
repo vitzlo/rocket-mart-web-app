@@ -26,21 +26,18 @@ body {
 /* Works on Firefox */
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--primary-color) var(--secondary-color);
+  scrollbar-color: var(--med-grey);
 }
 
 /* Works on Chrome, Edge, and Safari */
 *::-webkit-scrollbar {
   width: 6px;
   height: 6px;
-}
-
-*::-webkit-scrollbar-track {
-  background: var(--primary-color);
+  overflow: auto;
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: var(--secondary-color);
+  background-color: var(--med-grey);
   border-radius: 20px;
 }
 
@@ -258,10 +255,10 @@ body {
 }
 .rm-large-pokemon .rm-pokemon-name {
   text-transform: capitalize;
-  font-size: 5rem;
+  font-size: 2.5rem;
   font-weight: bold;
   color: var(--white);
-  text-align: center;
+  text-align: start;
   margin: 0;
   padding: 0;
 }
@@ -278,6 +275,18 @@ body {
 .rm-large-pokemon .rm-pokemon-info {
   font-size: 1rem;
 }
+.rm-large-pokemon .rm-pokemon-left {
+  width: 30vw;
+  min-width: 300px;
+  margin-right: 10px;
+}
+
+.rm-large-listings {
+  padding-top: 60px;
+  padding-left: 20px;
+}
+
+
 
 /* Pokemon Types */
 .rm-type {
@@ -299,8 +308,9 @@ body {
 
 /* seller listing on large view */
 .rm-listing {
-  background-color: var(--primary-color);
+  background-color: #404040;
   border-radius: 12px;
+  outline-color:1px #8591ce;
   margin-bottom: 12px;
   padding: 12px;
 }
@@ -325,7 +335,7 @@ body {
 }
 
 .rm-sign-user-title {
-  padding-left: 18%;
+  padding-left: 13%;
   padding-right: 13%;
 }
 
@@ -362,4 +372,8 @@ body {
 
 .btn-primary:hover {
   background-color: #d34579;
+}
+
+.btn-primary:active {
+  background-color: #d34579 !important;
 }

@@ -17,7 +17,7 @@ const PokemonRow = ({ category, pokemonList }) => {
       <div className="rm-carousel-container">
         <div className="row flex-nowrap rm-carousel" id={category}>
           {pokemonList.map((pokemon, index) => (
-            <div className="col-auto rm-carousel-item">
+            <div className="col-auto p-0 rm-carousel-item">
               <SmallPokemon key={index} pokemonId={pokemon} />
             </div>
           ))}

@@ -10,7 +10,7 @@ function SignUp({ onHide, setUser }) {
   const signup = async () => {
     try {
       const response = await client.signup(credentials);
-      setUser(response.data);
+      setUser(response);
       onHide();
       navigate("/profile");
     } catch (err) {

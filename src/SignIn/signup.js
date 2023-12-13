@@ -3,12 +3,14 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as client from "../Utils/Users/client";
 import Form from "react-bootstrap/Form";
+import { generatePfp } from "../Utils/pfp-utils";
 
 function SignUp({ onHide, setUser }) {
   const [error, setError] = useState("");
   const regions = ["Kalos", "Unova", "Kanto", "Johto", "Galar"];
   const signup = async () => {
     try {
+      credentials["pfp"] = generatePfp();
       const response = await client.signup(credentials);
       setUser(response.data);
       onHide();

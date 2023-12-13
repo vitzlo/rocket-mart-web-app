@@ -9,6 +9,7 @@ import {
 import * as client from "../Utils/Users/client";
 import { Tab, Tabs } from "react-bootstrap";
 import ProfileListingList from "./profileListingList";
+import { blankPfpPath, pfpPathToSvg } from "../Utils/pfp-utils";
 
 function Profile({ user, setUser }) {
   const { userId } = useParams();
@@ -59,8 +60,7 @@ function Profile({ user, setUser }) {
           <div className="col-auto mb-4">
             <img
               src={
-                account.pfp ||
-                "https://www.svgrepo.com/show/135058/circle-outline.svg"
+                account.pfp ? pfpPathToSvg[account.pfp] : blankPfpPath
               }
               alt="pfp icon"
               id="rm-profile-picture"

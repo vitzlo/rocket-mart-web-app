@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Navbar from "react-bootstrap/Navbar";
 import { useNavigate } from "react-router-dom";
 import User from "../SignIn";
+import { blankPfpPath, pfpPathToSvg } from "../Utils/pfp-utils";
 
 function NavigationBar({ user, setUser }) {
   const [searchInput, setSearchInput] = useState("");
@@ -35,7 +36,7 @@ function NavigationBar({ user, setUser }) {
         onClick={() => (!user ? setModalShow(true) : navigate("/profile"))}
       >
         <img
-          src="https://www.svgrepo.com/show/135058/circle-outline.svg"
+          src={user ? pfpPathToSvg[user.pfp] : blankPfpPath}
           alt="profile"
           width="50px"
           height="50px"

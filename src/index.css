@@ -177,7 +177,9 @@ body {
 
 /* Profile listing */
 .rm-profile-listing {
-  width: 50%;
+  width: 23%;
+  min-width: 255px;
+  margin: 1%;
   background-color: var(--primary-color);
   border-radius: 12px;
   margin-bottom: 12px;

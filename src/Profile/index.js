@@ -6,8 +6,9 @@ import {
   findTransactionBySellerId,
   purchaseTransactionById,
 } from "../Utils/Transactions/client";
-import ProfileListing from "../Pokemon/SmallView/smallListing";
 import * as client from "../Utils/Users/client";
+import { Tab, Tabs } from "react-bootstrap";
+import ProfileListingList from "./profileListingList";
 
 function Profile({ user, setUser }) {
   const { userId } = useParams();
@@ -53,68 +54,60 @@ function Profile({ user, setUser }) {
 
   return (
     <div className="container-fluid">
-      <div className="row mx-2">
-        <div className="col-auto">
-          <img
-            src={
-              (account && account.pfp) ||
-              "https://www.svgrepo.com/show/135058/circle-outline.svg"
-            }
-            alt="pfp icon"
-            id="rm-profile-picture"
-          />
-          <div>{account && `@${account.username} | ${account.region}`}</div>
-          <div className="rm-private-both">
-            <div>{account && account.email}</div>
+      {account && (
+        <div className="row justify-content-center mx-2">
+          <div className="col-auto mb-4">
+            <img
+              src={
+                account.pfp ||
+                "https://www.svgrepo.com/show/135058/circle-outline.svg"
+              }
+              alt="pfp icon"
+              id="rm-profile-picture"
+            />
+            <div className="text-center">
+              <div>{`@${account.username} | ${account.region}`}</div>
+              <div className="rm-private-both">{account.email}</div>
+              <div>{`Joined ${getDateString(account.signUpDate)}`}</div>
+            </div>
+            {!userId && (
+              <button className="btn w-100 btn-danger" onClick={signout}>
+                Sign out
+              </button>
+            )}
           </div>
-          <div>{account && `Joined ${getDateString(account.signUpDate)}`}</div>
+          <div className="row mx-2">
+            <Tabs
+              justify
+              defaultActiveKey={account.type === "SELLER" ? "listed" : "bought"}
+            >
+              <Tab eventKey="bought" title="Purchased Pokémon">
+                <div>
+                  {purchased && <ProfileListingList listings={purchased} />}
+                </div>
+              </Tab>
+
+              {account.type === "SELLER" && (
+                <Tab eventKey="listed" title="Listed Pokémon">
+                  {listed && (
+                    <ProfileListingList
+                      listings={listed}
+                      editable={!userId}
+                      buyable={userId}
+                      purchaseListing={purchaseListing}
+                    />
+                  )}
+                </Tab>
+              )}
+              {account.type === "SELLER" && (
+                <Tab eventKey="sold" title="Sold Pokémon">
+                  {sold && <ProfileListingList listings={sold} />}
+                </Tab>
+              )}
+            </Tabs>
+          </div>
         </div>
-        <div className="col">
-          {account && account.type === "BUYER" && purchased && (
-            <div>
-              <h1 className="rm-private-buyer">[BUYER] Purchased Pokémon</h1>
-              {purchased.map((transaction) => (
-                <ProfileListing
-                  transactionId={transaction._id}
-                  key={transaction._id}
-                  purchaseListing={purchaseListing}
-                  editable={false}
-                />
-              ))}
-            </div>
-          )}
-          {account && account.type === "SELLER" && listed && (
-            <div>
-              <h1 className="rm-private-seller">[SELLER] Listed Pokémon</h1>
-              {listed.map((transaction) => (
-                <ProfileListing
-                  transactionId={transaction._id}
-                  key={transaction._id}
-                  purchaseListing={purchaseListing}
-                  editable={!userId}
-                  buyable={userId}
-                />
-              ))}
-            </div>
-          )}
-          {account && account.type === "SELLER" && sold && (
-            <div>
-              <h1 className="rm-private-seller">[SELLER] Sold Pokémon</h1>
-              {sold.map((transaction) => (
-                <ProfileListing
-                  transactionId={transaction._id}
-                  key={transaction._id}
-                  purchaseListing={purchaseListing}
-                  editable={false}
-                />
-              ))}
-            </div>
-          )}
-          <button className="btn w-100 btn-danger" onClick={signout}>
-            Sign out
-          </button>
-        </div>
-      </div>
+      )}
     </div>
   );
 }

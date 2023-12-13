@@ -8,7 +8,7 @@ import { useNavigate } from "react-router";
 const ProfileListing = ({
   transactionId,
   purchaseListing,
-  editable,
+  editable = false,
   buyable,
 }) => {
   const [listing, setListing] = useState(null);
@@ -30,7 +30,6 @@ const ProfileListing = ({
       <div
         className="rm-profile-listing"
         onClick={() => {
-          // make this navigate to transaction page for pokemon?
           navigate("/pokemon/transaction/" + transactionId);
         }}
       >
@@ -50,7 +49,7 @@ const ProfileListing = ({
             )}
             <div className="row flex-nowrap">
               <div className="col">
-                <h3>Price: {listing.price}</h3>
+                <h3>Price: {listing.price.toFixed(2)}</h3>
               </div>
               <div className="col-auto">
                 {/* TODO: override button styles */}

@@ -9,7 +9,7 @@ export const pfpPathToSvg = {
 };
 
 export const generatePfp = () => {
-  const pfpPool = ["rocket_may", "rocket_red", "rocket_serena"];
+  const pfpPool = Object.keys(pfpPathToSvg);
   return pfpPool[Math.floor(Math.random() * pfpPool.length)];
 };
 

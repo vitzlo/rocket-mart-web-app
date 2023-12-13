@@ -20,6 +20,7 @@ const pruneTransaction = (transactionsData) => {
   if (transactionsData.buyerId) {
     transactionsData.timeOfPurchase = new Date(transactionsData.timeOfPurchase);
   }
+  transactionsData.price = transactionsData.price.toFixed(2);
   return transactionsData;
 };
 

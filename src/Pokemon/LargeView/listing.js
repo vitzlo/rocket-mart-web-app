@@ -5,29 +5,54 @@ import { getDateString } from "../../Utils/date-utils";
 const Listing = ({ listing, purchaseListing }) => {
   return (
     <div className="rm-listing">
-      <h3>LISTING</h3>
-      <p>listed on: {getDateString(listing.timeOfListing)}</p>
-      {/* make this link to seller profile page? */}
-      <p>by seller: {listing.sellerId}</p>
-      {listing.buyerId && (
-        <>
-          <p>purchased on: {getDateString(listing.timeOfPurchase)}</p>
-          <p>by buyer: {listing.buyerId}</p>
-        </>
-      )}
-      {/* make this link to buyer profile page? */}
-      <h3>ABOUT</h3>
-      <p>height: {listing.height}</p>
-      <p>weight: {listing.weight}</p>
-      <p>iv: {listing.iv}</p>
-      <div className="row flex-nowrap">
+      <div className="row">
+        <h4>Listing</h4>
+        <div className="col-auto">
+          <p>List Date:</p>
+          <p>Sold by: </p>
+          {listing.buyerId && (
+            <>
+              <p>Purchased On:</p>
+              <p>By:</p>
+            </>
+          )}
+        </div>
+        <div className="col-auto" style={{ marginBottom: "10px" }}>
+          <p> {getDateString(listing.timeOfListing)}</p>
+          <p>{listing.sellerId}</p>
+          {listing.buyerId && (
+            <>
+              <p>{getDateString(listing.timeOfPurchase)}</p>
+              <p>{listing.buyerId}</p>
+            </>
+          )}
+        </div>
+        <div>{/* make this link to buyer profile page? */}</div>
+      </div>
+      <div className="row">
+        <h4>Information</h4>
+        <div className="col-auto">
+          <p>Height:</p>
+          <p>Weight:</p>
+          <p>IV:</p>
+        </div>
         <div className="col">
-          <h3>Price: {listing.price}</h3>
+          <p> {listing.height}</p>
+          <p> {listing.weight}</p>
+          <p>{listing.iv}</p>
+        </div>
+      </div>
+      <div className="row flex-nowrap" style={{ marginTop: "10px" }}>
+        <div className="col">
+          <h3>${listing.price}</h3>
         </div>
         <div className="col-auto">
           {/* TODO: override button styles */}
           {!listing.buyerId && (
-            <Button onClick={() => purchaseListing(listing._id)} variant="primary">
+            <Button
+              onClick={() => purchaseListing(listing._id)}
+              variant="primary"
+            >
               Purchase
             </Button>
           )}

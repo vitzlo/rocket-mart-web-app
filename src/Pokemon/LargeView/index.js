@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { findPokemonById } from "../../Utils/client";
 import Listing from "./listing";
+import User from "../../SignIn";
 import {
   createTransaction,
   findTransactionById,
@@ -16,6 +17,7 @@ function LargePokemon({ user, setUser }) {
   const [listing, setListing] = useState(undefined);
   const [listedPokemon, setListedPokemon] = useState([]);
   const { pokemonId, transactionId } = useParams();
+  const [modalShow, setModalShow] = useState(false);
   // TODOS:
   // maybe add evolution chain as data shown?
 
@@ -30,9 +32,13 @@ function LargePokemon({ user, setUser }) {
     );
   };
   const purchaseListing = async (id) => {
-    const purchase = await purchaseTransactionById(id);
-    console.log(purchase);
-    updateListings(purchase);
+    if (user) {
+      const purchase = await purchaseTransactionById(id);
+      console.log(purchase);
+      updateListings(purchase);
+    } else {
+      setModalShow(true);
+    }
   };
   // add a button to list the pokemon
   const listPokemon = async () => {
@@ -81,43 +87,64 @@ function LargePokemon({ user, setUser }) {
 
   return (
     <div className="container-fluid rm-large-pokemon">
+      <User
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+        setUser={setUser}
+      />
       {pokemon && (
         <div>
-          {user && user.type === "SELLER" && (
-            <div className="float-end">
-              <button
-                className="btn btn-primary"
-                onClick={() => {
-                  listPokemon();
-                }}
-              >
-                List a pokemon
-              </button>
-            </div>
-          )}
-          <div className="rm-pokemon-name text-nowrap">
-            {pokemon.name.replaceAll("-", " ")}
-          </div>
-          <div className="row flex-nowrap">
-            <div className="col-auto">
+          <div className="row">
+            <div className="col-auto d-none d-md-block" style={{ position: "fixed" }}>
+              <div className="rm-pokemon-name rm-pokemon-left me-0">
+                {pokemon.name.replaceAll("-", " ")}
+                {user && user.type === "SELLER" && (
+                  <div className="float-end">
+                    <button
+                      className="btn btn-primary"
+                      onClick={() => {
+                        listPokemon();
+                      }}
+                    >
+                      List a pokemon
+                    </button>
+                  </div>
+                )}
+              </div>
               <img
                 src={pokemon.sprites.large}
                 alt={pokemon.name}
                 className="rm-pokemon-image m-0"
               />
-              {/* TODO: make the types pretty plz, they bland */}
-              {/* <div className="rm-pokemon-info">
-                Types:{" "}
-                {pokemon.types.map((type) => (
-                  <span key={type} className="rm-pokemon-info">
-                    {type}{" "}
-                  </span>
-                ))}
-              </div> */}
               <PokemonTypes types={pokemon.types} />
               {/* any other fields we want to list here??? maybe evolution tree*/}
             </div>
-            <div className="col">
+            <div className="col-auto rm-pokemon-left d-none d-md-block"></div>
+            <div className="col-auto d-md-none">
+              <div className="rm-pokemon-name rm-pokemon-left me-0">
+                {pokemon.name.replaceAll("-", " ")}
+                {user && user.type === "SELLER" && (
+                  <div className="float-end">
+                    <button
+                      className="btn btn-primary"
+                      onClick={() => {
+                        listPokemon();
+                      }}
+                    > 
+                      List a pokemon
+                    </button>
+                  </div>
+                )}
+              </div>
+              <img
+                src={pokemon.sprites.large}
+                alt={pokemon.name}
+                className="rm-pokemon-image m-0"
+              />
+              <PokemonTypes types={pokemon.types} />
+              {/* any other fields we want to list here??? maybe evolution tree*/}
+            </div>
+            <div className="col rm-large-listings">
               {listing &&
                 (listing.buyerId ? (
                   <div>

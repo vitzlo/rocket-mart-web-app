@@ -4,7 +4,7 @@ function ProfileListingList({
   listings,
   buyable,
   editable = false,
-  purchaseListing,
+  pressPurchase,
 }) {
   return (
     <div className="p-4 row">
@@ -12,7 +12,7 @@ function ProfileListingList({
         <ProfileListing
           transactionId={transaction._id}
           key={transaction._id}
-          purchaseListing={purchaseListing}
+          pressPurchase={pressPurchase}
           editable={editable}
           buyable={buyable}
         />

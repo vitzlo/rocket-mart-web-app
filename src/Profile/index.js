@@ -1,22 +1,30 @@
-import { useParams, useNavigate } from "react-router-dom";
-import { getDateString } from "../Utils/date-utils";
 import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { Tab, Tabs } from "react-bootstrap";
+import ProfileListingList from "./profileListingList";
+import { blankPfpPath, pfpPathToSvg } from "../Utils/pfp-utils";
+import User from "../SignIn";
+import { getDateString } from "../Utils/date-utils";
+import PurchaseModal from "../Utils/purchase";
 import {
   findTransactionByBuyerId,
   findTransactionBySellerId,
   purchaseTransactionById,
 } from "../Utils/Transactions/client";
 import * as client from "../Utils/Users/client";
-import { Tab, Tabs } from "react-bootstrap";
-import ProfileListingList from "./profileListingList";
-import { blankPfpPath, pfpPathToSvg } from "../Utils/pfp-utils";
 
 function Profile({ user, setUser }) {
   const { userId } = useParams();
+  // display user + transactions
+  const [account, setAccount] = useState(null);
   const [purchased, setPurchased] = useState();
   const [listed, setListed] = useState([]);
   const [sold, setSold] = useState([]);
-  const [account, setAccount] = useState(null);
+  // login modal
+  const [loginModalShow, setLoginModalShow] = useState(false);
+  // purchase modal
+  const [purchaseModalShow, setPurchaseModalShow] = useState(false);
+  const [selectedListing, setSelectedListing] = useState(undefined);
   const navigate = useNavigate();
 
   const signout = async () => {
@@ -26,11 +34,20 @@ function Profile({ user, setUser }) {
     navigate("/home");
   };
 
-  const purchaseListing = async (id) => {
+  const pressPurchase = async (transaction) => {
+    if (user) {
+      await setSelectedListing(transaction);
+      setPurchaseModalShow(true);
+    } else {
+      setLoginModalShow(true);
+    }
+  };
+
+  const purchase = async (id) => {
     const purchase = await purchaseTransactionById(id);
     setListed(listed.filter((transaction) => transaction._id !== id));
     setSold([...sold, purchase]);
-    console.log(purchase);
+    setPurchaseModalShow(false);
   };
 
   useEffect(() => {
@@ -55,13 +72,23 @@ function Profile({ user, setUser }) {
 
   return (
     <div className="container-fluid">
+      <User
+        show={loginModalShow}
+        onHide={() => setLoginModalShow(false)}
+        setUser={setUser}
+      />
+      <PurchaseModal
+        show={purchaseModalShow}
+        onHide={() => setPurchaseModalShow(false)}
+        transaction={selectedListing}
+        purchase={purchase}
+        user={user}
+      />
       {account && (
         <div className="row justify-content-center mx-2">
           <div className="col-auto mb-4">
             <img
-              src={
-                account.pfp ? pfpPathToSvg[account.pfp] : blankPfpPath
-              }
+              src={account.pfp ? pfpPathToSvg[account.pfp] : blankPfpPath}
               alt="pfp icon"
               id="rm-profile-picture"
             />
@@ -94,7 +121,7 @@ function Profile({ user, setUser }) {
                       listings={listed}
                       editable={!userId}
                       buyable={userId}
-                      purchaseListing={purchaseListing}
+                      pressPurchase={pressPurchase}
                     />
                   )}
                 </Tab>

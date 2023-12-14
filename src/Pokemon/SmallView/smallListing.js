@@ -7,7 +7,7 @@ import { useNavigate } from "react-router";
 
 const ProfileListing = ({
   transactionId,
-  purchaseListing,
+  pressPurchase,
   editable = false,
   buyable,
 }) => {
@@ -57,7 +57,7 @@ const ProfileListing = ({
                   <Button
                     onClick={(e) => {
                       e.stopPropagation();
-                      purchaseListing(listing._id);
+                      pressPurchase(listing);
                     }}
                     variant="primary"
                   >

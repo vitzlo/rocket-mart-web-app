@@ -114,9 +114,9 @@ body {
 }
 
 .rm-nav img {
-  width: 60px !important;
   padding: 0px;
   margin-left: auto;
+  width: 50px;
 }
 
 .rm-search {
@@ -171,44 +171,53 @@ body {
 
 /* Profile */
 #rm-profile-picture {
-  width: 25vw;
-  height: 25vw;
+  width: 18vw;
+  height: 18vw;
 }
 
 .rm-private-both {
-  color: magenta; /* temporary, just for skeleton modeling */
+  color:#eca2bd;
 }
 
-.rm-private-seller {
-  color: red; /* temporary, just for skeleton modeling */
-}
-
-.rm-private-buyer {
-  color: blue; /* temporary, just for skeleton modeling */
+.rm-join-date {
+  color:#bbbbbb;
 }
 
 /* Profile listing */
 .rm-profile-listing {
-  width: 23%;
-  min-width: 255px;
+  width: 31%;
+  min-width: 280px;
   margin: 1%;
-  background-color: var(--primary-color);
+  background-color: #404040;
+  border: 1px solid #8591ce;
   border-radius: 12px;
   margin-bottom: 12px;
   padding: 12px;
 }
 .rm-profile-listing p {
-  margin: 0;
+  margin-bottom: 10px;
   padding: 0;
+  font-size: 14px;
+  color:#bbbbbb;
+}
+
+.rm-profile-listing h4 {
+  margin-bottom: 0;
 }
 .rm-profile-listing .rm-listing-img {
-  scale: 1.5;
+  scale: 1.2;
   object-fit: none;
   width: 60px;
   height: 60px;
 }
 
 /* Profile Review */
+
+.nav-link {
+  color:#8591ce !important;
+  font-weight: 900 !important;
+}
+
 .rm-profile-review {
   width: 23%;
   min-width: 255px;
@@ -342,7 +351,6 @@ body {
 .rm-listing {
   background-color: #404040;
   border-radius: 12px;
-  outline-color: 1px #8591ce;
   margin-bottom: 12px;
   padding: 12px;
 }

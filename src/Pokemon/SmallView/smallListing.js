@@ -36,14 +36,14 @@ const ProfileListing = ({
             />
           </div>
           <div className="col">
-            <h3>{pokemon.name}</h3>
-            <p>listed on: {getDateString(transaction.timeOfListing)}</p>
+            <h4>{pokemon.name}</h4>
+            <p>List Date: {getDateString(transaction.timeOfListing)}</p>
             {transaction.buyer && (
-              <p>purchased on: {getDateString(transaction.timeOfPurchase)}</p>
+              <p style={{marginTop: "-10px"}}>Purchase Date: {getDateString(transaction.timeOfPurchase)}</p>
             )}
             <div className="row flex-nowrap">
               <div className="col">
-                <h3>Price: {transaction.price}</h3>
+                <h4>Price: {transaction.price}</h4>
               </div>
               <div className="col-auto">
                 {/* TODO: override button styles */}

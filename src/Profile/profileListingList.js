@@ -7,7 +7,7 @@ function ProfileListingList({
   pressPurchase,
 }) {
   return (
-    <div className="p-4 row">
+    <div className="p-4 row justify-content-center">
       {listings.map((transaction) => (
         <ProfileListing
           transaction={transaction}

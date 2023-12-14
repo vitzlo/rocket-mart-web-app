@@ -296,6 +296,10 @@ body {
   min-width: 300px;
   margin-right: 10px;
 }
+.rm-large-pokemon .rm-loading-image {
+  width: 80%;
+  min-width: 50%;
+}
 
 .rm-large-listings {
   padding-top: 60px;

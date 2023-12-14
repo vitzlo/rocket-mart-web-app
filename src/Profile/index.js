@@ -15,6 +15,8 @@ import User from "../SignIn";
 import { getDateString } from "../Utils/date-utils";
 import PurchaseModal from "../Utils/Components/purchase";
 import {
+  deleteTransactionById,
+  editTransactionById,
   findTransactionByBuyerName,
   findTransactionBySellerName,
   purchaseTransactionById,
@@ -40,8 +42,8 @@ function Profile({ user, setUser }) {
   const [review, setReview] = useState(null);
   // review modal
   const [reviewModalShow, setReviewModalShow] = useState(false);
-  // editing modal
-  const [editModalShow, setEditModalShow] = useState(false);
+  // editing profile modal
+  const [editProfileShow, setEditProfileShow] = useState(false);
   const navigate = useNavigate();
   // loading
   const [loading, setLoading] = useState(true);
@@ -70,14 +72,14 @@ function Profile({ user, setUser }) {
   };
 
   const pressEdit = async () => {
-    setEditModalShow(true);
-  }
+    setEditProfileShow(true);
+  };
 
   const editUser = async (editedUser) => {
     await client.updateUser(editedUser);
     setUser(editedUser);
     setAccount(user);
-  }
+  };
 
   const createReview = async (reviewBody) => {
     // create a new review
@@ -106,6 +108,20 @@ function Profile({ user, setUser }) {
     deleteUserReviewById(review._id);
     setReviews(reviews.filter((r) => r._id !== review._id));
     setReview(null);
+  };
+
+  const editListing = async (listingId, data) => {
+    // update the existing listing
+    editTransactionById(listingId, { ...data, seller: user.username });
+    const updatedListings = listed.map((listing) =>
+      listing._id === listingId ? { ...listing, ...data } : listing
+    );
+    setListed(updatedListings);
+  };
+
+  const deleteListing = async (listingId) => {
+    deleteTransactionById(listingId);
+    setListed(listed.filter((listing) => listing._id !== listingId));
   };
 
   useEffect(() => {
@@ -161,8 +177,8 @@ function Profile({ user, setUser }) {
         deleteReview={deleteReview}
       />
       <ProfileEditModal
-        show={editModalShow}
-        handleClose={() => setEditModalShow(false)}
+        show={editProfileShow}
+        handleClose={() => setEditProfileShow(false)}
         user={user}
         editUser={editUser}
       />
@@ -177,7 +193,9 @@ function Profile({ user, setUser }) {
             <div className="text-center">
               <div>{`@${account.username} · ${account.region}`}</div>
               <div className="rm-private-both">{account.email}</div>
-              <div className="rm-join-date">{`Joined ${getDateString(account.signUpDate)}`}</div>
+              <div className="rm-join-date">{`Joined ${getDateString(
+                account.signUpDate
+              )}`}</div>
             </div>
             {!username && (
               <button className="btn w-100 btn-danger" onClick={signout}>
@@ -241,6 +259,8 @@ function Profile({ user, setUser }) {
                         editable={!username}
                         buyable={username}
                         pressPurchase={pressPurchase}
+                        editListing={editListing}
+                        deleteListing={deleteListing}
                       />
                     ) : (
                       <h2>No Pokemon Listed</h2>

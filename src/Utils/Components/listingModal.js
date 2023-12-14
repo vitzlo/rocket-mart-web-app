@@ -52,7 +52,12 @@ function ListingModal({
       onHide={onHide}
     >
       <Modal.Header closeButton closeVariant="white">
-        <Modal.Title>{listing ? "Edit" : "Create"} Listing</Modal.Title>
+        <Modal.Title>
+          {listing ? "Edit" : "Create"} Listing for{" "}
+          <span className="rm-capitalize">
+            {pokemon && pokemon.name.replace("-", " ")}
+          </span>
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <div>

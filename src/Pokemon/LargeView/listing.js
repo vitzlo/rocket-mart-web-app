@@ -20,11 +20,15 @@ const Listing = ({ listing, pressPurchase }) => {
         </div>
         <div className="col-auto" style={{ marginBottom: "10px" }}>
           <p> {getDateString(listing.timeOfListing)}</p>
-          <Link to={`/profile/${listing.seller}`}><p>{listing.seller}</p></Link>
+          <Link to={`/profile/${listing.seller}`}>
+            <p>{listing.seller}</p>
+          </Link>
           {listing.buyer && (
             <>
               <p>{getDateString(listing.timeOfPurchase)}</p>
-              <Link to={`/profile/${listing.buyer}`}><p>{listing.buyer}</p></Link>
+              <Link to={`/profile/${listing.buyer}`}>
+                <p>{listing.buyer}</p>
+              </Link>
             </>
           )}
         </div>
@@ -50,10 +54,7 @@ const Listing = ({ listing, pressPurchase }) => {
         <div className="col-auto">
           {/* TODO: override button styles */}
           {!listing.buyer && (
-            <Button
-              onClick={() => pressPurchase(listing)}
-              variant="primary"
-            >
+            <Button onClick={() => pressPurchase(listing)} variant="primary">
               Purchase
             </Button>
           )}

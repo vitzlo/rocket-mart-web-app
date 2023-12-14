@@ -34,8 +34,6 @@ function LargePokemon({ user, setUser }) {
     setListing(newListing);
     const listed = await findTransactionsForPokemon(pokemon.id);
     let unsold = listed.filter((listing) => !listing.buyer);
-    console.log("unsold: ", unsold);
-    console.log("transaction: ", newListing);
     setListedPokemon(
       unsold.filter((listing) => listing._id !== newListing._id)
     );
@@ -49,7 +47,6 @@ function LargePokemon({ user, setUser }) {
 
   const pressPurchase = async (transaction) => {
     if (user) {
-      console.log("press purchase: ", transaction);
       await setSelectedListing(transaction);
       setPurchaseModalShow(true);
     } else {

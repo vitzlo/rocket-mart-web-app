@@ -120,12 +120,12 @@ body {
 }
 
 .rm-search {
-  color:#fff !important;
+  color: #fff !important;
   border-radius: 20px;
   width: 60vw;
   height: 40px;
   margin-right: 5%;
-  border:2px solid #6a6a6a !important;
+  border: 2px solid #6a6a6a !important;
   background-color: #404040;
   display: inline-flex;
 }
@@ -224,8 +224,8 @@ body {
   background-color: var(--dark-grey);
 }
 
-/* Transaction Modal */
-.rm-transaction-modal .modal-content {
+/* Listing Modal */
+.rm-listing-modal .modal-content {
   background-color: var(--dark-grey);
 }
 

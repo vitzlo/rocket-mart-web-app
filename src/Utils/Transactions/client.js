@@ -92,3 +92,24 @@ export const purchaseTransactionById = async (id) => {
 
   return pruneTransaction(response.data);
 };
+
+export const deleteTransactionById = async (id) => {
+  const response = await request.delete(`${API_BASE}/api/transactions/${id}`);
+  if (!response.data) {
+    return undefined;
+  }
+
+  return pruneTransaction(response.data);
+};
+
+export const editTransactionById = async (id, data) => {
+  const response = await request.put(
+    `${API_BASE}/api/transactions/${id}`,
+    data
+  );
+  if (!response.data) {
+    return undefined;
+  }
+
+  return pruneTransaction(response.data);
+};

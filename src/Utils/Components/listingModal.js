@@ -51,12 +51,12 @@ function ListingModal({
       show={show}
       onHide={onHide}
     >
-      <Modal.Header closeButto closeVariant="white">
+      <Modal.Header closeButton closeVariant="white">
         <Modal.Title>{listing ? "Edit" : "Create"} Listing</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <div>
-          <label for="weight-input">Weight</label>
+          <label for="weight-input">Weight (kg)</label>
           <input
             className="form-control mb-2"
             id="weight-input"
@@ -67,7 +67,7 @@ function ListingModal({
           />
         </div>
         <div>
-          <label for="height-input">Height</label>
+          <label for="height-input">Height (m)</label>
           <input
             className="form-control mb-2"
             id="height-input"

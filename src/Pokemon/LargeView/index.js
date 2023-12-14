@@ -5,6 +5,8 @@ import Listing from "./listing";
 import User from "../../SignIn";
 import {
   createTransaction,
+  deleteTransactionById,
+  editTransactionById,
   findTransactionById,
   findTransactionsForPokemon,
   purchaseTransactionById,
@@ -13,6 +15,7 @@ import PokemonTypes from "./Types/pokemonTypes";
 import { updateRecentlyViewed } from "../../Utils/Users/client";
 import { meowth_spin } from "../../Utils/loading";
 import PurchaseModal from "../../Utils/Components/purchase";
+import ListingModal from "../../Utils/Components/listingModal";
 
 function LargePokemon({ user, setUser }) {
   const { pokemonId, transactionId } = useParams();
@@ -57,16 +60,59 @@ function LargePokemon({ user, setUser }) {
 
   const listPokemon = async () => {
     if (user && user.type === "SELLER") {
-      // filler data for now
+      setTransactionModalShow(true);
+    }
+  };
+
+  const pressEdit = async (transaction) => {
+    if (user && user.type === "SELLER") {
+      await setSelectedListing(transaction);
+      setPurchaseModalShow(false);
+      setTransactionModalShow(true);
+    }
+  };
+
+  const createListing = async (data) => {
+    if (user && user.type === "SELLER") {
       const transaction = await createTransaction({
+        ...data,
         pokemonId: pokemon.id,
-        price: Math.random() * 100 + 50,
-        weight: 10,
-        height: 10,
-        iv: 10,
       });
       updateListingsList(transaction);
     }
+    setTransactionModalShow(false);
+    setSelectedListing(undefined);
+  };
+
+  const editListing = async (data) => {
+    if (user && user.type === "SELLER") {
+      editTransactionById(selectedListing._id, {
+        ...data,
+        seller: user.username,
+      });
+      if (listing && listing._id === selectedListing._id) {
+        setListing({ ...listing, ...data });
+      } else {
+        updateListingsList({ ...selectedListing, ...data });
+      }
+    }
+    setTransactionModalShow(false);
+    setSelectedListing(undefined);
+  };
+
+  const deleteListing = async () => {
+    if (user && user.type === "SELLER") {
+      deleteTransactionById(selectedListing._id);
+      if (listing && listing._id === selectedListing._id) {
+        setListing(undefined);
+      } else {
+        setListedPokemon(
+          listedPokemon.filter((listing) => listing._id !== selectedListing._id)
+        );
+      }
+    }
+    setTransactionModalShow(false);
+    setSelectedListing(undefined);
   };
   // add a button to go back to the search results??? (might be tough bc we need history)
 
@@ -109,12 +155,27 @@ function LargePokemon({ user, setUser }) {
       />
       <PurchaseModal
         show={purchaseModalShow}
-        onHide={() => setPurchaseModalShow(false)}
+        onHide={() => {
+          setPurchaseModalShow(false);
+          setSelectedListing(undefined);
+        }}
         transaction={selectedListing}
         purchase={purchase}
+        edit={pressEdit}
         user={user}
       />
-
+      <ListingModal
+        show={transactionModalShow}
+        onHide={() => {
+          setTransactionModalShow(false);
+          setSelectedListing(undefined);
+        }}
+        pokemon={pokemon}
+        listing={selectedListing}
+        createListing={createListing}
+        editListing={editListing}
+        deleteListing={deleteListing}
+      />
       {pokemon && (
         <div>
           <div className="row">

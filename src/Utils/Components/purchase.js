@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { findPokemonById } from "../PokeAPI/client";
 
-function PurchaseModal({ show, onHide, purchase, transaction, user }) {
+function PurchaseModal({ show, onHide, purchase, edit, transaction, user }) {
   const [pokemon, setPokemon] = useState(null);
 
   useEffect(() => {
@@ -25,7 +25,7 @@ function PurchaseModal({ show, onHide, purchase, transaction, user }) {
       <Modal.Body>
         {transaction && pokemon && (
           <div>
-            {transaction.sellerId !== user._id && (
+            {transaction.seller !== user.username && (
               <>
                 <div className="row">
                   <div className="col-6 ps-5">Pokemon</div>
@@ -33,15 +33,15 @@ function PurchaseModal({ show, onHide, purchase, transaction, user }) {
                 </div>
                 <div className="row">
                   <div className="col-6 ps-5">Seller</div>
-                  <div className="col-6">{transaction.sellerId}</div>
+                  <div className="col-6">{transaction.seller}</div>
                 </div>
                 <div className="row">
                   <div className="col-6 ps-5">Height</div>
-                  <div className="col-6">{transaction.height}</div>
+                  <div className="col-6">{transaction.height} m</div>
                 </div>
                 <div className="row">
                   <div className="col-6 ps-5">Weight</div>
-                  <div className="col-6">{transaction.weight}</div>
+                  <div className="col-6">{transaction.weight} kg</div>
                 </div>
                 <div className="row">
                   <div className="col-6 ps-5">IV</div>
@@ -49,11 +49,11 @@ function PurchaseModal({ show, onHide, purchase, transaction, user }) {
                 </div>
                 <div className="row mb-4">
                   <div className="col-6 ps-5">Price</div>
-                  <div className="col-6">{transaction.price}</div>
+                  <div className="col-6">${transaction.price}</div>
                 </div>
               </>
             )}
-            {transaction.sellerId === user._id && (
+            {transaction.seller === user.username && (
               <div className="row">
                 <div className="col">
                   Can't purchase your own Pokemon, would you like to edit?
@@ -65,8 +65,15 @@ function PurchaseModal({ show, onHide, purchase, transaction, user }) {
         {transaction && (
           <div className="text-end mt-4">
             {/* make it edit modal if this is the user's listing */}
-            {transaction.sellerId === user._id ? (
-              <button className="btn btn-primary">Edit Listing</button>
+            {transaction.seller === user.username ? (
+              <button
+                className="btn btn-primary"
+                onClick={() => {
+                  edit(transaction);
+                }}
+              >
+                Edit Listing
+              </button>
             ) : (
               <button
                 className="btn btn-primary"

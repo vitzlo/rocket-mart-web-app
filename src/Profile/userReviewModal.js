@@ -34,7 +34,7 @@ function UserReviewModal({
       show={show}
       onHide={handleClose}
     >
-      <Modal.Header closeButton>
+      <Modal.Header closeButton closeVariant="white">
         <Modal.Title>Review</Modal.Title>
       </Modal.Header>
       <Modal.Body>

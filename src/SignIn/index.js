@@ -11,7 +11,7 @@ function User({ setUser, ...props }) {
       size="md"
       aria-labelledby="contained-modal-title-vcenter"
       centered
-      className="rm-account-modal"
+      className="rm-account-modal rm-modal-bg"
     >
       <Modal.Header closeButton closeVariant="white">
         <Modal.Title

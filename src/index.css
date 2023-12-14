@@ -194,6 +194,22 @@ body {
   height: 60px;
 }
 
+/* Profile Review */
+.rm-profile-review {
+  width: 23%;
+  min-width: 255px;
+  margin: 1%;
+  background-color: var(--primary-color);
+  border-radius: 12px;
+  margin-bottom: 12px;
+  padding: 12px;
+}
+
+/* Profile Review Modal */
+.rm-profile-review-modal .modal-content {
+  background-color: var(--dark-grey);
+}
+
 /* small pokemon */
 .rm-small-pokemon {
   position: relative;
@@ -286,8 +302,6 @@ body {
   padding-left: 20px;
 }
 
-
-
 /* Pokemon Types */
 .rm-type {
   border-radius: 16px;
@@ -310,7 +324,7 @@ body {
 .rm-listing {
   background-color: #404040;
   border-radius: 12px;
-  outline-color:1px #8591ce;
+  outline-color: 1px #8591ce;
   margin-bottom: 12px;
   padding: 12px;
 }

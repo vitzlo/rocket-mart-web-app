@@ -3,6 +3,14 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Tab, Tabs } from "react-bootstrap";
 import ProfileListingList from "./profileListingList";
 import { blankPfpPath, pfpPathToSvg } from "../Utils/pfp-utils";
+import {
+  createUserReview,
+  deleteUserReviewById,
+  findUserReviewBySubject,
+  updateUserReview,
+} from "../Utils/UserReviews/client";
+import ProfileReviewList from "./profileReviewList";
+import UserReviewModal from "./userReviewModal";
 import User from "../SignIn";
 import { getDateString } from "../Utils/date-utils";
 import PurchaseModal from "../Utils/purchase";
@@ -25,6 +33,11 @@ function Profile({ user, setUser }) {
   // purchase modal
   const [purchaseModalShow, setPurchaseModalShow] = useState(false);
   const [selectedListing, setSelectedListing] = useState(undefined);
+  // user reviews
+  const [reviews, setReviews] = useState([]);
+  const [review, setReview] = useState(null);
+  // review modal
+  const [reviewModalShow, setReviewModalShow] = useState(false);
   const navigate = useNavigate();
 
   const signout = async () => {
@@ -50,13 +63,46 @@ function Profile({ user, setUser }) {
     setPurchaseModalShow(false);
   };
 
+  const createReview = async (reviewBody) => {
+    // create a new review
+    const newReview = await createUserReview({
+      ...reviewBody,
+      reviewer: user.username,
+      subject: account.username,
+    });
+    setReviews([...reviews, newReview]);
+    setReview(newReview);
+  };
+
+  const editReview = async (reviewBody) => {
+    // update the existing review
+    const newReview = {
+      ...review,
+      ...reviewBody,
+    };
+    updateUserReview(newReview);
+    setReviews([...reviews.filter((r) => r._id !== review._id), newReview]);
+    setReview(newReview);
+  };
+
+  const deleteReview = async () => {
+    // delete the existing review
+    deleteUserReviewById(review._id);
+    setReviews(reviews.filter((r) => r._id !== review._id));
+    setReview(null);
+  };
+
   useEffect(() => {
     if (userId) {
-      client.findUserById(userId).then((data) => setAccount(data));
+      if (user && user._id === userId) {
+        navigate("/profile");
+      } else {
+        client.findUserById(userId).then((data) => setAccount(data));
+      }
     } else {
       setAccount(user);
     }
-  }, [userId, user]);
+  }, [userId, user, navigate]);
 
   useEffect(() => {
     if (account) {
@@ -67,8 +113,12 @@ function Profile({ user, setUser }) {
         setSold(results.filter((transaction) => transaction.buyerId));
         setListed(results.filter((transaction) => !transaction.buyerId));
       });
+      findUserReviewBySubject(account.username).then((results) => {
+        setReviews(results);
+        setReview(user && results.find((r) => r.reviewer === user.username));
+      });
     }
-  }, [account]);
+  }, [account, user]);
 
   return (
     <div className="container-fluid">
@@ -83,6 +133,14 @@ function Profile({ user, setUser }) {
         transaction={selectedListing}
         purchase={purchase}
         user={user}
+      />
+      <UserReviewModal
+        show={reviewModalShow}
+        handleClose={() => setReviewModalShow(false)}
+        review={review}
+        createReview={createReview}
+        editReview={editReview}
+        deleteReview={deleteReview}
       />
       {account && (
         <div className="row justify-content-center mx-2">
@@ -100,6 +158,14 @@ function Profile({ user, setUser }) {
             {!userId && (
               <button className="btn w-100 btn-danger" onClick={signout}>
                 Sign out
+              </button>
+            )}
+            {userId && user && (
+              <button
+                className="btn w-100 btn-primary"
+                onClick={() => setReviewModalShow(true)}
+              >
+                {review ? "Edit your review" : "Leave a review"}
               </button>
             )}
           </div>
@@ -131,6 +197,9 @@ function Profile({ user, setUser }) {
                   {sold && <ProfileListingList listings={sold} />}
                 </Tab>
               )}
+              <Tab eventKey="reviews" title="Reviews">
+                {reviews && <ProfileReviewList reviews={reviews} />}
+              </Tab>
             </Tabs>
           </div>
         </div>

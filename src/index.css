@@ -198,6 +198,22 @@ body {
   height: 60px;
 }
 
+/* Profile Review */
+.rm-profile-review {
+  width: 23%;
+  min-width: 255px;
+  margin: 1%;
+  background-color: var(--primary-color);
+  border-radius: 12px;
+  margin-bottom: 12px;
+  padding: 12px;
+}
+
+/* Profile Review Modal */
+.rm-profile-review-modal .modal-content {
+  background-color: var(--dark-grey);
+}
+
 /* small pokemon */
 .rm-small-pokemon {
   position: relative;
@@ -359,7 +375,13 @@ body {
 
 .rm-sign-user button {
   text-align: center !important;
+  margin-top: 20px;
   margin-bottom: 5px;
+}
+
+.rm-sign-error {
+  color: #ff6a49;
+  padding-top:5px;
 }
 
 .form-select {

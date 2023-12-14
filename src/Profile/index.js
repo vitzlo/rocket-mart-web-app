@@ -2,8 +2,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import { getDateString } from "../Utils/date-utils";
 import { useEffect, useState } from "react";
 import {
-  findTransactionByBuyerId,
-  findTransactionBySellerId,
+  findTransactionByBuyerName,
+  findTransactionBySellerName,
   purchaseTransactionById,
 } from "../Utils/Transactions/client";
 import * as client from "../Utils/Users/client";
@@ -86,12 +86,12 @@ function Profile({ user, setUser }) {
 
   useEffect(() => {
     if (account) {
-      findTransactionByBuyerId(account._id).then((results) =>
+      findTransactionByBuyerName(account.username).then((results) =>
         setPurchased(results)
       );
-      findTransactionBySellerId(account._id).then((results) => {
-        setSold(results.filter((transaction) => transaction.buyerId));
-        setListed(results.filter((transaction) => !transaction.buyerId));
+      findTransactionBySellerName(account.username).then((results) => {
+        setSold(results.filter((transaction) => transaction.buyer));
+        setListed(results.filter((transaction) => !transaction.buyer));
       });
       findUserReviewBySubject(account.username).then((results) => {
         setReviews(results);

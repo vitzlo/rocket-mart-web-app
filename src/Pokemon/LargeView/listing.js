@@ -10,7 +10,7 @@ const Listing = ({ listing, purchaseListing }) => {
         <div className="col-auto">
           <p>List Date:</p>
           <p>Sold by: </p>
-          {listing.buyerId && (
+          {listing.buyer && (
             <>
               <p>Purchased On:</p>
               <p>By:</p>
@@ -19,11 +19,11 @@ const Listing = ({ listing, purchaseListing }) => {
         </div>
         <div className="col-auto" style={{ marginBottom: "10px" }}>
           <p> {getDateString(listing.timeOfListing)}</p>
-          <p>{listing.sellerId}</p>
-          {listing.buyerId && (
+          <p>{listing.seller}</p>
+          {listing.buyer && (
             <>
               <p>{getDateString(listing.timeOfPurchase)}</p>
-              <p>{listing.buyerId}</p>
+              <p>{listing.buyer}</p>
             </>
           )}
         </div>
@@ -48,7 +48,7 @@ const Listing = ({ listing, purchaseListing }) => {
         </div>
         <div className="col-auto">
           {/* TODO: override button styles */}
-          {!listing.buyerId && (
+          {!listing.buyer && (
             <Button
               onClick={() => purchaseListing(listing._id)}
               variant="primary"

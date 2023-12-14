@@ -44,7 +44,7 @@ const ProfileListing = ({
           <div className="col">
             <h3>{pokemon.name}</h3>
             <p>listed on: {getDateString(listing.timeOfListing)}</p>
-            {listing.buyerId && (
+            {listing.buyer && (
               <p>purchased on: {getDateString(listing.timeOfPurchase)}</p>
             )}
             <div className="row flex-nowrap">
@@ -53,7 +53,7 @@ const ProfileListing = ({
               </div>
               <div className="col-auto">
                 {/* TODO: override button styles */}
-                {!listing.buyerId && buyable && (
+                {!listing.buyer && buyable && (
                   <Button
                     onClick={(e) => {
                       e.stopPropagation();

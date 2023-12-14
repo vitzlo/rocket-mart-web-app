@@ -24,7 +24,7 @@ function LargePokemon({ user, setUser }) {
   const updateListings = async (newListing) => {
     setListing(newListing);
     const listed = await findTransactionsForPokemon(pokemon.id);
-    let unsold = listed.filter((listing) => !listing.buyerId);
+    let unsold = listed.filter((listing) => !listing.buyer);
     console.log("unsold: ", unsold);
     console.log("transaction: ", newListing);
     setListedPokemon(
@@ -64,7 +64,7 @@ function LargePokemon({ user, setUser }) {
       // sets the transactions for pokemon
       const listed = await findTransactionsForPokemon(id);
       // filter out sold pokemon
-      let unsold = listed.filter((listing) => !listing.buyerId);
+      let unsold = listed.filter((listing) => !listing.buyer);
       if (transactionId) {
         setListedPokemon(
           unsold.filter((listing) => listing._id !== transactionId)
@@ -146,7 +146,7 @@ function LargePokemon({ user, setUser }) {
             </div>
             <div className="col rm-large-listings">
               {listing &&
-                (listing.buyerId ? (
+                (listing.buyer ? (
                   <div>
                     <h1>Sold Listing</h1>
                     <Listing

@@ -38,8 +38,8 @@ const Listing = ({ listing, pressPurchase }) => {
           <p>IV:</p>
         </div>
         <div className="col">
-          <p> {listing.height}</p>
-          <p> {listing.weight}</p>
+          <p> {listing.height} m</p>
+          <p> {listing.weight} kg</p>
           <p>{listing.iv}</p>
         </div>
       </div>

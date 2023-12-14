@@ -33,15 +33,15 @@ function PurchaseModal({ show, onHide, purchase, edit, transaction, user }) {
                 </div>
                 <div className="row">
                   <div className="col-6 ps-5">Seller</div>
-                  <div className="col-6">{transaction.sellerId}</div>
+                  <div className="col-6">{transaction.seller}</div>
                 </div>
                 <div className="row">
                   <div className="col-6 ps-5">Height</div>
-                  <div className="col-6">{transaction.height}</div>
+                  <div className="col-6">{transaction.height} m</div>
                 </div>
                 <div className="row">
                   <div className="col-6 ps-5">Weight</div>
-                  <div className="col-6">{transaction.weight}</div>
+                  <div className="col-6">{transaction.weight} kg</div>
                 </div>
                 <div className="row">
                   <div className="col-6 ps-5">IV</div>
@@ -49,7 +49,7 @@ function PurchaseModal({ show, onHide, purchase, edit, transaction, user }) {
                 </div>
                 <div className="row mb-4">
                   <div className="col-6 ps-5">Price</div>
-                  <div className="col-6">{transaction.price}</div>
+                  <div className="col-6">${transaction.price}</div>
                 </div>
               </>
             )}

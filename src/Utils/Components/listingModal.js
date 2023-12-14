@@ -63,6 +63,7 @@ function ListingModal({
             type="number"
             min="0"
             value={weight}
+            placeholder={pokemon && pokemon.weight}
             onChange={(e) => setWeight(e.target.value)}
           />
         </div>
@@ -74,11 +75,12 @@ function ListingModal({
             type="number"
             min="0"
             value={height}
+            placeholder={pokemon && pokemon.height}
             onChange={(e) => setHeight(e.target.value)}
           />
         </div>
         <div>
-          <label for="iv-input">IV</label>
+          <label for="iv-input">IV (0-31)</label>
           <input
             className="form-control mb-2"
             id="iv-input"
@@ -86,11 +88,12 @@ function ListingModal({
             min="0"
             max="31"
             value={iv}
+            placeholder="15"
             onChange={(e) => setIv(e.target.value)}
           />
         </div>
         <div>
-          <label for="price-input">Price</label>
+          <label for="price-input">Price ($)</label>
           <input
             className="form-control mb-2"
             id="price-input"

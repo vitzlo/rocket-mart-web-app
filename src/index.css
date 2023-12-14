@@ -325,6 +325,10 @@ body {
   padding-left: 20px;
 }
 
+.rm-large-pokemon .rm-pokemon-type {
+  min-width: 320px;
+}
+
 /* Pokemon Types */
 .rm-type {
   border-radius: 16px;
@@ -345,6 +349,7 @@ body {
 
 /* seller listing on large view */
 .rm-listing {
+  min-width: 256px;
   background-color: #404040;
   border-radius: 12px;
   outline-color: 1px #8591ce;

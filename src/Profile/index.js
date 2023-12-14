@@ -236,7 +236,9 @@ function Profile({ user, setUser }) {
                   ) : purchased?.length ? (
                     <ProfileListingList listings={purchased} />
                   ) : (
-                    <h2>No Pokemon Bought</h2>
+                    <div className="text-center mt-5">
+                      <h2>No Pokemon Purchased</h2>
+                    </div>
                   )}
                 </div>
               </Tab>
@@ -263,7 +265,9 @@ function Profile({ user, setUser }) {
                         deleteListing={deleteListing}
                       />
                     ) : (
-                      <h2>No Pokemon Listed</h2>
+                      <div className="text-center mt-5">
+                        <h2>No Pokemon Listed</h2>
+                      </div>
                     )}
                   </div>
                 </Tab>
@@ -283,7 +287,9 @@ function Profile({ user, setUser }) {
                     ) : sold?.length ? (
                       <ProfileListingList listings={sold} />
                     ) : (
-                      <h2>No Pokemon Sold</h2>
+                      <div className="text-center mt-5">
+                        <h2>No Pokemon Sold</h2>
+                      </div>
                     )}
                   </div>
                 </Tab>
@@ -302,7 +308,9 @@ function Profile({ user, setUser }) {
                   ) : reviews?.length ? (
                     <ProfileReviewList reviews={reviews} />
                   ) : (
-                    <h2>No reviews</h2>
+                    <div className="text-center mt-5">
+                      <h2>No reviews</h2>
+                    </div>
                   )}
                 </div>
               </Tab>

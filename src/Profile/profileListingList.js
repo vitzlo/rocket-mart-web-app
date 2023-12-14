@@ -5,6 +5,8 @@ function ProfileListingList({
   buyable,
   editable = false,
   pressPurchase,
+  editListing,
+  deleteListing,
 }) {
   return (
     <div className="p-4 row justify-content-center">
@@ -15,6 +17,8 @@ function ProfileListingList({
           pressPurchase={pressPurchase}
           editable={editable}
           buyable={buyable}
+          editListing={editListing}
+          deleteListing={deleteListing}
         />
       ))}
     </div>

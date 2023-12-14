@@ -9,12 +9,18 @@ function SignIn({ onHide, setUser }) {
     password: "",
     email: "",
   });
+  const [error, setError] = useState(false);
   const navigate = useNavigate();
   const signin = async () => {
     const response = await client.signin(credentials);
-    setUser(response);
-    onHide();
-    navigate("/profile");
+    if (response) {
+      setError(false);
+      setUser(response);
+      onHide();
+      navigate("/profile");
+    } else {
+      setError(true);
+    }
   };
   return (
     <div className="rm-sign-user">
@@ -33,13 +39,23 @@ function SignIn({ onHide, setUser }) {
         <label>Password</label> <br />
         <input
           className="w-100"
-          type="text"
+          type="password"
           placeholder="Password"
+          style={{marginBottom: "0px"}}
           value={credentials.password}
           onChange={(e) =>
             setCredentials({ ...credentials, password: e.target.value })
           }
         />
+        <div>
+          {error ? (
+            <label className="rm-sign-error">
+              Username or password is incorrect.
+            </label>
+          ) : (
+            <></>
+          )}
+        </div>
       </div>
       <Button className="w-100" onClick={signin}>
         Sign in

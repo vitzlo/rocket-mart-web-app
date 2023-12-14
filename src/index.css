@@ -352,7 +352,13 @@ body {
 
 .rm-sign-user button {
   text-align: center !important;
+  margin-top: 20px;
   margin-bottom: 5px;
+}
+
+.rm-sign-error {
+  color: #ff6a49;
+  padding-top:5px;
 }
 
 .form-select {

@@ -7,7 +7,7 @@ import { generatePfp } from "../Utils/pfp-utils";
 
 function SignUp({ onHide, setUser }) {
   const [error, setError] = useState("");
-  const regions = ["Kalos", "Unova", "Kanto", "Johto", "Galar"];
+  const regions = ["KALOS", "UNOVA", "KANTO", "JOHTO", "GALAR"];
   const signup = async () => {
     try {
       credentials["pfp"] = generatePfp();
@@ -23,6 +23,8 @@ function SignUp({ onHide, setUser }) {
     username: "",
     password: "",
     email: "",
+    region: "KALOS",
+    type: "BUYER",
   });
   const navigate = useNavigate();
   return (
@@ -66,7 +68,13 @@ function SignUp({ onHide, setUser }) {
         <div className="row flex-nowrap">
           <div className="col">
             <label>Region</label>
-            <Form.Select className="w-100" aria-label="Region">
+            <Form.Select
+              className="w-100"
+              aria-label="Region"
+              onChange={(e) =>
+                setCredentials({ ...credentials, region: e.target.value })
+              }
+            >
               {regions.map((val) => (
                 <option key={val} value={val}>
                   {val}
@@ -77,9 +85,14 @@ function SignUp({ onHide, setUser }) {
 
           <div className="col">
             <label>Position</label>
-            <Form.Select aria-label="Position">
-              <option>Buyer</option>
-              <option>Seller</option>
+            <Form.Select
+              aria-label="Position"
+              onChange={(e) =>
+                setCredentials({ ...credentials, type: e.target.value })
+              }
+            >
+              <option>BUYER</option>
+              <option>SELLER</option>
             </Form.Select>
           </div>
         </div>

@@ -12,19 +12,25 @@ import ProfileListingList from "./profileListingList";
 import { blankPfpPath, pfpPathToSvg } from "../Utils/pfp-utils";
 import {
   createUserReview,
+  deleteUserReviewById,
   findUserReviewBySubject,
   updateUserReview,
 } from "../Utils/UserReviews/client";
 import ProfileReviewList from "./profileReviewList";
+import UserReviewModal from "./userReviewModal";
 
 function Profile({ user, setUser }) {
   const { userId } = useParams();
+  const [account, setAccount] = useState(null);
+  // lists of transactions
   const [purchased, setPurchased] = useState();
   const [listed, setListed] = useState([]);
   const [sold, setSold] = useState([]);
+  // user reviews
   const [reviews, setReviews] = useState([]);
   const [review, setReview] = useState(null);
-  const [account, setAccount] = useState(null);
+  // review modal
+  const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
   const signout = async () => {
@@ -58,9 +64,16 @@ function Profile({ user, setUser }) {
       ...review,
       ...reviewBody,
     };
-    await updateUserReview(newReview);
+    updateUserReview(newReview);
     setReviews([...reviews.filter((r) => r._id !== review._id), newReview]);
     setReview(newReview);
+  };
+
+  const deleteReview = async () => {
+    // delete the existing review
+    deleteUserReviewById(review._id);
+    setReviews(reviews.filter((r) => r._id !== review._id));
+    setReview(null);
   };
 
   useEffect(() => {
@@ -89,6 +102,14 @@ function Profile({ user, setUser }) {
 
   return (
     <div className="container-fluid">
+      <UserReviewModal
+        show={showModal}
+        handleClose={() => setShowModal(false)}
+        review={review}
+        createReview={createReview}
+        editReview={editReview}
+        deleteReview={deleteReview}
+      />
       {account && (
         <div className="row justify-content-center mx-2">
           <div className="col-auto mb-4">
@@ -107,23 +128,14 @@ function Profile({ user, setUser }) {
                 Sign out
               </button>
             )}
-            {userId &&
-              user &&
-              (review ? (
-                <button
-                  className="btn w-100 btn-primary"
-                  onClick={() => editReview({ review: "review 2", stars: 2 })}
-                >
-                  Edit your review
-                </button>
-              ) : (
-                <button
-                  className="btn w-100 btn-primary"
-                  onClick={() => createReview({ review: "review", stars: 5 })}
-                >
-                  Leave a review
-                </button>
-              ))}
+            {userId && user && (
+              <button
+                className="btn w-100 btn-primary"
+                onClick={() => setShowModal(true)}
+              >
+                {review ? "Edit your review" : "Leave a review"}
+              </button>
+            )}
           </div>
           <div className="row mx-2">
             <Tabs

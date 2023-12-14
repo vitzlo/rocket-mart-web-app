@@ -205,6 +205,11 @@ body {
   padding: 12px;
 }
 
+/* Profile Review Modal */
+.rm-profile-review-modal .modal-content {
+  background-color: var(--dark-grey);
+}
+
 /* small pokemon */
 .rm-small-pokemon {
   position: relative;

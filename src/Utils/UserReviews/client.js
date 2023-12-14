@@ -47,3 +47,8 @@ export const findUserReviewBySubject = async (subject) => {
   }
   return response.data.map(pruneUserReview);
 };
+
+export const deleteUserReviewById = async (id) => {
+  const response = await request.delete(`${API_BASE}/${id}`);
+  return response.data;
+};

@@ -4,15 +4,15 @@ function ProfileListingList({
   listings,
   buyable,
   editable = false,
-  purchaseListing,
+  pressPurchase,
 }) {
   return (
     <div className="p-4 row">
       {listings.map((transaction) => (
         <ProfileListing
-          transactionId={transaction._id}
+          transaction={transaction}
           key={transaction._id}
-          purchaseListing={purchaseListing}
+          pressPurchase={pressPurchase}
           editable={editable}
           buyable={buyable}
         />

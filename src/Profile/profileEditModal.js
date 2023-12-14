@@ -42,7 +42,7 @@ function ProfileEditModal({ show, handleClose, user, editUser }) {
       </Modal.Header>
       <Modal.Body>
         <div>
-          <label for="edit-password-input">Password: </label>
+          <label for="edit-password-input">Password </label>
           <input
             className="form-control mb-2"
             id="edit-password-input"
@@ -52,10 +52,11 @@ function ProfileEditModal({ show, handleClose, user, editUser }) {
           />
         </div>
         <div>
-          <label for="edit-region-select">Region: </label>
+          <label for="edit-region-select">Region </label>
           <select
             className="form-select mb-2"
             id="edit-region-select"
+            value={regionText}
             onChange={(e) => setRegionText(e.target.value)}
           >
             {regions.map((val) => (
@@ -66,7 +67,7 @@ function ProfileEditModal({ show, handleClose, user, editUser }) {
           </select>
         </div>
         <div>
-          <label for="edit-email-input">Email: </label>
+          <label for="edit-email-input">Email </label>
           <input
             className="form-control mb-2"
             id="edit-email-input"

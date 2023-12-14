@@ -222,10 +222,22 @@ body {
   width: 23%;
   min-width: 255px;
   margin: 1%;
-  background-color: var(--primary-color);
+  background-color: #404040;
+  border: 1px solid #eca2bd;
   border-radius: 12px;
   margin-bottom: 12px;
   padding: 12px;
+}
+
+.rm-profile-review p {
+  margin-bottom: 0;
+  padding: 0;
+  font-size: 14px;
+  color: #bbbbbb;
+}
+
+.rm-profile-review label {
+  font-size: 1.2rem;
 }
 
 /* Profile Review Modal */
@@ -443,6 +455,16 @@ body {
 
 .btn-primary:active {
   background-color: #d34579 !important;
+}
+
+.btn-secondary {
+  background-color: #6475cb;
+}
+.btn-secondary:hover {
+  background-color: #5163bd;
+}
+.btn-secondary:active {
+  background-color: #5163bd;;
 }
 
 a {

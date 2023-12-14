@@ -184,7 +184,7 @@ function Profile({ user, setUser }) {
       />
       {account && (
         <div className="row justify-content-center mx-2">
-          <div className="col-auto mb-4">
+          <div className="col-auto text-center mb-4">
             <img
               src={account.pfp ? pfpPathToSvg[account.pfp] : blankPfpPath}
               alt="pfp icon"
@@ -197,16 +197,25 @@ function Profile({ user, setUser }) {
                 account.signUpDate
               )}`}</div>
             </div>
-            {!username && (
-              <button className="btn w-100 btn-danger" onClick={signout}>
-                Sign out
-              </button>
-            )}
-            {!username && (
-              <button className="btn w-100 btn-warning" onClick={pressEdit}>
-                Edit Profile
-              </button>
-            )}
+            <div className="flex-nowrap row justify-content-center ">
+              {!username && (
+                <button
+                  className="col-auto btn w-50 btn-primary me-2"
+                  onClick={pressEdit}
+                >
+                  Edit Profile
+                </button>
+              )}
+              {!username && (
+                <button
+                  className="col-auto btn w-50 btn-secondary"
+                  onClick={signout}
+                >
+                  Sign out
+                </button>
+              )}
+            </div>
+
             {username && user && (
               <button
                 className="btn w-100 btn-primary"

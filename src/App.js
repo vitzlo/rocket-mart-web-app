@@ -33,7 +33,7 @@ function App() {
             element={<Profile user={user} setUser={setUser} />}
           />
           <Route
-            path="profile/:userId"
+            path="profile/:username"
             element={<Profile user={user} setUser={setUser} />}
           />
           {/* needs to take a parameter, or use the URL */}

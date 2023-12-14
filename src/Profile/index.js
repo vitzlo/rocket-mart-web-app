@@ -20,7 +20,7 @@ import ProfileReviewList from "./profileReviewList";
 import UserReviewModal from "./userReviewModal";
 
 function Profile({ user, setUser }) {
-  const { userId } = useParams();
+  const { username } = useParams();
   const [account, setAccount] = useState(null);
   // lists of transactions
   const [purchased, setPurchased] = useState();
@@ -77,12 +77,12 @@ function Profile({ user, setUser }) {
   };
 
   useEffect(() => {
-    if (userId) {
-      client.findUserById(userId).then((data) => setAccount(data));
+    if (username) {
+      client.findUserByName(username).then((data) => setAccount(data));
     } else {
       setAccount(user);
     }
-  }, [userId, user]);
+  }, [username, user]);
 
   useEffect(() => {
     if (account) {
@@ -123,12 +123,12 @@ function Profile({ user, setUser }) {
               <div className="rm-private-both">{account.email}</div>
               <div>{`Joined ${getDateString(account.signUpDate)}`}</div>
             </div>
-            {!userId && (
+            {!username && (
               <button className="btn w-100 btn-danger" onClick={signout}>
                 Sign out
               </button>
             )}
-            {userId && user && (
+            {username && user && (
               <button
                 className="btn w-100 btn-primary"
                 onClick={() => setShowModal(true)}
@@ -153,8 +153,8 @@ function Profile({ user, setUser }) {
                   {listed && (
                     <ProfileListingList
                       listings={listed}
-                      editable={!userId}
-                      buyable={userId}
+                      editable={!username}
+                      buyable={username}
                       purchaseListing={purchaseListing}
                     />
                   )}

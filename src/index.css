@@ -113,11 +113,21 @@ body {
   background-color: var(--background-color);
 }
 
+.rm-nav img {
+  width: 60px !important;
+  padding: 0px;
+  margin-left: auto;
+}
+
 .rm-search {
+  color:#fff !important;
   border-radius: 20px;
-  width: 75%;
+  width: 60vw;
   height: 40px;
-  margin-right: 200px;
+  margin-right: 5%;
+  border:2px solid #6a6a6a !important;
+  background-color: #404040;
+  display: inline-flex;
 }
 
 /* Carousel styles */

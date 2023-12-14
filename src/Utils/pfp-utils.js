@@ -16,5 +16,4 @@ export const generatePfp = () => {
   return pfpPool[Math.floor(Math.random() * pfpPool.length)];
 };
 
-export const blankPfpPath =
-  "https://www.svgrepo.com/show/135058/circle-outline.svg";
+export const blankPfpPath = "/images/anonymous_user.svg";

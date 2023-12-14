@@ -19,20 +19,23 @@ function NavigationBar({ user, setUser }) {
   };
 
   return (
-    <Navbar className="rm-nav" data-bs-theme="dark">
-      <Navbar.Brand className="" href="#home">
-        Rocket Mart
+    <Navbar className="rm-nav w-100" data-bs-theme="dark">
+      <Navbar.Brand href="#home">
+        <div className="row flex-nowrap align-middle">
+          <img src="/images/meowth.png" width="50px" alt="RM" />
+          <span className="d-none d-md-block mt-2">Rocket Mart</span>
+        </div>
       </Navbar.Brand>
       <input
         className="rm-search px-3"
         type="search"
-        placeholder="Find your next pokemon"
+        placeholder="Find your next pokemon..."
         onChange={handleSearch}
         onKeyUp={handleEnter}
         value={searchInput}
       />
       <div
-        className="ms-5 float-end .rm-curser-pointer"
+        className="ms-5 .rm-curser-pointer ms-auto"
         onClick={() => (!user ? setModalShow(true) : navigate("/profile"))}
       >
         <img
@@ -40,6 +43,7 @@ function NavigationBar({ user, setUser }) {
           alt="profile"
           width="50px"
           height="50px"
+          className="float-end"
         />
       </div>
       <User

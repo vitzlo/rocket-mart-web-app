@@ -38,10 +38,7 @@ function App() {
           />
           {/* needs to take a parameter, or use the URL */}
           <Route path="results/:search" element={<SearchResults />} />
-          <Route
-            path="results/type/:type"
-            element={<SearchResults />}
-          />
+          <Route path="results/type/:type" element={<SearchResults />} />
           {/* needs to take a parameter, or use the URL */}
           <Route
             path="pokemon/:pokemonId"

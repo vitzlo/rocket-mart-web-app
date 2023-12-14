@@ -56,7 +56,7 @@ function PurchaseModal({ show, onHide, purchase, transaction, user }) {
             {transaction.sellerId === user._id && (
               <div className="row">
                 <div className="col">
-                  Cant purchase your own Pokemon, would you like to edit?
+                  Can't purchase your own Pokemon, would you like to edit?
                 </div>
               </div>
             )}

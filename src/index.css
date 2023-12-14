@@ -348,6 +348,12 @@ body {
   max-width: 450px;
 }
 
+/* Profile editing modal */
+.rm-profile-editing-modal .modal-content {
+  background-color: var(--dark-grey);
+  max-width: 450px;
+}
+
 .rm-modal-switch {
   font-size: 0.9rem;
 }

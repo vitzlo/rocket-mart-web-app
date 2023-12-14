@@ -20,6 +20,7 @@ import {
   purchaseTransactionById,
 } from "../Utils/Transactions/client";
 import * as client from "../Utils/Users/client";
+import { ProfileEditModal } from "./profileEditModal.js";
 
 function Profile({ user, setUser }) {
   const { userId } = useParams();
@@ -38,6 +39,8 @@ function Profile({ user, setUser }) {
   const [review, setReview] = useState(null);
   // review modal
   const [reviewModalShow, setReviewModalShow] = useState(false);
+  // editing modal
+  const [editModalShow, setEditModalShow] = useState(false);
   const navigate = useNavigate();
 
   const signout = async () => {
@@ -62,6 +65,16 @@ function Profile({ user, setUser }) {
     setSold([...sold, purchase]);
     setPurchaseModalShow(false);
   };
+
+  const pressEdit = async () => {
+    setEditModalShow(true);
+  }
+
+  const editUser = async (editedUser) => {
+    await client.updateUser(editedUser);
+    setUser(editedUser);
+    setAccount(user);
+  }
 
   const createReview = async (reviewBody) => {
     // create a new review
@@ -142,6 +155,12 @@ function Profile({ user, setUser }) {
         editReview={editReview}
         deleteReview={deleteReview}
       />
+      <ProfileEditModal
+        show={editModalShow}
+        handleClose={() => setEditModalShow(false)}
+        user={user}
+        editUser={editUser}
+      />
       {account && (
         <div className="row justify-content-center mx-2">
           <div className="col-auto mb-4">
@@ -158,6 +177,11 @@ function Profile({ user, setUser }) {
             {!userId && (
               <button className="btn w-100 btn-danger" onClick={signout}>
                 Sign out
+              </button>
+            )}
+            {!userId && (
+              <button className="btn w-100 btn-warning" onClick={pressEdit}>
+                Edit Profile
               </button>
             )}
             {userId && user && (

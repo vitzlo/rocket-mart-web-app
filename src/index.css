@@ -96,6 +96,10 @@ body {
   cursor: pointer;
 }
 
+.rm-capitalize {
+  text-transform: capitalize;
+}
+
 /* Nav Bar Styles */
 .rm-nav {
   max-width: 100%;
@@ -335,6 +339,11 @@ body {
 .rm-listing p {
   margin: 0;
   padding: 0;
+}
+
+/* Purchase Modal */
+.rm-purchase-modal .modal-content {
+  background-color: var(--dark-grey);
 }
 
 /* Sign in and Sign up modal */

@@ -1,36 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import { getDateString } from "../../Utils/date-utils";
-import { findPokemonById } from "../../Utils/client";
-import { findTransactionById } from "../../Utils/Transactions/client";
+import { findPokemonById } from "../../Utils/PokeAPI/client";
 import { useNavigate } from "react-router";
 
 const ProfileListing = ({
-  transactionId,
-  purchaseListing,
+  transaction,
+  pressPurchase,
   editable = false,
   buyable,
 }) => {
-  const [listing, setListing] = useState(null);
   const [pokemon, setPokemon] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    findTransactionById(transactionId).then((transaction) => {
-      setListing(transaction);
-      findPokemonById(transaction.pokemonId).then((pok) => {
-        setPokemon(pok);
-      });
+    findPokemonById(transaction.pokemonId).then((pok) => {
+      setPokemon(pok);
     });
-  }, [transactionId]);
+  }, [transaction]);
 
   return (
-    listing &&
     pokemon && (
       <div
         className="rm-profile-listing"
         onClick={() => {
-          navigate("/pokemon/transaction/" + transactionId);
+          navigate("/pokemon/transaction/" + transaction._id);
         }}
       >
         <div className="row">
@@ -43,21 +37,21 @@ const ProfileListing = ({
           </div>
           <div className="col">
             <h3>{pokemon.name}</h3>
-            <p>listed on: {getDateString(listing.timeOfListing)}</p>
-            {listing.buyerId && (
-              <p>purchased on: {getDateString(listing.timeOfPurchase)}</p>
+            <p>listed on: {getDateString(transaction.timeOfListing)}</p>
+            {transaction.buyer && (
+              <p>purchased on: {getDateString(transaction.timeOfPurchase)}</p>
             )}
             <div className="row flex-nowrap">
               <div className="col">
-                <h3>Price: {listing.price}</h3>
+                <h3>Price: {transaction.price}</h3>
               </div>
               <div className="col-auto">
                 {/* TODO: override button styles */}
-                {!listing.buyerId && buyable && (
+                {!transaction.buyer && buyable && (
                   <Button
                     onClick={(e) => {
                       e.stopPropagation();
-                      purchaseListing(listing._id);
+                      pressPurchase(transaction);
                     }}
                     variant="primary"
                   >

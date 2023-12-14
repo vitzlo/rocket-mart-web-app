@@ -1,12 +1,5 @@
-import { useParams, useNavigate } from "react-router-dom";
-import { getDateString } from "../Utils/date-utils";
 import { useEffect, useState } from "react";
-import {
-  findTransactionByBuyerId,
-  findTransactionBySellerId,
-  purchaseTransactionById,
-} from "../Utils/Transactions/client";
-import * as client from "../Utils/Users/client";
+import { useParams, useNavigate } from "react-router-dom";
 import { Tab, Tabs } from "react-bootstrap";
 import ProfileListingList from "./profileListingList";
 import { blankPfpPath, pfpPathToSvg } from "../Utils/pfp-utils";
@@ -18,19 +11,33 @@ import {
 } from "../Utils/UserReviews/client";
 import ProfileReviewList from "./profileReviewList";
 import UserReviewModal from "./userReviewModal";
+import User from "../SignIn";
+import { getDateString } from "../Utils/date-utils";
+import PurchaseModal from "../Utils/Components/purchase";
+import {
+  findTransactionByBuyerName,
+  findTransactionBySellerName,
+  purchaseTransactionById,
+} from "../Utils/Transactions/client";
+import * as client from "../Utils/Users/client";
 
 function Profile({ user, setUser }) {
-  const { userId } = useParams();
+  const { username } = useParams();
+  // display user + transactions
   const [account, setAccount] = useState(null);
-  // lists of transactions
   const [purchased, setPurchased] = useState();
   const [listed, setListed] = useState([]);
   const [sold, setSold] = useState([]);
+  // login modal
+  const [loginModalShow, setLoginModalShow] = useState(false);
+  // purchase modal
+  const [purchaseModalShow, setPurchaseModalShow] = useState(false);
+  const [selectedListing, setSelectedListing] = useState(undefined);
   // user reviews
   const [reviews, setReviews] = useState([]);
   const [review, setReview] = useState(null);
   // review modal
-  const [showModal, setShowModal] = useState(false);
+  const [reviewModalShow, setReviewModalShow] = useState(false);
   const navigate = useNavigate();
 
   const signout = async () => {
@@ -40,11 +47,20 @@ function Profile({ user, setUser }) {
     navigate("/home");
   };
 
-  const purchaseListing = async (id) => {
+  const pressPurchase = async (transaction) => {
+    if (user) {
+      await setSelectedListing(transaction);
+      setPurchaseModalShow(true);
+    } else {
+      setLoginModalShow(true);
+    }
+  };
+
+  const purchase = async (id) => {
     const purchase = await purchaseTransactionById(id);
     setListed(listed.filter((transaction) => transaction._id !== id));
     setSold([...sold, purchase]);
-    console.log(purchase);
+    setPurchaseModalShow(false);
   };
 
   const createReview = async (reviewBody) => {
@@ -77,21 +93,25 @@ function Profile({ user, setUser }) {
   };
 
   useEffect(() => {
-    if (userId) {
-      client.findUserById(userId).then((data) => setAccount(data));
+    if (username) {
+      if (user && user.username === username) {
+        navigate("/profile");
+      } else {
+        client.findUserByName(username).then((data) => setAccount(data));
+      }
     } else {
       setAccount(user);
     }
-  }, [userId, user]);
+  }, [username, user, navigate]);
 
   useEffect(() => {
     if (account) {
-      findTransactionByBuyerId(account._id).then((results) =>
+      findTransactionByBuyerName(account.username).then((results) =>
         setPurchased(results)
       );
-      findTransactionBySellerId(account._id).then((results) => {
-        setSold(results.filter((transaction) => transaction.buyerId));
-        setListed(results.filter((transaction) => !transaction.buyerId));
+      findTransactionBySellerName(account.username).then((results) => {
+        setSold(results.filter((transaction) => transaction.buyer));
+        setListed(results.filter((transaction) => !transaction.buyer));
       });
       findUserReviewBySubject(account.username).then((results) => {
         setReviews(results);
@@ -102,9 +122,21 @@ function Profile({ user, setUser }) {
 
   return (
     <div className="container-fluid">
+      <User
+        show={loginModalShow}
+        onHide={() => setLoginModalShow(false)}
+        setUser={setUser}
+      />
+      <PurchaseModal
+        show={purchaseModalShow}
+        onHide={() => setPurchaseModalShow(false)}
+        transaction={selectedListing}
+        purchase={purchase}
+        user={user}
+      />
       <UserReviewModal
-        show={showModal}
-        handleClose={() => setShowModal(false)}
+        show={reviewModalShow}
+        handleClose={() => setReviewModalShow(false)}
         review={review}
         createReview={createReview}
         editReview={editReview}
@@ -123,15 +155,15 @@ function Profile({ user, setUser }) {
               <div className="rm-private-both">{account.email}</div>
               <div>{`Joined ${getDateString(account.signUpDate)}`}</div>
             </div>
-            {!userId && (
+            {!username && (
               <button className="btn w-100 btn-danger" onClick={signout}>
                 Sign out
               </button>
             )}
-            {userId && user && (
+            {username && user && (
               <button
                 className="btn w-100 btn-primary"
-                onClick={() => setShowModal(true)}
+                onClick={() => setReviewModalShow(true)}
               >
                 {review ? "Edit your review" : "Leave a review"}
               </button>
@@ -153,9 +185,9 @@ function Profile({ user, setUser }) {
                   {listed && (
                     <ProfileListingList
                       listings={listed}
-                      editable={!userId}
-                      buyable={userId}
-                      purchaseListing={purchaseListing}
+                      editable={!username}
+                      buyable={username}
+                      pressPurchase={pressPurchase}
                     />
                   )}
                 </Tab>

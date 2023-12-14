@@ -71,12 +71,27 @@ export const findUserById = async (id) => {
   return pruneUser(response.data);
 };
 
-export const updateRecentlyViewed = async (pokemonId) => {
-  const response = await request.put(
-    `${USERS_API}/recentlyViewed/${pokemonId}`
-  );
+export const findUserByName = async (username) => {
+  const response = await axios.get(`${BASE_API}/api/users`);
   if (!response.data) {
     return undefined;
   }
-  return pruneUser(response.data);
+
+  const user = response.data.find((u) => u.username === username);
+  if (!user) {
+    return undefined;
+  }
+
+  return pruneUser(user);
+};
+
+export const updateRecentlyViewed = async (pokemonId) => {
+  try {
+    const response = await request.put(
+      `${USERS_API}/recentlyViewed/${pokemonId}`
+    );
+    return pruneUser(response.data);
+  } catch (error) {
+    return undefined;
+  }
 };

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { findPokemonById } from "../../Utils/client";
+import { findPokemonById } from "../../Utils/PokeAPI/client";
 import Listing from "./listing";
 import User from "../../SignIn";
 import {
@@ -12,13 +12,20 @@ import {
 import PokemonTypes from "./Types/pokemonTypes";
 import { updateRecentlyViewed } from "../../Utils/Users/client";
 import { meowth_spin } from "../../Utils/loading";
+import PurchaseModal from "../../Utils/Components/purchase";
 
 function LargePokemon({ user, setUser }) {
+  const { pokemonId, transactionId } = useParams();
+  // display pokemon + transactions
   const [pokemon, setPokemon] = useState(undefined);
   const [listing, setListing] = useState(undefined);
   const [listedPokemon, setListedPokemon] = useState([]);
-  const { pokemonId, transactionId } = useParams();
-  const [modalShow, setModalShow] = useState(false);
+  // login modal
+  const [loginModalShow, setLoginModalShow] = useState(false);
+  // for purchasing
+  const [selectedListing, setSelectedListing] = useState(undefined);
+  const [purchaseModalShow, setPurchaseModalShow] = useState(false);
+  // loading
   const [loading, setLoading] = useState(true);
   // TODOS:
   // maybe add evolution chain as data shown?
@@ -26,20 +33,27 @@ function LargePokemon({ user, setUser }) {
   const updateListings = async (newListing) => {
     setListing(newListing);
     const listed = await findTransactionsForPokemon(pokemon.id);
-    let unsold = listed.filter((listing) => !listing.buyerId);
+    let unsold = listed.filter((listing) => !listing.buyer);
     console.log("unsold: ", unsold);
     console.log("transaction: ", newListing);
     setListedPokemon(
       unsold.filter((listing) => listing._id !== newListing._id)
     );
   };
-  const purchaseListing = async (id) => {
+
+  const purchase = async (id) => {
+    const purchase = await purchaseTransactionById(id);
+    updateListings(purchase);
+    setPurchaseModalShow(false);
+  };
+
+  const pressPurchase = async (transaction) => {
     if (user) {
-      const purchase = await purchaseTransactionById(id);
-      console.log(purchase);
-      updateListings(purchase);
+      console.log("press purchase: ", transaction);
+      await setSelectedListing(transaction);
+      setPurchaseModalShow(true);
     } else {
-      setModalShow(true);
+      setLoginModalShow(true);
     }
   };
 
@@ -66,7 +80,7 @@ function LargePokemon({ user, setUser }) {
       // sets the transactions for pokemon
       const listed = await findTransactionsForPokemon(id);
       // filter out sold pokemon
-      let unsold = listed.filter((listing) => !listing.buyerId);
+      let unsold = listed.filter((listing) => !listing.buyer);
       if (transactionId) {
         setListedPokemon(
           unsold.filter((listing) => listing._id !== transactionId)
@@ -91,10 +105,18 @@ function LargePokemon({ user, setUser }) {
   return (
     <div className="container-fluid rm-large-pokemon">
       <User
-        show={modalShow}
-        onHide={() => setModalShow(false)}
+        show={loginModalShow}
+        onHide={() => setLoginModalShow(false)}
         setUser={setUser}
       />
+      <PurchaseModal
+        show={purchaseModalShow}
+        onHide={() => setPurchaseModalShow(false)}
+        transaction={selectedListing}
+        purchase={purchase}
+        user={user}
+      />
+
       {pokemon && (
         <div>
           <div className="row">
@@ -153,22 +175,16 @@ function LargePokemon({ user, setUser }) {
             <div className="col rm-large-listings">
               {!loading &&
                 listing &&
-                (listing.buyerId ? (
+                (listing.buyer ? (
                   <div>
                     <h1>Sold Listing</h1>
-                    <Listing
-                      listing={listing}
-                      purchaseListing={purchaseListing}
-                    />
+                    <Listing listing={listing} pressPurchase={pressPurchase} />
                     <h1>Other Listings</h1>
                   </div>
                 ) : (
                   <div>
                     <h1>Your Listing</h1>
-                    <Listing
-                      listing={listing}
-                      purchaseListing={purchaseListing}
-                    />
+                    <Listing listing={listing} pressPurchase={pressPurchase} />
                     <h1>Other Listings</h1>
                   </div>
                 ))}
@@ -190,7 +206,7 @@ function LargePokemon({ user, setUser }) {
                   <Listing
                     key={listing.listingId}
                     listing={listing}
-                    purchaseListing={purchaseListing}
+                    pressPurchase={pressPurchase}
                   />
                 ))
               )}

@@ -20,7 +20,7 @@ import {
   purchaseTransactionById,
 } from "../Utils/Transactions/client";
 import * as client from "../Utils/Users/client";
-import { ProfileEditModal } from "./profileEditModal.js";
+import ProfileEditModal from "./profileEditModal";
 
 function Profile({ user, setUser }) {
   const { userId } = useParams();

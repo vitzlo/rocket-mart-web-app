@@ -1,12 +1,5 @@
-import { useParams, useNavigate } from "react-router-dom";
-import { getDateString } from "../Utils/date-utils";
 import { useEffect, useState } from "react";
-import {
-  findTransactionByBuyerName,
-  findTransactionBySellerName,
-  purchaseTransactionById,
-} from "../Utils/Transactions/client";
-import * as client from "../Utils/Users/client";
+import { useParams, useNavigate } from "react-router-dom";
 import { Tab, Tabs } from "react-bootstrap";
 import ProfileListingList from "./profileListingList";
 import { blankPfpPath, pfpPathToSvg } from "../Utils/pfp-utils";
@@ -18,19 +11,33 @@ import {
 } from "../Utils/UserReviews/client";
 import ProfileReviewList from "./profileReviewList";
 import UserReviewModal from "./userReviewModal";
+import User from "../SignIn";
+import { getDateString } from "../Utils/date-utils";
+import PurchaseModal from "../Utils/Components/purchase";
+import {
+  findTransactionByBuyerName,
+  findTransactionBySellerName,
+  purchaseTransactionById,
+} from "../Utils/Transactions/client";
+import * as client from "../Utils/Users/client";
 
 function Profile({ user, setUser }) {
   const { username } = useParams();
+  // display user + transactions
   const [account, setAccount] = useState(null);
-  // lists of transactions
   const [purchased, setPurchased] = useState();
   const [listed, setListed] = useState([]);
   const [sold, setSold] = useState([]);
+  // login modal
+  const [loginModalShow, setLoginModalShow] = useState(false);
+  // purchase modal
+  const [purchaseModalShow, setPurchaseModalShow] = useState(false);
+  const [selectedListing, setSelectedListing] = useState(undefined);
   // user reviews
   const [reviews, setReviews] = useState([]);
   const [review, setReview] = useState(null);
   // review modal
-  const [showModal, setShowModal] = useState(false);
+  const [reviewModalShow, setReviewModalShow] = useState(false);
   const navigate = useNavigate();
 
   const signout = async () => {
@@ -40,11 +47,20 @@ function Profile({ user, setUser }) {
     navigate("/home");
   };
 
-  const purchaseListing = async (id) => {
+  const pressPurchase = async (transaction) => {
+    if (user) {
+      await setSelectedListing(transaction);
+      setPurchaseModalShow(true);
+    } else {
+      setLoginModalShow(true);
+    }
+  };
+
+  const purchase = async (id) => {
     const purchase = await purchaseTransactionById(id);
     setListed(listed.filter((transaction) => transaction._id !== id));
     setSold([...sold, purchase]);
-    console.log(purchase);
+    setPurchaseModalShow(false);
   };
 
   const createReview = async (reviewBody) => {
@@ -78,11 +94,15 @@ function Profile({ user, setUser }) {
 
   useEffect(() => {
     if (username) {
-      client.findUserByName(username).then((data) => setAccount(data));
+      if (user && user.username === username) {
+        navigate("/profile");
+      } else {
+        client.findUserByName(username).then((data) => setAccount(data));
+      }
     } else {
       setAccount(user);
     }
-  }, [username, user]);
+  }, [username, user, navigate]);
 
   useEffect(() => {
     if (account) {
@@ -102,9 +122,21 @@ function Profile({ user, setUser }) {
 
   return (
     <div className="container-fluid">
+      <User
+        show={loginModalShow}
+        onHide={() => setLoginModalShow(false)}
+        setUser={setUser}
+      />
+      <PurchaseModal
+        show={purchaseModalShow}
+        onHide={() => setPurchaseModalShow(false)}
+        transaction={selectedListing}
+        purchase={purchase}
+        user={user}
+      />
       <UserReviewModal
-        show={showModal}
-        handleClose={() => setShowModal(false)}
+        show={reviewModalShow}
+        handleClose={() => setReviewModalShow(false)}
         review={review}
         createReview={createReview}
         editReview={editReview}
@@ -131,7 +163,7 @@ function Profile({ user, setUser }) {
             {username && user && (
               <button
                 className="btn w-100 btn-primary"
-                onClick={() => setShowModal(true)}
+                onClick={() => setReviewModalShow(true)}
               >
                 {review ? "Edit your review" : "Leave a review"}
               </button>
@@ -155,7 +187,7 @@ function Profile({ user, setUser }) {
                       listings={listed}
                       editable={!username}
                       buyable={username}
-                      purchaseListing={purchaseListing}
+                      pressPurchase={pressPurchase}
                     />
                   )}
                 </Tab>

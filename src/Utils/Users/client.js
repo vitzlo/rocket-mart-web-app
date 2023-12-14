@@ -86,11 +86,12 @@ export const findUserByName = async (username) => {
 };
 
 export const updateRecentlyViewed = async (pokemonId) => {
-  const response = await request.put(
-    `${USERS_API}/recentlyViewed/${pokemonId}`
-  );
-  if (!response.data) {
+  try {
+    const response = await request.put(
+      `${USERS_API}/recentlyViewed/${pokemonId}`
+    );
+    return pruneUser(response.data);
+  } catch (error) {
     return undefined;
   }
-  return pruneUser(response.data);
 };

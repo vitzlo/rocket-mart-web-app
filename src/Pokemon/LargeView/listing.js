@@ -3,7 +3,7 @@ import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { getDateString } from "../../Utils/date-utils";
 
-const Listing = ({ listing, purchaseListing }) => {
+const Listing = ({ listing, pressPurchase }) => {
   return (
     <div className="rm-listing">
       <div className="row">
@@ -51,7 +51,7 @@ const Listing = ({ listing, purchaseListing }) => {
           {/* TODO: override button styles */}
           {!listing.buyer && (
             <Button
-              onClick={() => purchaseListing(listing._id)}
+              onClick={() => pressPurchase(listing)}
               variant="primary"
             >
               Purchase

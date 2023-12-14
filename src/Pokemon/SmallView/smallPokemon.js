@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { findPokemon, findPokemonById } from "../../Utils/client";
+import { findPokemon, findPokemonById } from "../../Utils/PokeAPI/client";
 import { useNavigate } from "react-router-dom";
 
 function SmallPokemon({ pokemonId, pokemonName }) {

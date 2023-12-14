@@ -249,7 +249,7 @@ function LargePokemon({ user, setUser }) {
                 ))}
               {/* change this condition to show something else */}
               {!loading && !listedPokemon.length && (
-                <h1>{listing ? "NO OTHER LISTINGS" : "NO LISTINGS"}</h1>
+                <h3>{listing ? "No other listings" : "No listings"}</h3>
               )}
               {loading ? (
                 <div className="text-center">

@@ -15,14 +15,14 @@ import User from "../SignIn";
 import { getDateString } from "../Utils/date-utils";
 import PurchaseModal from "../Utils/Components/purchase";
 import {
-  findTransactionByBuyerId,
-  findTransactionBySellerId,
+  findTransactionByBuyerName,
+  findTransactionBySellerName,
   purchaseTransactionById,
 } from "../Utils/Transactions/client";
 import * as client from "../Utils/Users/client";
 
 function Profile({ user, setUser }) {
-  const { userId } = useParams();
+  const { username } = useParams();
   // display user + transactions
   const [account, setAccount] = useState(null);
   const [purchased, setPurchased] = useState();
@@ -93,25 +93,25 @@ function Profile({ user, setUser }) {
   };
 
   useEffect(() => {
-    if (userId) {
-      if (user && user._id === userId) {
+    if (username) {
+      if (user && user.username === username) {
         navigate("/profile");
       } else {
-        client.findUserById(userId).then((data) => setAccount(data));
+        client.findUserByName(username).then((data) => setAccount(data));
       }
     } else {
       setAccount(user);
     }
-  }, [userId, user, navigate]);
+  }, [username, user, navigate]);
 
   useEffect(() => {
     if (account) {
-      findTransactionByBuyerId(account._id).then((results) =>
+      findTransactionByBuyerName(account.username).then((results) =>
         setPurchased(results)
       );
-      findTransactionBySellerId(account._id).then((results) => {
-        setSold(results.filter((transaction) => transaction.buyerId));
-        setListed(results.filter((transaction) => !transaction.buyerId));
+      findTransactionBySellerName(account.username).then((results) => {
+        setSold(results.filter((transaction) => transaction.buyer));
+        setListed(results.filter((transaction) => !transaction.buyer));
       });
       findUserReviewBySubject(account.username).then((results) => {
         setReviews(results);
@@ -155,12 +155,12 @@ function Profile({ user, setUser }) {
               <div className="rm-private-both">{account.email}</div>
               <div>{`Joined ${getDateString(account.signUpDate)}`}</div>
             </div>
-            {!userId && (
+            {!username && (
               <button className="btn w-100 btn-danger" onClick={signout}>
                 Sign out
               </button>
             )}
-            {userId && user && (
+            {username && user && (
               <button
                 className="btn w-100 btn-primary"
                 onClick={() => setReviewModalShow(true)}
@@ -185,8 +185,8 @@ function Profile({ user, setUser }) {
                   {listed && (
                     <ProfileListingList
                       listings={listed}
-                      editable={!userId}
-                      buyable={userId}
+                      editable={!username}
+                      buyable={username}
                       pressPurchase={pressPurchase}
                     />
                   )}

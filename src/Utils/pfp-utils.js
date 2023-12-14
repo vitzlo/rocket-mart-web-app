@@ -1,5 +1,5 @@
 const internalPfpPathToSvg = {
-  rocket_red: "/images/rocket_red.sv",
+  rocket_red: "/images/rocket_red.svg",
   rocket_may: "/images/rocket_may.svg",
   rocket_serena: "/images/rocket_serena.svg",
 };

@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { getDateString } from "../../Utils/date-utils";
 
 const Listing = ({ listing, pressPurchase }) => {
@@ -10,20 +11,20 @@ const Listing = ({ listing, pressPurchase }) => {
         <div className="col-auto">
           <p>List Date:</p>
           <p>Sold by: </p>
-          {listing.buyerId && (
+          {listing.buyer && (
             <>
               <p>Purchased On:</p>
-              <p>By:</p>
+              <p>Purchased By:</p>
             </>
           )}
         </div>
         <div className="col-auto" style={{ marginBottom: "10px" }}>
           <p> {getDateString(listing.timeOfListing)}</p>
-          <p>{listing.sellerId}</p>
-          {listing.buyerId && (
+          <Link to={`/profile/${listing.seller}`}><p>{listing.seller}</p></Link>
+          {listing.buyer && (
             <>
               <p>{getDateString(listing.timeOfPurchase)}</p>
-              <p>{listing.buyerId}</p>
+              <Link to={`/profile/${listing.buyer}`}><p>{listing.buyer}</p></Link>
             </>
           )}
         </div>
@@ -48,7 +49,7 @@ const Listing = ({ listing, pressPurchase }) => {
         </div>
         <div className="col-auto">
           {/* TODO: override button styles */}
-          {!listing.buyerId && (
+          {!listing.buyer && (
             <Button
               onClick={() => pressPurchase(listing)}
               variant="primary"

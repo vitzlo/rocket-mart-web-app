@@ -11,6 +11,7 @@ import {
 } from "../../Utils/Transactions/client";
 import PokemonTypes from "./Types/pokemonTypes";
 import { updateRecentlyViewed } from "../../Utils/Users/client";
+import { meowth_spin } from "../../Utils/loading";
 import PurchaseModal from "../../Utils/Components/purchase";
 
 function LargePokemon({ user, setUser }) {
@@ -24,6 +25,8 @@ function LargePokemon({ user, setUser }) {
   // for purchasing
   const [selectedListing, setSelectedListing] = useState(undefined);
   const [purchaseModalShow, setPurchaseModalShow] = useState(false);
+  // loading
+  const [loading, setLoading] = useState(true);
   // TODOS:
   // maybe add evolution chain as data shown?
 
@@ -31,8 +34,6 @@ function LargePokemon({ user, setUser }) {
     setListing(newListing);
     const listed = await findTransactionsForPokemon(pokemon.id);
     let unsold = listed.filter((listing) => !listing.buyer);
-    console.log("unsold: ", unsold);
-    console.log("transaction: ", newListing);
     setListedPokemon(
       unsold.filter((listing) => listing._id !== newListing._id)
     );
@@ -46,7 +47,6 @@ function LargePokemon({ user, setUser }) {
 
   const pressPurchase = async (transaction) => {
     if (user) {
-      console.log("press purchase: ", transaction);
       await setSelectedListing(transaction);
       setPurchaseModalShow(true);
     } else {
@@ -85,6 +85,7 @@ function LargePokemon({ user, setUser }) {
       } else {
         setListedPokemon(unsold);
       }
+      setLoading(false);
     };
     const setPokemonByTransactionID = async (id) => {
       const transaction = await findTransactionById(id);
@@ -122,7 +123,7 @@ function LargePokemon({ user, setUser }) {
             >
               <div className="rm-pokemon-name rm-pokemon-left me-0">
                 {pokemon.name.replaceAll("-", " ")}
-                {user && user.type === "SELLER" && (
+                {user && user.type === "SELLER" && !loading && (
                   <div className="float-end">
                     <button
                       className="btn btn-primary"
@@ -169,7 +170,8 @@ function LargePokemon({ user, setUser }) {
               {/* any other fields we want to list here??? maybe evolution tree*/}
             </div>
             <div className="col rm-large-listings">
-              {listing &&
+              {!loading &&
+                listing &&
                 (listing.buyer ? (
                   <div>
                     <h1>Sold Listing</h1>
@@ -184,16 +186,27 @@ function LargePokemon({ user, setUser }) {
                   </div>
                 ))}
               {/* change this condition to show something else */}
-              {!listedPokemon.length && (
+              {!loading && !listedPokemon.length && (
                 <h1>{listing ? "NO OTHER LISTINGS" : "NO LISTINGS"}</h1>
               )}
-              {listedPokemon.map((listing) => (
-                <Listing
-                  key={listing.listingId}
-                  listing={listing}
-                  pressPurchase={pressPurchase}
-                />
-              ))}
+              {loading ? (
+                <div className="text-center">
+                  <h3>Loading...</h3>
+                  <img
+                    src={meowth_spin}
+                    alt="loading"
+                    className="rm-loading-image"
+                  />
+                </div>
+              ) : (
+                listedPokemon.map((listing) => (
+                  <Listing
+                    key={listing.listingId}
+                    listing={listing}
+                    pressPurchase={pressPurchase}
+                  />
+                ))
+              )}
             </div>
           </div>
         </div>

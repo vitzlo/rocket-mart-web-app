@@ -20,6 +20,7 @@ import {
   purchaseTransactionById,
 } from "../Utils/Transactions/client";
 import * as client from "../Utils/Users/client";
+import { meowth_spin } from "../Utils/loading";
 
 function Profile({ user, setUser }) {
   const { username } = useParams();
@@ -39,6 +40,8 @@ function Profile({ user, setUser }) {
   // review modal
   const [reviewModalShow, setReviewModalShow] = useState(false);
   const navigate = useNavigate();
+  // loading
+  const [loading, setLoading] = useState(true);
 
   const signout = async () => {
     await client.signout();
@@ -106,12 +109,14 @@ function Profile({ user, setUser }) {
 
   useEffect(() => {
     if (account) {
+      setLoading(true);
       findTransactionByBuyerName(account.username).then((results) =>
         setPurchased(results)
       );
       findTransactionBySellerName(account.username).then((results) => {
         setSold(results.filter((transaction) => transaction.buyer));
         setListed(results.filter((transaction) => !transaction.buyer));
+        setLoading(false);
       });
       findUserReviewBySubject(account.username).then((results) => {
         setReviews(results);
@@ -176,29 +181,85 @@ function Profile({ user, setUser }) {
             >
               <Tab eventKey="bought" title="Purchased Pokémon">
                 <div>
-                  {purchased && <ProfileListingList listings={purchased} />}
+                  {loading ? (
+                    <div className="text-center">
+                      <h3>Loading...</h3>
+                      <img
+                        src={meowth_spin}
+                        alt="loading"
+                        className="rm-loading-image"
+                      />
+                    </div>
+                  ) : purchased?.length ? (
+                    <ProfileListingList listings={purchased} />
+                  ) : (
+                    <h2>No Pokemon Bought</h2>
+                  )}
                 </div>
               </Tab>
 
               {account.type === "SELLER" && (
                 <Tab eventKey="listed" title="Listed Pokémon">
-                  {listed && (
-                    <ProfileListingList
-                      listings={listed}
-                      editable={!username}
-                      buyable={username}
-                      pressPurchase={pressPurchase}
-                    />
-                  )}
+                  <div>
+                    {loading ? (
+                      <div className="text-center">
+                        <h3>Loading...</h3>
+                        <img
+                          src={meowth_spin}
+                          alt="loading"
+                          className="rm-loading-image"
+                        />
+                      </div>
+                    ) : listed?.length ? (
+                      <ProfileListingList
+                        listings={listed}
+                        editable={!username}
+                        buyable={username}
+                        pressPurchase={pressPurchase}
+                      />
+                    ) : (
+                      <h2>No Pokemon Listed</h2>
+                    )}
+                  </div>
                 </Tab>
               )}
               {account.type === "SELLER" && (
                 <Tab eventKey="sold" title="Sold Pokémon">
-                  {sold && <ProfileListingList listings={sold} />}
+                  <div>
+                    {loading ? (
+                      <div className="text-center">
+                        <h3>Loading...</h3>
+                        <img
+                          src={meowth_spin}
+                          alt="loading"
+                          className="rm-loading-image"
+                        />
+                      </div>
+                    ) : sold?.length ? (
+                      <ProfileListingList listings={sold} />
+                    ) : (
+                      <h2>No Pokemon Sold</h2>
+                    )}
+                  </div>
                 </Tab>
               )}
               <Tab eventKey="reviews" title="Reviews">
-                {reviews && <ProfileReviewList reviews={reviews} />}
+                <div>
+                  {loading ? (
+                    <div className="text-center">
+                      <h3>Loading...</h3>
+                      <img
+                        src={meowth_spin}
+                        alt="loading"
+                        className="rm-loading-image"
+                      />
+                    </div>
+                  ) : reviews?.length ? (
+                    <ProfileReviewList reviews={reviews} />
+                  ) : (
+                    <h2>No reviews</h2>
+                  )}
+                </div>
               </Tab>
             </Tabs>
           </div>

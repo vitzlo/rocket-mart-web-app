@@ -70,7 +70,7 @@ const ProfileListing = ({
               )}
               <div className="row flex-nowrap">
                 <div className="col">
-                  <h4>Price: {transaction.price}</h4>
+                  <h4>Price: ${transaction.price}</h4>
                 </div>
                 <div className="col-auto">
                   {/* TODO: override button styles */}

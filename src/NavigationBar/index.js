@@ -23,7 +23,7 @@ function NavigationBar({ user, setUser }) {
       <Navbar.Brand href="#home">
         <div className="row flex-nowrap align-middle">
           <img src="/images/meowth.png" width="50px" alt="RM" />
-          <span className="d-none d-md-block mt-2">Rocket Mart</span>
+          <span className="d-none d-md-block ps-0 mt-2">Rocket Mart</span>
         </div>
       </Navbar.Brand>
       <input
@@ -43,7 +43,7 @@ function NavigationBar({ user, setUser }) {
           alt="profile"
           width="50px"
           height="50px"
-          className="float-end"
+          style={{marginRight: "20px"}}
         />
       </div>
       <User

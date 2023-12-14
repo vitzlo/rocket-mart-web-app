@@ -126,7 +126,7 @@ function LargePokemon({ user, setUser }) {
             >
               <div className="rm-pokemon-name rm-pokemon-left me-0">
                 {pokemon.name.replaceAll("-", " ")}
-                {user && user.type === "SELLER" && (
+                {user && user.type === "SELLER" && !loading && (
                   <div className="float-end">
                     <button
                       className="btn btn-primary"

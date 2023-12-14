@@ -300,7 +300,7 @@ body {
   min-width: 300px;
   margin-right: 10px;
 }
-.rm-large-pokemon .rm-loading-image {
+.rm-loading-image {
   width: 80%;
   min-width: 50%;
 }

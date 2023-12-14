@@ -35,7 +35,7 @@ function UserReviewModal({
       onHide={handleClose}
     >
       <Modal.Header closeButton closeVariant="white">
-        <Modal.Title>Review</Modal.Title>
+        <Modal.Title>{review ? "Editing" : "Creating"} Review</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <div>
@@ -59,12 +59,15 @@ function UserReviewModal({
             onChange={(e) => setReviewText(e.target.value)}
           />
         </div>
-        <button className="btn btn-primary my-2" onClick={create}>
+        <button
+          className="btn btn-primary ms-2 mt-4 float-end"
+          onClick={create}
+        >
           Submit
         </button>
         {review && (
           <button
-            className="btn btn-warning ms-2 my-2"
+            className="btn btn-danger mt-4"
             onClick={() => {
               deleteReview();
               handleClose();

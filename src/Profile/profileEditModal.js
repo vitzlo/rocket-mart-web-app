@@ -38,10 +38,9 @@ function ProfileEditModal({ show, handleClose, user, editUser }) {
       onHide={handleClose}
     >
       <Modal.Header closeButton>
-        <Modal.Title>Edit Profile</Modal.Title>
+        <Modal.Title>Editing @{usernameText}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <div>Username: {usernameText}</div>
         <div>
           <label for="edit-password-input">Password: </label>
           <input
@@ -55,7 +54,7 @@ function ProfileEditModal({ show, handleClose, user, editUser }) {
         <div>
           <label for="edit-region-select">Region: </label>
           <select
-            className="form-select"
+            className="form-select mb-2"
             id="edit-region-select"
             onChange={(e) => setRegionText(e.target.value)}
           >
@@ -76,7 +75,7 @@ function ProfileEditModal({ show, handleClose, user, editUser }) {
             onChange={(e) => setEmailText(e.target.value)}
           />
         </div>
-        <button className="btn btn-primary my-2" onClick={update}>
+        <button className="btn btn-primary mt-4 float-end" onClick={update}>
           Update User
         </button>
       </Modal.Body>

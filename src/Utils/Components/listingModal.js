@@ -103,14 +103,14 @@ function ListingModal({
             onChange={(e) => setPrice(e.target.value)}
           />
         </div>
-        <div className="text-end mt-4">
+        <div className="mt-4">
           {listing && (
             <button className="btn btn-danger me-2" onClick={handleDelete}>
               Delete
             </button>
           )}
-          <button className="btn btn-primary" onClick={handleButton}>
-            {listing ? "Edit" : "Create"}
+          <button className="btn btn-primary float-end" onClick={handleButton}>
+            {listing ? "Save" : "Create"}
           </button>
         </div>
       </Modal.Body>

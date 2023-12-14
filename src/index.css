@@ -224,6 +224,11 @@ body {
   background-color: var(--dark-grey);
 }
 
+/* Transaction Modal */
+.rm-transaction-modal .modal-content {
+  background-color: var(--dark-grey);
+}
+
 /* small pokemon */
 .rm-small-pokemon {
   position: relative;
@@ -395,7 +400,7 @@ body {
 
 .rm-sign-error {
   color: #ff6a49;
-  padding-top:5px;
+  padding-top: 5px;
 }
 
 .form-select {

@@ -22,15 +22,16 @@ function LargePokemon({ user, setUser }) {
   const [listedPokemon, setListedPokemon] = useState([]);
   // login modal
   const [loginModalShow, setLoginModalShow] = useState(false);
-  // for purchasing
+  // for purchasing or editing listings
   const [selectedListing, setSelectedListing] = useState(undefined);
   const [purchaseModalShow, setPurchaseModalShow] = useState(false);
+  const [transactionModalShow, setTransactionModalShow] = useState(false);
   // loading
   const [loading, setLoading] = useState(true);
   // TODOS:
   // maybe add evolution chain as data shown?
 
-  const updateListings = async (newListing) => {
+  const updateListingsList = async (newListing) => {
     setListing(newListing);
     const listed = await findTransactionsForPokemon(pokemon.id);
     let unsold = listed.filter((listing) => !listing.buyer);
@@ -41,7 +42,7 @@ function LargePokemon({ user, setUser }) {
 
   const purchase = async (id) => {
     const purchase = await purchaseTransactionById(id);
-    updateListings(purchase);
+    updateListingsList(purchase);
     setPurchaseModalShow(false);
   };
 
@@ -64,7 +65,7 @@ function LargePokemon({ user, setUser }) {
         height: 10,
         iv: 10,
       });
-      updateListings(transaction);
+      updateListingsList(transaction);
     }
   };
   // add a button to go back to the search results??? (might be tough bc we need history)

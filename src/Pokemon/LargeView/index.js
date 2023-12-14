@@ -5,13 +5,17 @@ import Listing from "./listing";
 import User from "../../SignIn";
 import {
   createTransaction,
+  deleteTransactionById,
+  editTransactionById,
   findTransactionById,
   findTransactionsForPokemon,
   purchaseTransactionById,
 } from "../../Utils/Transactions/client";
 import PokemonTypes from "./Types/pokemonTypes";
 import { updateRecentlyViewed } from "../../Utils/Users/client";
+import { meowth_spin } from "../../Utils/loading";
 import PurchaseModal from "../../Utils/Components/purchase";
+import ListingModal from "../../Utils/Components/listingModal";
 
 function LargePokemon({ user, setUser }) {
   const { pokemonId, transactionId } = useParams();
@@ -21,18 +25,19 @@ function LargePokemon({ user, setUser }) {
   const [listedPokemon, setListedPokemon] = useState([]);
   // login modal
   const [loginModalShow, setLoginModalShow] = useState(false);
-  // for purchasing
+  // for purchasing or editing listings
   const [selectedListing, setSelectedListing] = useState(undefined);
   const [purchaseModalShow, setPurchaseModalShow] = useState(false);
+  const [transactionModalShow, setTransactionModalShow] = useState(false);
+  // loading
+  const [loading, setLoading] = useState(true);
   // TODOS:
   // maybe add evolution chain as data shown?
 
-  const updateListings = async (newListing) => {
+  const updateListingsList = async (newListing) => {
     setListing(newListing);
     const listed = await findTransactionsForPokemon(pokemon.id);
-    let unsold = listed.filter((listing) => !listing.buyerId);
-    console.log("unsold: ", unsold);
-    console.log("transaction: ", newListing);
+    let unsold = listed.filter((listing) => !listing.buyer);
     setListedPokemon(
       unsold.filter((listing) => listing._id !== newListing._id)
     );
@@ -40,13 +45,12 @@ function LargePokemon({ user, setUser }) {
 
   const purchase = async (id) => {
     const purchase = await purchaseTransactionById(id);
-    updateListings(purchase);
+    updateListingsList(purchase);
     setPurchaseModalShow(false);
   };
 
   const pressPurchase = async (transaction) => {
     if (user) {
-      console.log("press purchase: ", transaction);
       await setSelectedListing(transaction);
       setPurchaseModalShow(true);
     } else {
@@ -56,16 +60,59 @@ function LargePokemon({ user, setUser }) {
 
   const listPokemon = async () => {
     if (user && user.type === "SELLER") {
-      // filler data for now
-      const transaction = await createTransaction({
-        pokemonId: pokemon.id,
-        price: Math.random() * 100 + 50,
-        weight: 10,
-        height: 10,
-        iv: 10,
-      });
-      updateListings(transaction);
+      setTransactionModalShow(true);
     }
+  };
+
+  const pressEdit = async (transaction) => {
+    if (user && user.type === "SELLER") {
+      await setSelectedListing(transaction);
+      setPurchaseModalShow(false);
+      setTransactionModalShow(true);
+    }
+  };
+
+  const createListing = async (data) => {
+    if (user && user.type === "SELLER") {
+      const transaction = await createTransaction({
+        ...data,
+        pokemonId: pokemon.id,
+      });
+      updateListingsList(transaction);
+    }
+    setTransactionModalShow(false);
+    setSelectedListing(undefined);
+  };
+
+  const editListing = async (data) => {
+    if (user && user.type === "SELLER") {
+      editTransactionById(selectedListing._id, {
+        ...data,
+        seller: user.username,
+      });
+      if (listing && listing._id === selectedListing._id) {
+        setListing({ ...listing, ...data });
+      } else {
+        updateListingsList({ ...selectedListing, ...data });
+      }
+    }
+    setTransactionModalShow(false);
+    setSelectedListing(undefined);
+  };
+
+  const deleteListing = async () => {
+    if (user && user.type === "SELLER") {
+      deleteTransactionById(selectedListing._id);
+      if (listing && listing._id === selectedListing._id) {
+        setListing(undefined);
+      } else {
+        setListedPokemon(
+          listedPokemon.filter((listing) => listing._id !== selectedListing._id)
+        );
+      }
+    }
+    setTransactionModalShow(false);
+    setSelectedListing(undefined);
   };
   // add a button to go back to the search results??? (might be tough bc we need history)
 
@@ -77,7 +124,7 @@ function LargePokemon({ user, setUser }) {
       // sets the transactions for pokemon
       const listed = await findTransactionsForPokemon(id);
       // filter out sold pokemon
-      let unsold = listed.filter((listing) => !listing.buyerId);
+      let unsold = listed.filter((listing) => !listing.buyer);
       if (transactionId) {
         setListedPokemon(
           unsold.filter((listing) => listing._id !== transactionId)
@@ -85,6 +132,7 @@ function LargePokemon({ user, setUser }) {
       } else {
         setListedPokemon(unsold);
       }
+      setLoading(false);
     };
     const setPokemonByTransactionID = async (id) => {
       const transaction = await findTransactionById(id);
@@ -107,12 +155,27 @@ function LargePokemon({ user, setUser }) {
       />
       <PurchaseModal
         show={purchaseModalShow}
-        onHide={() => setPurchaseModalShow(false)}
+        onHide={() => {
+          setPurchaseModalShow(false);
+          setSelectedListing(undefined);
+        }}
         transaction={selectedListing}
         purchase={purchase}
+        edit={pressEdit}
         user={user}
       />
-
+      <ListingModal
+        show={transactionModalShow}
+        onHide={() => {
+          setTransactionModalShow(false);
+          setSelectedListing(undefined);
+        }}
+        pokemon={pokemon}
+        listing={selectedListing}
+        createListing={createListing}
+        editListing={editListing}
+        deleteListing={deleteListing}
+      />
       {pokemon && (
         <div>
           <div className="row">
@@ -122,7 +185,7 @@ function LargePokemon({ user, setUser }) {
             >
               <div className="rm-pokemon-name rm-pokemon-left me-0">
                 {pokemon.name.replaceAll("-", " ")}
-                {user && user.type === "SELLER" && (
+                {user && user.type === "SELLER" && !loading && (
                   <div className="float-end">
                     <button
                       className="btn btn-primary"
@@ -169,8 +232,9 @@ function LargePokemon({ user, setUser }) {
               {/* any other fields we want to list here??? maybe evolution tree*/}
             </div>
             <div className="col rm-large-listings">
-              {listing &&
-                (listing.buyerId ? (
+              {!loading &&
+                listing &&
+                (listing.buyer ? (
                   <div>
                     <h1>Sold Listing</h1>
                     <Listing listing={listing} pressPurchase={pressPurchase} />
@@ -184,16 +248,27 @@ function LargePokemon({ user, setUser }) {
                   </div>
                 ))}
               {/* change this condition to show something else */}
-              {!listedPokemon.length && (
+              {!loading && !listedPokemon.length && (
                 <h1>{listing ? "NO OTHER LISTINGS" : "NO LISTINGS"}</h1>
               )}
-              {listedPokemon.map((listing) => (
-                <Listing
-                  key={listing.listingId}
-                  listing={listing}
-                  pressPurchase={pressPurchase}
-                />
-              ))}
+              {loading ? (
+                <div className="text-center">
+                  <h3>Loading...</h3>
+                  <img
+                    src={meowth_spin}
+                    alt="loading"
+                    className="rm-loading-image"
+                  />
+                </div>
+              ) : (
+                listedPokemon.map((listing) => (
+                  <Listing
+                    key={listing.listingId}
+                    listing={listing}
+                    pressPurchase={pressPurchase}
+                  />
+                ))
+              )}
             </div>
           </div>
         </div>

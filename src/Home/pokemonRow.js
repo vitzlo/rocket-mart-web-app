@@ -13,7 +13,7 @@ const PokemonRow = ({ category, pokemonList }) => {
 
   return (
     <div className="m-2">
-      <h1 className="ms-5 mb-0 text-nowrap">{category}</h1>
+      <h2 className="ms-5 mb-0 text-nowrap">{category}</h2>
       <div className="rm-carousel-container">
         <div className="row flex-nowrap rm-carousel" id={category}>
           {pokemonList.map((pokemon, index) => (

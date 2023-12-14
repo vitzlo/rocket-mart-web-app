@@ -15,15 +15,16 @@ import User from "../SignIn";
 import { getDateString } from "../Utils/date-utils";
 import PurchaseModal from "../Utils/Components/purchase";
 import {
-  findTransactionByBuyerId,
-  findTransactionBySellerId,
+  findTransactionByBuyerName,
+  findTransactionBySellerName,
   purchaseTransactionById,
 } from "../Utils/Transactions/client";
 import * as client from "../Utils/Users/client";
 import ProfileEditModal from "./profileEditModal";
+import { meowth_spin } from "../Utils/loading";
 
 function Profile({ user, setUser }) {
-  const { userId } = useParams();
+  const { username } = useParams();
   // display user + transactions
   const [account, setAccount] = useState(null);
   const [purchased, setPurchased] = useState();
@@ -42,6 +43,8 @@ function Profile({ user, setUser }) {
   // editing modal
   const [editModalShow, setEditModalShow] = useState(false);
   const navigate = useNavigate();
+  // loading
+  const [loading, setLoading] = useState(true);
 
   const signout = async () => {
     await client.signout();
@@ -106,25 +109,27 @@ function Profile({ user, setUser }) {
   };
 
   useEffect(() => {
-    if (userId) {
-      if (user && user._id === userId) {
+    if (username) {
+      if (user && user.username === username) {
         navigate("/profile");
       } else {
-        client.findUserById(userId).then((data) => setAccount(data));
+        client.findUserByName(username).then((data) => setAccount(data));
       }
     } else {
       setAccount(user);
     }
-  }, [userId, user, navigate]);
+  }, [username, user, navigate]);
 
   useEffect(() => {
     if (account) {
-      findTransactionByBuyerId(account._id).then((results) =>
+      setLoading(true);
+      findTransactionByBuyerName(account.username).then((results) =>
         setPurchased(results)
       );
-      findTransactionBySellerId(account._id).then((results) => {
-        setSold(results.filter((transaction) => transaction.buyerId));
-        setListed(results.filter((transaction) => !transaction.buyerId));
+      findTransactionBySellerName(account.username).then((results) => {
+        setSold(results.filter((transaction) => transaction.buyer));
+        setListed(results.filter((transaction) => !transaction.buyer));
+        setLoading(false);
       });
       findUserReviewBySubject(account.username).then((results) => {
         setReviews(results);
@@ -174,17 +179,17 @@ function Profile({ user, setUser }) {
               <div className="rm-private-both">{account.email}</div>
               <div>{`Joined ${getDateString(account.signUpDate)}`}</div>
             </div>
-            {!userId && (
+            {!username && (
               <button className="btn w-100 btn-danger" onClick={signout}>
                 Sign out
               </button>
             )}
-            {!userId && (
+            {!username && (
               <button className="btn w-100 btn-warning" onClick={pressEdit}>
                 Edit Profile
               </button>
             )}
-            {userId && user && (
+            {username && user && (
               <button
                 className="btn w-100 btn-primary"
                 onClick={() => setReviewModalShow(true)}
@@ -200,29 +205,85 @@ function Profile({ user, setUser }) {
             >
               <Tab eventKey="bought" title="Purchased Pokémon">
                 <div>
-                  {purchased && <ProfileListingList listings={purchased} />}
+                  {loading ? (
+                    <div className="text-center">
+                      <h3>Loading...</h3>
+                      <img
+                        src={meowth_spin}
+                        alt="loading"
+                        className="rm-loading-image"
+                      />
+                    </div>
+                  ) : purchased?.length ? (
+                    <ProfileListingList listings={purchased} />
+                  ) : (
+                    <h2>No Pokemon Bought</h2>
+                  )}
                 </div>
               </Tab>
 
               {account.type === "SELLER" && (
                 <Tab eventKey="listed" title="Listed Pokémon">
-                  {listed && (
-                    <ProfileListingList
-                      listings={listed}
-                      editable={!userId}
-                      buyable={userId}
-                      pressPurchase={pressPurchase}
-                    />
-                  )}
+                  <div>
+                    {loading ? (
+                      <div className="text-center">
+                        <h3>Loading...</h3>
+                        <img
+                          src={meowth_spin}
+                          alt="loading"
+                          className="rm-loading-image"
+                        />
+                      </div>
+                    ) : listed?.length ? (
+                      <ProfileListingList
+                        listings={listed}
+                        editable={!username}
+                        buyable={username}
+                        pressPurchase={pressPurchase}
+                      />
+                    ) : (
+                      <h2>No Pokemon Listed</h2>
+                    )}
+                  </div>
                 </Tab>
               )}
               {account.type === "SELLER" && (
                 <Tab eventKey="sold" title="Sold Pokémon">
-                  {sold && <ProfileListingList listings={sold} />}
+                  <div>
+                    {loading ? (
+                      <div className="text-center">
+                        <h3>Loading...</h3>
+                        <img
+                          src={meowth_spin}
+                          alt="loading"
+                          className="rm-loading-image"
+                        />
+                      </div>
+                    ) : sold?.length ? (
+                      <ProfileListingList listings={sold} />
+                    ) : (
+                      <h2>No Pokemon Sold</h2>
+                    )}
+                  </div>
                 </Tab>
               )}
               <Tab eventKey="reviews" title="Reviews">
-                {reviews && <ProfileReviewList reviews={reviews} />}
+                <div>
+                  {loading ? (
+                    <div className="text-center">
+                      <h3>Loading...</h3>
+                      <img
+                        src={meowth_spin}
+                        alt="loading"
+                        className="rm-loading-image"
+                      />
+                    </div>
+                  ) : reviews?.length ? (
+                    <ProfileReviewList reviews={reviews} />
+                  ) : (
+                    <h2>No reviews</h2>
+                  )}
+                </div>
               </Tab>
             </Tabs>
           </div>

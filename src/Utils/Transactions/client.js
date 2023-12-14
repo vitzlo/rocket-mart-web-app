@@ -17,7 +17,7 @@ const API_BASE = process.env.REACT_APP_API_BASE;
 const pruneTransaction = (transactionsData) => {
   // convert strings to Date objects in the transaction data
   transactionsData.timeOfListing = new Date(transactionsData.timeOfListing);
-  if (transactionsData.buyerId) {
+  if (transactionsData.buyer) {
     transactionsData.timeOfPurchase = new Date(transactionsData.timeOfPurchase);
   }
   transactionsData.price = transactionsData.price.toFixed(2);
@@ -41,9 +41,9 @@ export const createTransaction = async (transactionData) => {
 };
 
 // GET: list of transactions that the given user has listed
-export const findTransactionBySellerId = async (sellerId) => {
+export const findTransactionBySellerName = async (seller) => {
   const response = await request.get(
-    `${API_BASE}/api/transactions/seller/${sellerId}`
+    `${API_BASE}/api/transactions/seller/${seller}`
   );
   if (!response.data) {
     return [];
@@ -52,9 +52,9 @@ export const findTransactionBySellerId = async (sellerId) => {
 };
 
 // GET: list of transactions that the given user has purchased
-export const findTransactionByBuyerId = async (buyerId) => {
+export const findTransactionByBuyerName = async (buyer) => {
   const response = await request.get(
-    `${API_BASE}/api/transactions/buyer/${buyerId}`
+    `${API_BASE}/api/transactions/buyer/${buyer}`
   );
   if (!response.data) {
     return [];
@@ -85,6 +85,27 @@ export const findTransactionById = async (id) => {
 export const purchaseTransactionById = async (id) => {
   const response = await request.put(
     `${API_BASE}/api/transactions/purchase/${id}`
+  );
+  if (!response.data) {
+    return undefined;
+  }
+
+  return pruneTransaction(response.data);
+};
+
+export const deleteTransactionById = async (id) => {
+  const response = await request.delete(`${API_BASE}/api/transactions/${id}`);
+  if (!response.data) {
+    return undefined;
+  }
+
+  return pruneTransaction(response.data);
+};
+
+export const editTransactionById = async (id, data) => {
+  const response = await request.put(
+    `${API_BASE}/api/transactions/${id}`,
+    data
   );
   if (!response.data) {
     return undefined;

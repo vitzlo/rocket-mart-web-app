@@ -19,7 +19,7 @@ function SignUp({ onHide, setUser }) {
       navigate("/profile");
     } catch (err) {
       setIncomplete(true);
-      // setError(err.response.data.message);
+      setError(err.response.data.message);
     }
   };
   const [credentials, setCredentials] = useState({
@@ -32,8 +32,7 @@ function SignUp({ onHide, setUser }) {
   const navigate = useNavigate();
   return (
     <div className="container rm-sign-user">
-      <div className="">
-        {error && <div>{error}</div>}
+      <div>
         <div className="justify-content-center">
           <label>Username</label> <br />
           <input
@@ -104,7 +103,7 @@ function SignUp({ onHide, setUser }) {
         <div>
           {incomplete ? (
             <label className="rm-sign-error">
-              Please fill out all input fields.
+              {error}
             </label>
           ) : (
             <></>

@@ -113,11 +113,21 @@ body {
   background-color: var(--background-color);
 }
 
+.rm-nav img {
+  width: 60px !important;
+  padding: 0px;
+  margin-left: auto;
+}
+
 .rm-search {
+  color: #fff !important;
   border-radius: 20px;
-  width: 75%;
+  width: 60vw;
   height: 40px;
-  margin-right: 200px;
+  margin-right: 5%;
+  border: 2px solid #6a6a6a !important;
+  background-color: #404040;
+  display: inline-flex;
 }
 
 /* Carousel styles */
@@ -214,6 +224,11 @@ body {
   background-color: var(--dark-grey);
 }
 
+/* Listing Modal */
+.rm-listing-modal .modal-content {
+  background-color: var(--dark-grey);
+}
+
 /* small pokemon */
 .rm-small-pokemon {
   position: relative;
@@ -300,10 +315,18 @@ body {
   min-width: 300px;
   margin-right: 10px;
 }
+.rm-loading-image {
+  width: 80%;
+  min-width: 50%;
+}
 
 .rm-large-listings {
   padding-top: 60px;
   padding-left: 20px;
+}
+
+.rm-large-pokemon .rm-pokemon-type {
+  min-width: 320px;
 }
 
 /* Pokemon Types */
@@ -326,6 +349,7 @@ body {
 
 /* seller listing on large view */
 .rm-listing {
+  min-width: 256px;
   background-color: #404040;
   border-radius: 12px;
   outline-color: 1px #8591ce;
@@ -387,7 +411,7 @@ body {
 
 .rm-sign-error {
   color: #ff6a49;
-  padding-top:5px;
+  padding-top: 5px;
 }
 
 .form-select {

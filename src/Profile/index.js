@@ -175,9 +175,9 @@ function Profile({ user, setUser }) {
               id="rm-profile-picture"
             />
             <div className="text-center">
-              <div>{`@${account.username} | ${account.region}`}</div>
+              <div>{`@${account.username} · ${account.region}`}</div>
               <div className="rm-private-both">{account.email}</div>
-              <div>{`Joined ${getDateString(account.signUpDate)}`}</div>
+              <div className="rm-join-date">{`Joined ${getDateString(account.signUpDate)}`}</div>
             </div>
             {!username && (
               <button className="btn w-100 btn-danger" onClick={signout}>
@@ -202,6 +202,7 @@ function Profile({ user, setUser }) {
             <Tabs
               justify
               defaultActiveKey={account.type === "SELLER" ? "listed" : "bought"}
+              className="rm-profile-link font-weight-bold"
             >
               <Tab eventKey="bought" title="Purchased Pokémon">
                 <div>

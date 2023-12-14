@@ -7,22 +7,27 @@ import { generatePfp } from "../Utils/pfp-utils";
 
 function SignUp({ onHide, setUser }) {
   const [error, setError] = useState("");
-  const regions = ["Kalos", "Unova", "Kanto", "Johto", "Galar"];
+  const [incomplete, setIncomplete] = useState(false);
+  const regions = ["KALOS", "UNOVA", "KANTO", "JOHTO", "GALAR"];
   const signup = async () => {
     try {
       credentials["pfp"] = generatePfp();
       const response = await client.signup(credentials);
       setUser(response);
+      setIncomplete(false);
       onHide();
       navigate("/profile");
     } catch (err) {
-      setError(err.response.data.message);
+      setIncomplete(true);
+      // setError(err.response.data.message);
     }
   };
   const [credentials, setCredentials] = useState({
     username: "",
     password: "",
     email: "",
+    region: "KALOS",
+    type: "BUYER",
   });
   const navigate = useNavigate();
   return (
@@ -44,7 +49,7 @@ function SignUp({ onHide, setUser }) {
         <label>Password</label> <br />
         <input
           className="w-100"
-          type="text"
+          type="password"
           placeholder="Password"
           value={credentials.password}
           onChange={(e) =>
@@ -66,7 +71,14 @@ function SignUp({ onHide, setUser }) {
         <div className="row flex-nowrap">
           <div className="col">
             <label>Region</label>
-            <Form.Select className="w-100" aria-label="Region">
+            <Form.Select
+              className="w-100"
+              aria-label="Region"
+              style={{ marginBottom: "0px" }}
+              onChange={(e) =>
+                setCredentials({ ...credentials, region: e.target.value })
+              }
+            >
               {regions.map((val) => (
                 <option key={val} value={val}>
                   {val}
@@ -77,11 +89,26 @@ function SignUp({ onHide, setUser }) {
 
           <div className="col">
             <label>Position</label>
-            <Form.Select aria-label="Position">
-              <option>Buyer</option>
-              <option>Seller</option>
+            <Form.Select
+              aria-label="Position"
+              style={{ marginBottom: "0px" }}
+              onChange={(e) =>
+                setCredentials({ ...credentials, type: e.target.value })
+              }
+            >
+              <option>BUYER</option>
+              <option>SELLER</option>
             </Form.Select>
           </div>
+        </div>
+        <div>
+          {incomplete ? (
+            <label className="rm-sign-error">
+              Please fill out all input fields.
+            </label>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
       <div className="text-center">

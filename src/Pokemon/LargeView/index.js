@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { findPokemonById } from "../../Utils/client";
+import { findPokemonById } from "../../Utils/PokeAPI/client";
 import Listing from "./listing";
 import User from "../../SignIn";
 import {
@@ -11,7 +11,7 @@ import {
 } from "../../Utils/Transactions/client";
 import PokemonTypes from "./Types/pokemonTypes";
 import { updateRecentlyViewed } from "../../Utils/Users/client";
-import PurchaseModal from "../../Utils/purchase";
+import PurchaseModal from "../../Utils/Components/purchase";
 
 function LargePokemon({ user, setUser }) {
   const { pokemonId, transactionId } = useParams();

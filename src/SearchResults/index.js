@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { searchPokemonBySubstring, searchPokemonByType } from "../Utils/client";
+import {
+  searchPokemonBySubstring,
+  searchPokemonByType,
+} from "../Utils/PokeAPI/client";
 import SmallPokemon from "../Pokemon/SmallView/smallPokemon";
 
 function SearchResults() {

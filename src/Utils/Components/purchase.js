@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
-import { findPokemonById } from "./client";
+import { findPokemonById } from "../PokeAPI/client";
 
 function PurchaseModal({ show, onHide, purchase, transaction, user }) {
   const [pokemon, setPokemon] = useState(null);

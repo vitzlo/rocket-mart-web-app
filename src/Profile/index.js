@@ -13,7 +13,7 @@ import ProfileReviewList from "./profileReviewList";
 import UserReviewModal from "./userReviewModal";
 import User from "../SignIn";
 import { getDateString } from "../Utils/date-utils";
-import PurchaseModal from "../Utils/purchase";
+import PurchaseModal from "../Utils/Components/purchase";
 import {
   findTransactionByBuyerId,
   findTransactionBySellerId,

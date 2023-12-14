@@ -10,7 +10,7 @@ function ProfileListingList({
     <div className="p-4 row">
       {listings.map((transaction) => (
         <ProfileListing
-          transactionId={transaction._id}
+          transaction={transaction}
           key={transaction._id}
           pressPurchase={pressPurchase}
           editable={editable}

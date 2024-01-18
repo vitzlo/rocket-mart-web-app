@@ -1,3 +1,9 @@
+# See the Website in Action
+
+Here's the link to the website: https://rocketmart.netlify.app
+
+Please note that the backend is running on a free plan that pauses after inactivity, so the website may need a few minutes to be fully operational.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
